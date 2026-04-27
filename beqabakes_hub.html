@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beqabakes — System Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --brown:    #5C2C1D;
+    --brown-dk: #3d1c10;
+    --cream:    #FFE3E9;
+    --cream-lt: #FFFBF9;
+    --cream-md: #F7F0ED;
+    --pink:     #F58BA6;
+    --rose:     #D16681;
+    --blush:    #F7D8DF;
+    --text:     #2E2420;
+    --text-mid: #5C4840;
+    --text-dim: #8C7068;
+    --border:   rgba(92,44,29,.12);
+    --nav-w:    240px;
+  }
+
+  html, body { height: 100%; overflow: hidden; font-family: 'Mulish', sans-serif; background: #EDE3DD; }
+
+  /* ── LAYOUT ── */
+  .shell { display: flex; height: 100vh; }
+
+  /* ── SIDEBAR ── */
+  nav {
+    width: var(--nav-w);
+    min-width: var(--nav-w);
+    background: var(--brown-dk);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    z-index: 10;
+  }
+
+  .nav-brand {
+    padding: 28px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .nav-brand .wordmark {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    color: var(--cream);
+    letter-spacing: .02em;
+    line-height: 1.2;
+  }
+  .nav-brand .tagline {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-top: 4px;
+    opacity: .8;
+  }
+
+  .nav-label {
+    padding: 16px 20px 6px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.3);
+  }
+
+  .nav-links { list-style: none; padding: 0 10px 24px; }
+
+  .nav-links li button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: background .15s, color .15s;
+    color: rgba(255,255,255,.65);
+    font-family: 'Mulish', sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+  .nav-links li button:hover { background: rgba(255,255,255,.07); color: #fff; }
+  .nav-links li button.active { background: var(--rose); color: #fff; }
+
+  .nav-links li button .icon {
+    font-size: 14px;
+    flex-shrink: 0;
+    opacity: .85;
+  }
+
+  /* ── CONTENT ── */
+  .content { flex: 1; overflow: hidden; position: relative; }
+
+  .pane {
+    position: absolute;
+    inset: 0;
+    display: none;
+  }
+  .pane.active { display: block; }
+
+  .pane iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: var(--cream-lt);
+  }
+
+  /* ── MOBILE TOGGLE ── */
+  .mob-toggle {
+    display: none;
+    position: fixed;
+    top: 12px; left: 12px;
+    z-index: 100;
+    background: var(--brown-dk);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 10px;
+    cursor: pointer;
+    color: #fff;
+    font-size: 18px;
+  }
+  .mob-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.4);
+    z-index: 9;
+  }
+
+  @media (max-width: 680px) {
+    nav {
+      position: fixed;
+      top: 0; left: 0;
+      height: 100%;
+      transform: translateX(-100%);
+      transition: transform .25s ease;
+    }
+    nav.open { transform: translateX(0); }
+    .mob-toggle { display: block; }
+    .mob-overlay.visible { display: block; }
+    .content { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<button class="mob-toggle" id="mobToggle" aria-label="Open menu">☰</button>
+<div class="mob-overlay" id="mobOverlay"></div>
+
+<div class="shell">
+
+  <!-- SIDEBAR -->
+  <nav id="sidebar">
+    <div class="nav-brand">
+      <div class="wordmark">Beqabakes</div>
+      <div class="tagline">System Hub</div>
+    </div>
+
+    <div class="nav-label">Systems</div>
+    <ul class="nav-links" id="navLinks">
+      <li><button class="active" data-target="master" onclick="show('master', this)">
+        <span class="icon">🗂</span> Master Index
+      </button></li>
+      <li><button data-target="brand" onclick="show('brand', this)">
+        <span class="icon">🎨</span> Brand System
+      </button></li>
+      <li><button data-target="content" onclick="show('content', this)">
+        <span class="icon">✍️</span> Content Ops
+      </button></li>
+      <li><button data-target="marketing" onclick="show('marketing', this)">
+        <span class="icon">📈</span> Marketing & Sales
+      </button></li>
+      <li><button data-target="message" onclick="show('message', this)">
+        <span class="icon">💬</span> WhatsApp Messages
+      </button></li>
+      <li><button data-target="pinned" onclick="show('pinned', this)">
+        <span class="icon">📌</span> Pinned Posts
+      </button></li>
+      <li><button data-target="platform" onclick="show('platform', this)">
+        <span class="icon">📱</span> Platform Ops
+      </button></li>
+      <li><button data-target="tracking" onclick="show('tracking', this)">
+        <span class="icon">📊</span> Tracking System
+      </button></li>
+    </ul>
+  </nav>
+
+  <!-- CONTENT PANES -->
+  <div class="content">
+
+    <div class="pane active" id="pane-master">
+      <iframe src="beqabakes_master_index.html" title="Master Index"></iframe>
+    </div>
+
+    <div class="pane" id="pane-brand">
+      <iframe src="beqabakes_brand_system_v2.html" title="Brand System"></iframe>
+    </div>
+
+    <div class="pane" id="pane-content">
+      <iframe src="beqabakes_content_ops_system.html" title="Content Ops"></iframe>
+    </div>
+
+    <div class="pane" id="pane-marketing">
+      <iframe src="beqabakes_marketing_sales_system.html" title="Marketing & Sales"></iframe>
+    </div>
+
+    <div class="pane" id="pane-message">
+      <iframe src="beqabakes_message_system.html" title="WhatsApp Messages"></iframe>
+    </div>
+
+    <div class="pane" id="pane-pinned">
+      <iframe src="beqabakes_pinned_posts.html" title="Pinned Posts"></iframe>
+    </div>
+
+    <div class="pane" id="pane-platform">
+      <iframe src="beqabakes_platform_system.html" title="Platform Ops"></iframe>
+    </div>
+
+    <div class="pane" id="pane-tracking">
+      <iframe src="beqabakes_tracking_system.html" title="Tracking System"></iframe>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function show(id, btn) {
+    // hide all panes
+    document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+    // deactivate all buttons
+    document.querySelectorAll('#navLinks button').forEach(b => b.classList.remove('active'));
+    // activate target
+    document.getElementById('pane-' + id).classList.add('active');
+    btn.classList.add('active');
+    // close mobile nav
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('mobOverlay').classList.remove('visible');
+  }
+
+  // mobile toggle
+  document.getElementById('mobToggle').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('mobOverlay').classList.toggle('visible');
+  });
+  document.getElementById('mobOverlay').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('mobOverlay').classList.remove('visible');
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beqabakes — WhatsApp Message System v1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Mulish:wght@300;400;500;600;700&family=Merienda:wght@600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brown:    #5C2C1D;
+  --brown-dk: #3d1c10;
+  --cream:    #FFE3E9;
+  --cream-lt: #FDFBF9;
+  --cream-md: #F5EDE8;
+  --pink:     #F58BA6;
+  --rose:     #D16681;
+  --rose-dk:  #a84d63;
+  --blush:    #F7D8DF;
+  --green:    #AAC8A7;
+  --green-dk: #5a8a57;
+  --wa:       #25D366;
+  --wa-dk:    #128C7E;
+  --wa-lt:    #E8FAF0;
+  --wa-mid:   #B3E6CC;
+  --text:     #2E2420;
+  --text-mid: #5C4840;
+  --text-dim: #8C7068;
+  --text-lt:  #B8A098;
+  --border:   rgba(92,44,29,.09);
+  --border-md:rgba(92,44,29,.17);
+  --border-dk:rgba(92,44,29,.26);
+  --white:    #ffffff;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Mulish',sans-serif;
+  background:#E8DDD6;
+  color:var(--text);
+  font-size:14px;
+  line-height:1.75;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+.page{max-width:900px;margin:0 auto;background:var(--cream-lt);}
+
+/* COVER */
+.cover{
+  background:var(--wa-dk);
+  padding:0;position:relative;overflow:hidden;
+  min-height:92vh;
+  display:grid;grid-template-rows:1fr auto;
+}
+.cover-dots{
+  position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:28px 28px;
+  pointer-events:none;
+}
+.cover-bar{height:5px;background:linear-gradient(90deg,var(--wa),#1ebe5d,var(--wa));}
+.cover-top{padding:64px 72px 48px;position:relative;z-index:1;}
+.cover-eyebrow{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:14px;}
+.cover h1{font-family:'Playfair Display',serif;font-size:clamp(38px,5.2vw,58px);font-weight:700;color:white;line-height:1.1;margin-bottom:10px;}
+.cover h1 em{color:var(--wa);font-style:italic;}
+.cover-sub{font-size:15px;color:rgba(255,255,255,.45);max-width:540px;line-height:1.7;margin:24px 0 40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.1);}
+.cover-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:12px;overflow:hidden;max-width:560px;}
+.cover-stat{padding:16px 18px;background:rgba(255,255,255,.03);}
+.cover-stat-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:white;margin-bottom:4px;}
+.cover-stat-label{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.cover-rules{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:28px;max-width:560px;}
+.cover-rule{padding:12px 16px;background:rgba(255,255,255,.05);border-radius:8px;font-size:12px;color:rgba(255,255,255,.45);line-height:1.6;}
+.cover-rule strong{color:var(--wa);display:block;margin-bottom:3px;font-size:11px;letter-spacing:.04em;}
+.cover-bottom{padding:22px 72px 36px;border-top:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1;}
+.cover-bottom-meta{font-size:11px;color:rgba(255,255,255,.25);line-height:1.9;}
+.cover-bottom-brand{font-family:'Merienda',cursive;font-size:18px;color:var(--wa);opacity:.6;}
+
+/* NAV */
+.sticky-nav{position:sticky;top:0;z-index:50;background:rgba(18,140,126,.97);backdrop-filter:blur(8px);padding:0 72px;display:flex;align-items:center;justify-content:space-between;height:48px;border-bottom:1px solid rgba(255,255,255,.08);}
+.nav-brand{font-family:'Playfair Display',serif;font-size:13px;color:rgba(255,255,255,.8);}
+.nav-links{display:flex;gap:0;list-style:none;}
+.nav-links a{font-size:11px;font-weight:500;text-decoration:none;color:rgba(255,255,255,.45);padding:5px 11px;border-radius:20px;transition:color .15s,background .15s;letter-spacing:.03em;}
+.nav-links a:hover{color:white;background:rgba(255,255,255,.1);}
+.nav-badge{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--wa);color:white;padding:3px 10px;border-radius:20px;}
+
+/* TOC */
+.toc-page{background:var(--cream-md);padding:52px 72px;border-bottom:1px solid var(--border);}
+.toc-eyebrow{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--wa-dk);margin-bottom:18px;}
+.toc-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--brown);margin-bottom:24px;}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 28px;}
+.toc-item{display:flex;align-items:baseline;gap:0;padding:8px 0;border-bottom:1px solid var(--border);text-decoration:none;color:inherit;transition:color .15s;}
+.toc-item:hover .toc-name{color:var(--wa-dk);}
+.toc-num{font-family:'Playfair Display',serif;font-size:11px;color:var(--text-lt);min-width:26px;}
+.toc-name{font-size:12px;font-weight:500;color:var(--text-dim);flex:1;line-height:1.4;}
+
+/* SECTIONS */
+.section{padding:52px 72px;border-bottom:1px solid var(--border);}
+.section-alt{background:var(--cream-md);}
+.section-wa{background:var(--wa-lt);}
+
+.sec-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.sec-num{font-family:'Playfair Display',serif;font-size:11px;color:var(--text-lt);min-width:24px;}
+.sec-tag{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--wa-dk);}
+.sec-rule{flex:1;height:1px;background:var(--border);}
+.sec-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--brown);line-height:1.2;margin-bottom:8px;}
+.sec-intro{font-size:14px;color:var(--text-dim);max-width:600px;line-height:1.7;margin-bottom:26px;}
+
+h3{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--brown);margin:26px 0 10px;}
+h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin:20px 0 8px;}
+p{font-size:14px;color:var(--text-mid);line-height:1.75;margin-bottom:12px;}
+p:last-child{margin-bottom:0;}
+strong{font-weight:700;color:var(--text);}
+
+/* CALLOUTS */
+.callout{background:var(--cream);border-left:3px solid var(--rose);border-radius:0 10px 10px 0;padding:13px 17px;margin:16px 0;font-size:13px;line-height:1.65;color:var(--text);}
+.callout strong{color:var(--brown);}
+.callout-law{background:var(--brown-dk);border-radius:10px;padding:18px 22px;color:rgba(255,255,255,.8);margin:20px 0;font-size:13px;line-height:1.7;}
+.callout-law strong{color:var(--wa);}
+.callout-wa{background:var(--wa-lt);border-left:3px solid var(--wa-dk);border-radius:0 10px 10px 0;padding:13px 17px;margin:16px 0;font-size:13px;line-height:1.65;color:var(--text);}
+.callout-wa strong{color:var(--wa-dk);}
+
+/* CARDS */
+.card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:12px;}
+.card-sm{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:10px;}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+
+/* PILLS */
+.pill{display:inline-block;padding:3px 11px;border-radius:20px;font-size:11px;font-weight:600;}
+.pill-express{background:var(--rose);color:white;}
+.pill-celeb{background:var(--pink);color:var(--brown);}
+.pill-retain{background:var(--blush);color:var(--brown);border:1px solid var(--border-md);}
+.pill-wa{background:var(--wa-lt);color:var(--wa-dk);}
+.pill-new{background:var(--cream-md);color:var(--brown);border:1px solid var(--border-md);}
+
+/* WA MESSAGE BUBBLE */
+.wa-thread{background:#e8f5e1;border-radius:14px;padding:16px 18px;max-width:400px;margin:14px 0;}
+.wa-thread-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--wa-dk);margin-bottom:10px;}
+.wa-bubble{display:inline-block;max-width:300px;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.6;margin-bottom:8px;clear:both;white-space:pre-line;}
+.wa-out{background:#dcf8c6;border-bottom-right-radius:4px;float:right;color:#1a3a10;}
+.wa-in{background:white;border-bottom-left-radius:4px;color:#1a1a2e;}
+.wa-time{font-size:10px;color:#999;text-align:right;margin-top:2px;clear:both;}
+
+/* SCRIPT CARD */
+.script-card{background:var(--white);border:1px solid var(--border);border-radius:13px;overflow:hidden;margin-bottom:14px;}
+.script-head{padding:11px 18px;display:flex;align-items:center;gap:8px;background:var(--cream-md);border-bottom:1px solid var(--border);}
+.script-head.wa-head{background:var(--wa-lt);border-bottom:1px solid var(--wa-mid);}
+.script-title{font-size:12px;font-weight:700;color:var(--brown);}
+.script-trigger{margin-left:auto;font-size:11px;color:var(--text-lt);}
+.script-body{padding:16px 18px;font-size:13px;line-height:1.8;color:var(--text);white-space:pre-line;font-family:'Mulish',sans-serif;}
+.script-vars{padding:10px 18px;background:var(--cream-lt);border-top:1px solid var(--border);font-size:11px;color:var(--text-dim);display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.var-tag{background:var(--cream);border:1px solid var(--border-md);border-radius:4px;padding:2px 8px;font-family:monospace;font-size:11px;color:var(--brown);}
+.cmd-tag{display:inline-block;background:var(--wa-dk);color:white;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;font-family:monospace;margin-right:4px;}
+
+/* FLOW TABLE */
+.flow-row{display:grid;grid-template-columns:100px 1fr 130px;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px;align-items:start;}
+.flow-row:last-child{border-bottom:none;}
+.flow-step{font-weight:700;color:var(--brown);}
+.flow-desc{color:var(--text-mid);line-height:1.55;}
+.flow-ref{font-size:11px;color:var(--text-lt);text-align:right;}
+
+/* MENU CARD */
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border-md);border-radius:12px;overflow:hidden;}
+.menu-item{padding:18px 20px;background:var(--white);}
+.menu-item+.menu-item{border-left:1px solid var(--border);}
+.menu-item.featured{background:var(--brown);}
+.menu-num{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-lt);margin-bottom:6px;}
+.menu-num-dk{color:rgba(255,255,255,.3);}
+.menu-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);margin-bottom:4px;}
+.menu-name-dk{color:white;}
+.menu-price{font-size:16px;font-weight:700;color:var(--rose);margin-bottom:4px;}
+.menu-price-dk{color:var(--wa);}
+.menu-desc{font-size:12px;color:var(--text-dim);line-height:1.5;}
+.menu-desc-dk{color:rgba(255,255,255,.45);}
+
+/* DATA TABLE */
+.data-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+.data-table th{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);padding:10px 14px;text-align:left;border-bottom:1px solid var(--border-dk);background:var(--cream-md);}
+.data-table td{padding:11px 14px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text-mid);line-height:1.55;}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table tr:hover td{background:var(--cream-lt);}
+.data-table td strong{color:var(--text);}
+
+/* NURTURE SEQUENCE */
+.nurture-seq{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border-md);border-radius:12px;overflow:hidden;}
+.nurture-step{padding:16px 18px;background:var(--white);}
+.nurture-step+.nurture-step{border-left:1px solid var(--border);}
+.nurture-step.active{background:var(--wa-dk);}
+.nurture-day{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:5px;}
+.nurture-title{font-size:13px;font-weight:700;color:var(--brown);margin-bottom:4px;}
+.nurture-detail{font-size:11px;color:var(--text-muted);line-height:1.55;}
+.nurture-step.active .nurture-day{color:rgba(255,255,255,.45);}
+.nurture-step.active .nurture-title{color:white;}
+.nurture-step.active .nurture-detail{color:rgba(255,255,255,.6);}
+
+/* CHECKLIST */
+.chk-list{list-style:none;}
+.chk-list li{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text-mid);line-height:1.55;}
+.chk-list li:last-child{border-bottom:none;}
+.cb{width:17px;height:17px;border:1.5px solid var(--border-dk);border-radius:4px;flex-shrink:0;margin-top:1px;}
+
+/* ROADMAP */
+.roadmap{position:relative;padding-left:32px;}
+.roadmap::before{content:'';position:absolute;left:9px;top:8px;bottom:8px;width:1px;background:var(--border-dk);}
+.rm-item{position:relative;margin-bottom:22px;}
+.rm-item::before{content:'';position:absolute;left:-26px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--white);border:2px solid var(--wa-dk);}
+.rm-item.done::before{background:var(--wa-dk);}
+.rm-week{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--wa-dk);margin-bottom:3px;}
+.rm-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);margin-bottom:3px;}
+.rm-desc{font-size:13px;color:var(--text-dim);line-height:1.65;margin-bottom:7px;}
+.rm-tags{display:flex;flex-wrap:wrap;gap:5px;}
+.rm-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--cream-md);border:1px solid var(--border-md);color:var(--brown);font-weight:500;}
+
+/* MANTRA */
+.mantra-block{background:var(--brown-dk);border-radius:14px;padding:32px 38px;text-align:center;margin-top:8px;}
+.mantra-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:12px;}
+.mantra-text{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--white);line-height:1.5;margin-bottom:6px;}
+.mantra-sub{font-size:12px;color:var(--wa);opacity:.75;}
+
+.divider{border:none;border-top:1px solid var(--border);margin:22px 0;}
+
+/* FOOTER */
+.doc-footer{background:var(--wa-dk);padding:30px 72px;display:flex;justify-content:space-between;align-items:center;}
+.doc-footer-brand{font-family:'Playfair Display',serif;font-size:15px;color:white;}
+.doc-footer-tagline{font-family:'Merienda',cursive;font-size:13px;color:var(--wa);opacity:.65;margin-top:4px;}
+.doc-footer-meta{font-size:11px;color:rgba(255,255,255,.25);line-height:1.9;text-align:right;}
+
+/* PRINT */
+@media print{
+  body{background:white;}
+  .page{max-width:100%;}
+  .cover{min-height:auto;break-after:page;}
+  .toc-page{break-after:page;}
+  .section{padding:40px 52px;break-inside:avoid;}
+  .sticky-nav{display:none;}
+}
+@media(min-width:1100px){body{padding:0 40px;}.page{box-shadow:0 0 60px rgba(0,0,0,.15);}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══ COVER ══ -->
+<div class="cover-bar"></div>
+<div class="cover">
+  <div class="cover-dots"></div>
+  <div class="cover-top">
+    <p class="cover-eyebrow">WhatsApp Message System &nbsp;·&nbsp; v1 &nbsp;·&nbsp; April 2026</p>
+    <h1>Every message<br>has a <em>job to do.</em></h1>
+    <p class="cover-sub">The complete, corrected WhatsApp message system for Beqabakes. Aligned to the locked stack — Brand v2, COS v1, MSOS, Platform OS. Every template carries a brand mode. Every script references the canonical bank. Two retention beats. No duplicates.</p>
+    <div class="cover-stats">
+      <div class="cover-stat"><p class="cover-stat-num">3</p><p class="cover-stat-label">Menu items max</p></div>
+      <div class="cover-stat"><p class="cover-stat-num">6</p><p class="cover-stat-label">Canonical scripts</p></div>
+      <div class="cover-stat"><p class="cover-stat-num">2</p><p class="cover-stat-label">Retention beats</p></div>
+      <div class="cover-stat"><p class="cover-stat-num">0</p><p class="cover-stat-label">Duplicate scripts</p></div>
+    </div>
+    <div class="cover-rules">
+      <div class="cover-rule"><strong>One script bank</strong>Scripts 01–06 in Platform OS. No rewrites here.</div>
+      <div class="cover-rule"><strong>Two retention beats</strong>Day 0 + Day 7 only until data says otherwise.</div>
+      <div class="cover-rule"><strong>Mode on every message</strong>Express / Celebration / Retention tagged throughout.</div>
+    </div>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-bottom-meta">Aligned to Brand v2 · COS v1 · MSOS · Platform OS<br>Operator × Giver · Abuja market · Status: live</div>
+    <div class="cover-bottom-brand">Beqabakes</div>
+  </div>
+</div>
+
+<!-- ══ NAV ══ -->
+<nav class="sticky-nav">
+  <span class="nav-brand">Beqabakes Message System</span>
+  <ul class="nav-links">
+    <li><a href="#principles">Principles</a></li>
+    <li><a href="#setup">Setup</a></li>
+    <li><a href="#entry">Entry</a></li>
+    <li><a href="#order">Order flow</a></li>
+    <li><a href="#scripts">Scripts</a></li>
+    <li><a href="#retention">Retention</a></li>
+    <li><a href="#reactivation">Reactivation</a></li>
+    <li><a href="#crm">CRM labels</a></li>
+    <li><a href="#rules">Rules</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+  </ul>
+  <span class="nav-badge">v1 live</span>
+</nav>
+
+<!-- ══ TOC ══ -->
+<div class="toc-page">
+  <p class="toc-eyebrow">Contents</p>
+  <p class="toc-title">What this document covers</p>
+  <div class="toc-grid">
+    <a class="toc-item" href="#principles"><span class="toc-num">00</span><span class="toc-name">Core principles — what changed and why</span></a>
+    <a class="toc-item" href="#setup"><span class="toc-num">01</span><span class="toc-name">WhatsApp Business setup — profile + catalog</span></a>
+    <a class="toc-item" href="#entry"><span class="toc-num">02</span><span class="toc-name">Entry system — greeting + away + quick replies</span></a>
+    <a class="toc-item" href="#order"><span class="toc-num">03</span><span class="toc-name">Order flow — menu → details → payment → confirm</span></a>
+    <a class="toc-item" href="#scripts"><span class="toc-num">04</span><span class="toc-name">Canonical script bank — Scripts 01–06</span></a>
+    <a class="toc-item" href="#upsell"><span class="toc-num">05</span><span class="toc-name">Upsell system — post-payment add-ons</span></a>
+    <a class="toc-item" href="#retention"><span class="toc-num">06</span><span class="toc-name">Retention sequence — Day 0 + Day 7 (locked)</span></a>
+    <a class="toc-item" href="#reactivation"><span class="toc-num">07</span><span class="toc-name">Reactivation — Phase 2 (gated)</span></a>
+    <a class="toc-item" href="#crm"><span class="toc-num">08</span><span class="toc-name">CRM labels — aligned to Notion schema</span></a>
+    <a class="toc-item" href="#broadcast"><span class="toc-num">09</span><span class="toc-name">Broadcast templates — weekly push</span></a>
+    <a class="toc-item" href="#rules"><span class="toc-num">10</span><span class="toc-name">Non-negotiable rules + daily execution</span></a>
+    <a class="toc-item" href="#roadmap"><span class="toc-num">11</span><span class="toc-name">Roadmap — automation + phase 2 gates</span></a>
+  </div>
+</div>
+
+<!-- ══ 00 PRINCIPLES ══ -->
+<section class="section section-alt" id="principles">
+  <div class="sec-eyebrow"><span class="sec-num">00</span><span class="sec-tag">Core principles</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">What this system is built to do</h2>
+  <p class="sec-intro">The original message kit had the right instincts — speed, payment links, follow-up discipline — but introduced parallel systems that contradicted the locked stack. Every conflict has been resolved. This document is the corrected, canonical version.</p>
+
+  <div class="callout-law">
+    <strong>Operating principle:</strong> You are not "chatting with customers." You are re-triggering gifting behaviour. Every message exists to move someone one step closer to a confirmed order — or to a confirmed repeat order. If a message doesn't do that, it doesn't send.
+  </div>
+
+  <h3>What changed from the original</h3>
+  <div class="grid-2" style="margin-top:8px;">
+    <div class="card-sm" style="border-left:3px solid var(--rose);border-radius:0 10px 10px 0;">
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);margin-bottom:6px;">Follow-up timing — unified</p>
+      <p style="font-size:13px;color:var(--text-mid);">Day 3–5 / 7–10 / 14–21 sequence retired. Locked to Day 0 (Script 03) + Day 7 (Script 04) only. Phase 2 three-beat sequence unlocks at Month 3 review if data supports it.</p>
+    </div>
+    <div class="card-sm" style="border-left:3px solid var(--rose);border-radius:0 10px 10px 0;">
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);margin-bottom:6px;">SKU count — reduced to 3</p>
+      <p style="font-size:13px;color:var(--text-mid);">Five Quick Order items confirmed as the fast-lane execution layer — distinct from the three canonical offer tiers. The Quick Order menu is the express checkout; the Lookbook covers the full catalogue. Both architectures coexist. Product names below are canonical and must be used identically across all messages, posts, and Paystack links.</p>
+    </div>
+    <div class="card-sm" style="border-left:3px solid var(--rose);border-radius:0 10px 10px 0;">
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);margin-bottom:6px;">Scripts — no duplicates</p>
+      <p style="font-size:13px;color:var(--text-mid);">Confirmation, delivery update, photo prompt, and pending payment scripts are removed from this document. Canonical versions live in Platform OS Scripts 01–06. This document adds entry flow and broadcast templates only.</p>
+    </div>
+    <div class="card-sm" style="border-left:3px solid var(--rose);border-radius:0 10px 10px 0;">
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);margin-bottom:6px;">Brand mode — tagged throughout</p>
+      <p style="font-size:13px;color:var(--text-mid);">Every template in this document carries a mode tag. Emoji count reduced to one maximum per message — warmth comes from words, not decoration.</p>
+    </div>
+    <div class="card-sm" style="border-left:3px solid var(--rose);border-radius:0 10px 10px 0;">
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);margin-bottom:6px;">Upsell — moved to post-payment</p>
+      <p style="font-size:13px;color:var(--text-mid);">Add-on offer fires after Script 01 payment confirmation — never before. Pre-payment upsells create friction at the highest-value moment.</p>
+    </div>
+    <div class="card-sm" style="border-left:3px solid var(--rose);border-radius:0 10px 10px 0;">
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);margin-bottom:6px;">CRM — one system</p>
+      <p style="font-size:13px;color:var(--text-mid);">Nine WA labels collapsed to four, mapped directly to the Notion CRM buyer types. WhatsApp labels are operational shortcuts; Notion is the record of truth.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 01 SETUP ══ -->
+<section class="section" id="setup">
+  <div class="sec-eyebrow"><span class="sec-num">01</span><span class="sec-tag">WhatsApp Business setup</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">Configure once. Never revisit unless something changes.</h2>
+
+  <div class="grid-2">
+    <div>
+      <h3 style="margin-top:0;">Business profile</h3>
+      <table class="data-table">
+        <thead><tr><th>Field</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Name</strong></td><td>Beqabakes</td></tr>
+          <tr><td><strong>Category</strong></td><td>Food &amp; Beverage</td></tr>
+          <tr><td><strong>About</strong></td><td>Send a cake in minutes. Fast · Beautiful · No stress.</td></tr>
+          <tr><td><strong>Hours</strong></td><td>9AM – 7PM daily</td></tr>
+          <tr><td><strong>Location</strong></td><td>Abuja, Nigeria</td></tr>
+          <tr><td><strong>Website</strong></td><td>instagram.com/beqabakes</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3 style="margin-top:0;">Catalog — exactly 3 items</h3>
+      <div class="menu-grid" style="grid-template-columns:1fr;">
+        <div class="menu-item" style="border-bottom:1px solid var(--border);">
+          <p class="menu-num">Entry tier</p>
+          <p class="menu-name">Express Bento</p>
+          <p class="menu-price">₦10,000</p>
+          <p class="menu-desc">Small cake, 1–2 people. Fast. No decisions. Same-day.</p>
+        </div>
+        <div class="menu-item featured" style="border-bottom:1px solid rgba(255,255,255,.1);">
+          <p class="menu-num menu-num-dk">Core tier</p>
+          <p class="menu-name menu-name-dk">Signature Cake</p>
+          <p class="menu-price menu-price-dk">₦18,000</p>
+          <p class="menu-desc menu-desc-dk">6-inch, serves 6–8. Birthdays, celebrations.</p>
+        </div>
+        <div class="menu-item">
+          <p class="menu-num">Premium tier</p>
+          <p class="menu-name">Gift Set</p>
+          <p class="menu-price">₦15,000</p>
+          <p class="menu-desc">Cake + note + gift packaging. Complete experience.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout-wa" style="margin-top:16px;"><strong>Catalog law:</strong> Three items. Not four. Not five. More items = more hesitation = fewer orders. The catalog is a decision accelerator, not a menu.</div>
+
+      <h3 style="margin-top:0;">Catalog — Quick Order fast lane (5 items)</h3>
+      <div class="callout-wa" style="margin-bottom:10px;"><strong>Catalog architecture — updated:</strong> The WA Business catalog shows all five Quick Order items. These are the fast-lane execution layer of the offer architecture — pre-configured, pre-priced, no consultation needed. The Lookbook covers the full range including Signature and custom options.</div>
+      <div class="menu-grid" style="grid-template-columns:1fr;">
+        <div class="menu-item" style="border-bottom:1px solid var(--border);">
+          <p class="menu-num">Fast lane</p>
+          <p class="menu-name">Quick Birthday Cake</p>
+          <p class="menu-price">₦18,000</p>
+          <p class="menu-desc">6-inch, serves 6–8. Birthdays and celebrations. Ready fast.</p>
+        </div>
+        <div class="menu-item featured" style="border-bottom:1px solid rgba(255,255,255,.1);">
+          <p class="menu-num menu-num-dk">Fast lane</p>
+          <p class="menu-name menu-name-dk">Send Love (Bento)</p>
+          <p class="menu-price menu-price-dk">₦10,000</p>
+          <p class="menu-desc menu-desc-dk">Small bento cake, 1–2 people. Same-day. Perfect surprise.</p>
+        </div>
+        <div class="menu-item" style="border-bottom:1px solid var(--border);">
+          <p class="menu-num">Fast lane</p>
+          <p class="menu-name">Mini Celebration Box</p>
+          <p class="menu-price">₦15,000</p>
+          <p class="menu-desc">Cake + note + gift packaging. Complete gifting experience.</p>
+        </div>
+        <div class="menu-item" style="border-bottom:1px solid var(--border);">
+          <p class="menu-num">Fast lane</p>
+          <p class="menu-name">Just Because Cake</p>
+          <p class="menu-price">₦7,000</p>
+          <p class="menu-desc">Cake loaf/slices, 1–3 people. Casual gifting, everyday treat.</p>
+        </div>
+        <div class="menu-item">
+          <p class="menu-num">Fast lane</p>
+          <p class="menu-name">Cupcake Box</p>
+          <p class="menu-price">₦12,000</p>
+          <p class="menu-desc">Box of 6 cupcakes. Sharing or small celebrations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Payment links — one per Quick Order item</h3>
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="card-sm"><p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--wa-dk);margin-bottom:4px;">Quick Birthday Cake</p><p style="font-size:12px;color:var(--text-dim);">paystack.com/buy/quick-birthday-cake</p><p style="font-size:11px;color:var(--text-lt);margin-top:3px;">Command: /paybirthday</p></div>
+    <div class="card-sm"><p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--wa-dk);margin-bottom:4px;">Send Love (Bento)</p><p style="font-size:12px;color:var(--text-dim);">paystack.com/buy/send-love-bento</p><p style="font-size:11px;color:var(--text-lt);margin-top:3px;">Command: /paybento</p></div>
+    <div class="card-sm"><p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--wa-dk);margin-bottom:4px;">Mini Celebration Box</p><p style="font-size:12px;color:var(--text-dim);">paystack.com/buy/mini-celebration-box</p><p style="font-size:11px;color:var(--text-lt);margin-top:3px;">Command: /paybox</p></div>
+    <div class="card-sm"><p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--wa-dk);margin-bottom:4px;">Just Because Cake</p><p style="font-size:12px;color:var(--text-dim);">paystack.com/buy/just-because-cake</p><p style="font-size:11px;color:var(--text-lt);margin-top:3px;">Command: /paycasual</p></div>
+    <div class="card-sm"><p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--wa-dk);margin-bottom:4px;">Cupcake Box</p><p style="font-size:12px;color:var(--text-dim);">paystack.com/buy/cupcake-box</p><p style="font-size:11px;color:var(--text-lt);margin-top:3px;">Command: /paycupcake</p></div>
+    <div class="card-sm"><p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--wa-dk);margin-bottom:4px;">Lookbook / Signature</p><p style="font-size:12px;color:var(--text-dim);">→ Redirect to Lookbook site via bio link</p><p style="font-size:11px;color:var(--text-lt);margin-top:3px;">No direct Paystack — Lookbook closes to WA</p></div>
+  </div>
+  <div class="callout"><strong>Five payment commands — one per Quick Order item:</strong> /paybirthday, /paybento, /paybox, /paycasual, /paycupcake. These map directly to the five Paystack links from the original message kit — all now restored and correct. Custom orders have no payment command — they open a WhatsApp conversation.</div>
+</section>
+
+<!-- ══ 02 ENTRY SYSTEM ══ -->
+<section class="section section-alt" id="entry">
+  <div class="sec-eyebrow"><span class="sec-num">02</span><span class="sec-tag">Entry system</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">The first message a new contact receives.</h2>
+  <p class="sec-intro">Every new WhatsApp contact sees the greeting message first. It presents three options only — Quick Order, bigger cake conversation, or a question. No custom cake path. No six-option menu. Mode: Express.</p>
+
+  <div class="grid-2" style="align-items:start;">
+    <div>
+      <h3 style="margin-top:0;">Greeting message (auto-reply on)</h3>
+      <div class="script-card">
+        <div class="script-head wa-head"><span class="pill pill-express">Express</span><span class="script-title">Greeting — fires on first contact</span></div>
+        <div class="script-body">Hi — welcome to Beqabakes. 🎂
+
+What would you like to do?
+
+1. Quick Order (ready today)
+2. Plan a bigger cake
+3. Ask a question
+
+Reply with a number or tell me what you need.</div>
+      </div>
+      <div class="callout-wa"><strong>Menu option 2 is a conversation redirect</strong> — not a custom cake product path. Anyone who selects it gets a warm message explaining that for larger or custom cakes, lead time is 48+ hours and the conversation continues manually.</div>
+    </div>
+    <div>
+      <h3 style="margin-top:0;">Away message (outside hours)</h3>
+      <div class="script-card">
+        <div class="script-head wa-head"><span class="pill pill-retain">Retention</span><span class="script-title">Away — outside 9AM–7PM</span></div>
+        <div class="script-body">Hi — we'll respond shortly.
+
+You can still browse options while you wait:
+
+1. Express Bento — ₦10,000
+2. Signature Cake — ₦18,000
+3. Gift Set — ₦15,000
+
+Reply when ready and we'll pick up from there.</div>
+      </div>
+
+      <h3>Quick reply commands</h3>
+      <div class="card-sm"><span class="cmd-tag">/menu</span><p style="font-size:12px;color:var(--text-dim);display:inline;margin-left:8px;">Resends the greeting message</p></div>
+      <div class="card-sm"><span class="cmd-tag">/quick</span><p style="font-size:12px;color:var(--text-dim);display:inline;margin-left:8px;">Sends Quick Order options (5 items with prices)</p></div>
+      <div class="card-sm"><span class="cmd-tag">/delivery</span><p style="font-size:12px;color:var(--text-dim);display:inline;margin-left:8px;">Delivery info — same-day, Abuja, 9AM–7PM</p></div>
+      <div class="card-sm"><span class="cmd-tag">/proof</span><p style="font-size:12px;color:var(--text-dim);display:inline;margin-left:8px;">Sends 3 recent delivery photos from Proof bank</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 03 ORDER FLOW ══ -->
+<section class="section" id="order">
+  <div class="sec-eyebrow"><span class="sec-num">03</span><span class="sec-tag">Order flow</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">Menu selection → details → payment → confirmation.</h2>
+  <p class="sec-intro">The order flow is the conversion engine. Every step moves toward a confirmed payment. No freestyle. No delays. No "I'll pay later." The flow is identical regardless of which product is selected — only the payment link changes.</p>
+
+  <div class="callout-law">
+    <strong>Closing logic:</strong> Remove thinking → show options → ask "which one?" → send payment link immediately. Don't wait for a "yes" before sending the link. The link is the commitment device.
+  </div>
+
+  <h3>Step 1 — Quick Order menu (fires on selection 1)</h3>
+  <div class="script-card">
+    <div class="script-head wa-head"><span class="pill pill-express">Express</span><span class="script-title">Quick Order menu — 5 items</span><span class="script-trigger">Trigger: selects option 1 from entry menu</span></div>
+    <div class="script-body">Here are your options:
+
+1. Quick Birthday Cake — ₦18,000
+   6-inch, serves 6–8. Ready fast.
+
+2. Send Love (Bento) — ₦10,000
+   Small cake, 1–2 people. Same-day.
+
+3. Mini Celebration Box — ₦15,000
+   Cake + note + gift packaging.
+
+4. Just Because Cake — ₦7,000
+   Cake loaf/slices, 1–3 people.
+
+5. Cupcake Box — ₦12,000
+   Box of 6 cupcakes.
+
+Reply with a number to continue.</div>
+  </div>
+
+  <h3>Step 2 — Collect delivery details</h3>
+  <div class="script-card">
+    <div class="script-head wa-head"><span class="pill pill-express">Express</span><span class="script-title">Details collection</span><span class="script-trigger">Trigger: product selected</span></div>
+    <div class="script-body">Perfect choice.
+
+Please send:
+
+• Delivery date:
+• Message on cake (optional):
+• Delivery address:</div>
+    <div class="script-vars">Applies to all three products. Do not ask for more than these three details.</div>
+  </div>
+
+  <h3>Step 3 — Order summary + payment link</h3>
+  <div class="script-card">
+    <div class="script-head wa-head"><span class="pill pill-express">Express</span><span class="script-title">Order summary</span><span class="script-trigger">Trigger: delivery details received</span></div>
+    <div class="script-body">Here's your order:
+
+• [Product name]
+• Message: [message or "none"]
+• Delivery: [date + address]
+• Total: ₦[price]
+
+Pay here to confirm:
+👉 [Paystack link]
+
+Or bank transfer:
+Bank: [BANK NAME]
+Account: [NAME] — [NUMBER]
+
+Send proof of payment after transfer.</div>
+    <div class="script-vars">Variables: <span class="var-tag">[Product]</span><span class="var-tag">[message]</span><span class="var-tag">[date]</span><span class="var-tag">[address]</span><span class="var-tag">[price]</span><span class="var-tag">[Paystack link]</span> · Fill bank transfer fields before activating</div>
+  </div>
+
+  <h3>Full order flow table</h3>
+  <div class="card" style="padding:8px 24px;">
+    <div class="flow-row">
+      <span class="flow-step">Entry</span>
+      <span class="flow-desc">Greeting auto-reply. Three options presented. No custom cake path.</span>
+      <span class="flow-ref">Entry message</span>
+    </div>
+    <div class="flow-row">
+      <span class="flow-step">Selection</span>
+      <span class="flow-desc">Quick Order menu (5 items). Customer replies with number.</span>
+      <span class="flow-ref">/quick command</span>
+    </div>
+    <div class="flow-row">
+      <span class="flow-step">Details</span>
+      <span class="flow-desc">Collect date, message, address. Three fields only.</span>
+      <span class="flow-ref">Details script</span>
+    </div>
+    <div class="flow-row">
+      <span class="flow-step">Payment</span>
+      <span class="flow-desc">Order summary + Paystack link + bank transfer. Sent immediately — no waiting for verbal confirmation.</span>
+      <span class="flow-ref">Summary script</span>
+    </div>
+    <div class="flow-row">
+      <span class="flow-step">Confirmed</span>
+      <span class="flow-desc">Payment received → Script 01 fires → upsell offer follows.</span>
+      <span class="flow-ref">Script 01</span>
+    </div>
+    <div class="flow-row">
+      <span class="flow-step">Upsell</span>
+      <span class="flow-desc">Add-on offer sent AFTER confirmation only. One message, one reply.</span>
+      <span class="flow-ref">Section 05</span>
+    </div>
+    <div class="flow-row" style="border-bottom:none;">
+      <span class="flow-step">Dispatch</span>
+      <span class="flow-desc">Script 02 fires when rider dispatches. CRM tagged. Delivery confirmed → Script 03 fires.</span>
+      <span class="flow-ref">Scripts 02 + 03</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 04 SCRIPT BANK ══ -->
+<section class="section section-alt" id="scripts">
+  <div class="sec-eyebrow"><span class="sec-num">04</span><span class="sec-tag">Canonical script bank</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">Scripts 01–06. Owned here. Referenced everywhere else.</h2>
+  <p class="sec-intro">These are the only scripts used by Beqabakes. They live in Platform OS as the canonical source. They are reproduced here for operational convenience. Any change is made in Platform OS first — this document inherits it.</p>
+
+  <div class="script-card">
+    <div class="script-head wa-head"><span class="pill pill-express">Express</span><span class="script-title">Script 01 — Order confirmation</span><span class="script-trigger">Trigger: payment confirmed</span></div>
+    <div class="script-body">Hi [Name] — your order is confirmed. 🎂
+
+We're baking your [product] now and it'll be ready by [time].
+
+Anything to add to the box? Just reply here.</div>
+    <div class="script-vars">Variables: <span class="var-tag">[Name]</span><span class="var-tag">[product]</span><span class="var-tag">[time]</span></div>
+  </div>
+
+  <div class="script-card">
+    <div class="script-head wa-head"><span class="pill pill-express">Express</span><span class="script-title">Script 02 — Delivery update</span><span class="script-trigger">Trigger: rider dispatched</span></div>
+    <div class="script-body">[Name], your cake is on its way.
+
+Rider headed to [address]. ETA: [time].
+
+Please have someone available to receive it.</div>
+    <div class="script-vars">Variables: <span class="var-tag">[Name]</span><span class="var-tag">[address]</span><span class="var-tag">[ETA]</span></div>
+  </div>
+
+  <div class="script-card">
+    <div class="script-head wa-head"><span class="pill pill-celeb">Celebration</span><span class="script-title">Script 03 — Photo prompt (Day 0)</span><span class="script-trigger">Trigger: delivery confirmed</span></div>
+    <div class="script-body">Hope it made them smile.
+
+If you got a reaction photo, tag us @beqabakes — we love to see it. You'll get ₦500 off your next order when we reshare.</div>
+    <div class="script-vars">No variables. Send as written after every delivery. Photo received → tag in Notion Proof bank immediately.</div>
+  </div>
+
+  <div class="script-card">
+    <div class="script-head wa-head"><span class="pill pill-retain">Retention</span><span class="script-title">Script 04 — Day 7 re-order nudge</span><span class="script-trigger">Trigger: exactly Day 7 post-delivery</span></div>
+    <div class="script-body">Hi [Name] — it's been a week since your last order.
+
+Got another occasion coming up? Use code BACK500 for ₦500 off your next box.
+
+Order here → [Paystack link]</div>
+    <div class="script-vars">Variables: <span class="var-tag">[Name]</span><span class="var-tag">[Paystack link]</span> · Send Day 7 exactly. Include direct Paystack link — never just "order here."</div>
+  </div>
+
+  <div class="script-card">
+    <div class="script-head wa-head"><span class="pill pill-express">Express</span><span class="script-title">Script 05 — Corporate / bulk inquiry</span><span class="script-trigger">Trigger: 10+ box inquiry</span></div>
+    <div class="script-body">Hi [Name], thanks for reaching out.
+
+For corporate and bulk orders (10+ boxes), we offer custom packaging, branded note cards, and flexible delivery scheduling.
+
+Minimum: 10 boxes. Lead time: 48 hours.
+Pricing: from ₦[price] per box.
+
+To get started, share: event date, quantity, and any branding requirements. We'll reply within 2 hours.</div>
+    <div class="script-vars">Variables: <span class="var-tag">[Name]</span><span class="var-tag">[price]</span></div>
+  </div>
+
+  <div class="script-card" style="border:2px solid var(--wa-mid);">
+    <div class="script-head" style="background:var(--wa-dk);border-bottom:1px solid var(--wa);">
+      <span class="pill" style="background:white;color:var(--wa-dk);font-size:10px;">New</span>
+      <span class="script-title" style="color:white;">Script 06 — Referral prompt</span>
+      <span class="script-trigger" style="color:rgba(255,255,255,.5);">Trigger: buyer reshares delivery to Story</span>
+    </div>
+    <div class="script-body">Your friends saw that — want to send them one?
+
+They can order here → [WA link]
+
+And your ₦500 credit from that reshare is already saved on your account.</div>
+    <div class="script-vars" style="background:var(--wa-lt);">Variables: <span class="var-tag">[WA link]</span> · Zero-cost acquisition. Reshare detection is manual for now — monitor Stories, send when spotted.</div>
+  </div>
+
+  <div class="script-card">
+    <div class="script-head"><span class="pill pill-express">Express</span><span class="script-title">Pending payment recovery</span><span class="script-trigger">Trigger: no payment after 2 hours</span></div>
+    <div class="script-body">Hi — just checking in on your order.
+
+We can still deliver today if you confirm now:
+
+[Paystack link]
+
+Let me know if you have any questions.</div>
+    <div class="script-vars">Send once only. Never twice. Sending a second reminder reads as pressure, not service.</div>
+  </div>
+</section>
+
+<!-- ══ 05 UPSELL ══ -->
+<section class="section" id="upsell">
+  <div class="sec-eyebrow"><span class="sec-num">05</span><span class="sec-tag">Upsell system</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">Add-ons only after payment is confirmed.</h2>
+  <p class="sec-intro">The upsell offer fires immediately after Script 01 — never before payment. Pre-payment upsells introduce friction at the moment of highest intent. Post-payment upsells feel like service, not sales.</p>
+
+  <div class="script-card">
+    <div class="script-head wa-head"><span class="pill pill-express">Express</span><span class="script-title">Upsell offer</span><span class="script-trigger">Trigger: immediately after Script 01</span></div>
+    <div class="script-body">Want to make it extra special?
+
+🎀 Ribbon packaging — ₦1,000
+💌 Extra note card — ₦1,000
+🕯 Candles — ₦500
+
+Reply with what you'd like to add and we'll update your order.</div>
+    <div class="script-vars">Emojis here are functional indicators, not decoration. One reply accepted. Do not re-send if no response.</div>
+  </div>
+
+  <div class="callout"><strong>Upsell timing law:</strong> This fires after Script 01. Never before the summary script. Never during the details collection. The order is confirmed — now we're enhancing it. If the customer doesn't reply to the upsell, the order proceeds as confirmed. No follow-up on the upsell.</div>
+</section>
+
+<!-- ══ 06 RETENTION ══ -->
+<section class="section section-alt" id="retention">
+  <div class="sec-eyebrow"><span class="sec-num">06</span><span class="sec-tag">Retention sequence</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">Two beats. Locked. Day 0 and Day 7.</h2>
+  <p class="sec-intro">The retention sequence is owned by COS v1 and referenced here. Two beats only — until data from the Month 3 review shows that adding a third beat increases repeat rate. The sequence fires after every delivery without exception.</p>
+
+  <div class="nurture-seq">
+    <div class="nurture-step active">
+      <p class="nurture-day">Day 0 — delivery</p>
+      <p class="nurture-title">Script 03 fires</p>
+      <p class="nurture-detail">Photo prompt + ₦500 reshare incentive. Tag photo in Notion Proof bank when received.</p>
+    </div>
+    <div class="nurture-step">
+      <p class="nurture-day">If reshare</p>
+      <p class="nurture-title">Script 06 fires</p>
+      <p class="nurture-detail">Referral prompt to resharing buyer. Zero-cost new lead acquisition.</p>
+    </div>
+    <div class="nurture-step active">
+      <p class="nurture-day">Day 7 — re-order</p>
+      <p class="nurture-title">Script 04 fires</p>
+      <p class="nurture-detail">BACK500 code + direct Paystack link. Retention mode — soft, one action.</p>
+    </div>
+    <div class="nurture-step">
+      <p class="nurture-day">If purchase</p>
+      <p class="nurture-title">Loop restarts</p>
+      <p class="nurture-detail">New order → new Day 0 sequence. Update Notion buyer type to Repeat or VIP.</p>
+    </div>
+  </div>
+
+  <div class="callout-wa" style="margin-top:16px;"><strong>Timing is non-negotiable.</strong> Day 7 means Day 7. Not Day 6, not Day 8. The BACK500 code creates a predictable incentive rhythm. If buyers know it arrives on Day 7, they start anticipating it — which is the mechanism that builds habitual re-ordering.</div>
+
+  <h3>Day 7 — rotate product by buyer history</h3>
+  <p>Script 04 includes a direct Paystack link. Rotate the featured product based on what the buyer ordered last — show them something adjacent, not identical:</p>
+
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="script-card" style="margin-bottom:0;">
+      <div class="script-head wa-head"><span class="pill pill-retain">Retention</span><span class="script-title">If last order was Bento</span></div>
+      <div class="script-body" style="font-size:12px;">Hi [Name] — a week since your last order.
+
+Thinking of surprising someone again?
+
+Signature Cake — ₦18,000
+Ready in 24 hours.
+
+Use BACK500 for ₦500 off → [link]</div>
+    </div>
+    <div class="script-card" style="margin-bottom:0;">
+      <div class="script-head wa-head"><span class="pill pill-retain">Retention</span><span class="script-title">If last order was Signature</span></div>
+      <div class="script-body" style="font-size:12px;">Hi [Name] — hope the last one landed well.
+
+Something quick this week?
+
+Express Bento — ₦10,000
+Same-day available.
+
+Use BACK500 → [link]</div>
+    </div>
+    <div class="script-card" style="margin-bottom:0;">
+      <div class="script-head wa-head"><span class="pill pill-retain">Retention</span><span class="script-title">If last order was Gift Set</span></div>
+      <div class="script-body" style="font-size:12px;">Hi [Name] — it's been a week.
+
+Smaller option this time?
+
+Express Bento — ₦10,000
+Fast. Simple. Ready today.
+
+Use BACK500 → [link]</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 07 REACTIVATION ══ -->
+<section class="section" id="reactivation">
+  <div class="sec-eyebrow"><span class="sec-num">07</span><span class="sec-tag">Reactivation — Phase 2</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">The three-beat sequence. Gated until Month 3 data supports it.</h2>
+  <p class="sec-intro">The original message system's Day 3–5 / Day 7–10 / Day 14–21 sequence is preserved here as Phase 2. It activates only when: the two-beat Day 0 / Day 7 sequence has run for at least 6 weeks and the Month 3 data review shows that the Day 7 repeat rate is below 15%. Until both conditions are met, this section is planning material only.</p>
+
+  <div class="callout"><strong>Phase 2 gate:</strong> Do not activate until the Month 3 review. Running three follow-up beats before the two-beat sequence is proven creates noise, raises spam risk, and makes the data unreadable. The simpler system runs first.</div>
+
+  <h3>Phase 2 — Beat A (Day 3–5, if activated)</h3>
+  <div class="script-card">
+    <div class="script-head"><span class="pill pill-celeb">Celebration</span><span class="script-title">Beat A — experience check + soft offer</span><span class="script-trigger">Phase 2 only · Day 3–5</span></div>
+    <div class="script-body">Hi [Name] — hope they loved it.
+
+If you feel like sending something small this week, these are quick:
+
+• Express Bento — ₦10,000
+• Gift Set — ₦15,000
+
+Order here → [link]</div>
+    <div class="script-vars">Variables: <span class="var-tag">[Name]</span><span class="var-tag">[link]</span> · Phase 2 only. Does not replace Day 0 photo prompt.</div>
+  </div>
+
+  <h3>Phase 2 — Beat C (Day 14–21, if activated)</h3>
+  <div class="script-card">
+    <div class="script-head"><span class="pill pill-retain">Retention</span><span class="script-title">Beat C — reactivation</span><span class="script-trigger">Phase 2 only · Day 14–21 · CRM gate required</span></div>
+    <div class="script-body">Hi [Name] — it's been a couple of weeks.
+
+Anything coming up soon? 
+
+Our easiest options:
+
+• Express Bento — ₦10,000
+• Signature Cake — ₦18,000
+
+Ready within 24 hours → [link]</div>
+    <div class="script-vars">CRM gate: send only to buyers with Buyer type = Repeat or VIP in Notion AND Last order date &gt; 14 days ago. Never broadcast to unfiltered list.</div>
+  </div>
+
+  <h3>Event-based trigger (bonus — high value)</h3>
+  <p>When a buyer mentions an upcoming occasion in conversation — birthday, anniversary, special person — note it in the Notion CRM "Next occasion" field (date + type). 14 days before that date, send:</p>
+  <div class="script-card">
+    <div class="script-head"><span class="pill pill-celeb">Celebration</span><span class="script-title">Event-based trigger</span><span class="script-trigger">Trigger: Next occasion field in Notion = 14 days away</span></div>
+    <div class="script-body">Hi [Name] — [occasion type] is coming up soon.
+
+Thinking of doing something for it?
+
+We'd love to help you plan something simple. 🎂
+
+Just reply here and we'll get started.</div>
+    <div class="script-vars">Variables: <span class="var-tag">[Name]</span><span class="var-tag">[occasion type]</span> · Requires "Next occasion" field in Notion CRM — see Section 08.</div>
+  </div>
+</section>
+
+<!-- ══ 08 CRM LABELS ══ -->
+<section class="section section-wa" id="crm">
+  <div class="sec-eyebrow"><span class="sec-num">08</span><span class="sec-tag">CRM labels</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">Four WA labels. All map to Notion CRM. One record of truth.</h2>
+  <p class="sec-intro">The original nine-label system is replaced by four. WhatsApp Business labels are operational shortcuts for managing your inbox today — they show you who needs what right now. Notion is the permanent buyer record. When they diverge, Notion wins.</p>
+
+  <div class="callout-wa"><strong>Rule:</strong> Every label change in WhatsApp Business triggers a corresponding update in the Notion CRM buyer database. The two systems must stay in sync. When in doubt, update Notion first.</div>
+
+  <table class="data-table">
+    <thead><tr><th>WA label</th><th>Meaning</th><th>Notion buyer type</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong style="color:#E67E22;">🟠 New lead</strong></td>
+        <td>In conversation, has not ordered</td>
+        <td>New Lead</td>
+        <td>Guide to product selection. Use /quick. Push to payment link.</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#F1C40F;">🟡 Ordering</strong></td>
+        <td>Details collected, payment not yet received</td>
+        <td>New Lead (pending)</td>
+        <td>Pending payment recovery script if 2+ hours pass. Once only.</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#27AE60;">🟢 Paid</strong></td>
+        <td>Payment confirmed, order in progress</td>
+        <td>New Lead or Repeat</td>
+        <td>Script 01 fired. Upsell sent. Rider dispatched → Script 02.</td>
+      </tr>
+      <tr>
+        <td><strong style="color:#8E44AD;">🟣 Follow-up</strong></td>
+        <td>Delivered. In Day 0 / Day 7 sequence</td>
+        <td>Repeat (if 2+ orders) or New Lead</td>
+        <td>Day 0: Script 03. Day 7: Script 04 with BACK500. If repeat: upgrade to Repeat in Notion.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Notion CRM — updated field schema</h3>
+  <p>The MSOS defined five fields. A sixth is added here to support the event-based trigger:</p>
+  <div class="card" style="padding:8px 24px;">
+    <div class="flow-row"><span class="flow-step">Name</span><span class="flow-desc">First name + last initial. Privacy-appropriate.</span><span class="flow-ref">Required</span></div>
+    <div class="flow-row"><span class="flow-step">Buyer type</span><span class="flow-desc">New Lead / Repeat / VIP / Inquiry only. VIP threshold: 3+ orders.</span><span class="flow-ref">Required</span></div>
+    <div class="flow-row"><span class="flow-step">Last order</span><span class="flow-desc">ISO date of most recent confirmed delivery. Drives Day 7 timing.</span><span class="flow-ref">Required</span></div>
+    <div class="flow-row"><span class="flow-step">Total orders</span><span class="flow-desc">Cumulative count. Triggers Repeat at 2, VIP at 3.</span><span class="flow-ref">Required</span></div>
+    <div class="flow-row"><span class="flow-step">Proof shared</span><span class="flow-desc">Y / N. Did this buyer share a delivery photo? Drives Script 06 opportunity.</span><span class="flow-ref">Required</span></div>
+    <div class="flow-row" style="border-bottom:none;"><span class="flow-step">Next occasion</span><span class="flow-desc">Date + type (e.g. "15 May — wife's birthday"). Drives event-based trigger at 14 days out.</span><span class="flow-ref">New — Phase 2</span></div>
+  </div>
+</section>
+
+<!-- ══ 09 BROADCAST ══ -->
+<section class="section" id="broadcast">
+  <div class="sec-eyebrow"><span class="sec-num">09</span><span class="sec-tag">Broadcast templates</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">Weekly push. Broadcast lists only. Never groups.</h2>
+  <p class="sec-intro">Broadcasts go to buyers who have previously interacted or ordered — never to cold contacts. Segment by WA label before sending. Two to three per week maximum. Every broadcast carries a direct Paystack link.</p>
+
+  <div class="callout-wa"><strong>Broadcast rule:</strong> Send to WhatsApp broadcast lists, never to groups. Group sends expose all members' numbers and feel impersonal. Broadcast lists deliver individually and respect privacy. Segment by label — "Paid" and "Follow-up" buyers get different messages.</div>
+
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="script-card" style="margin-bottom:0;">
+      <div class="script-head wa-head"><span class="pill pill-express">Express</span><span class="script-title">Availability push (Monday)</span></div>
+      <div class="script-body" style="font-size:12px;">New week — we're delivering today.
+
+Express Bento — ₦10,000
+Ready in 24 hours.
+
+Order here → [link]</div>
+    </div>
+    <div class="script-card" style="margin-bottom:0;">
+      <div class="script-head wa-head"><span class="pill pill-celeb">Celebration</span><span class="script-title">Proof push (Wednesday)</span></div>
+      <div class="script-body" style="font-size:12px;">Another one delivered this week. 🎂
+
+Want this for someone?
+
+[Proof bank photo]
+
+Order here → [link]</div>
+    </div>
+    <div class="script-card" style="margin-bottom:0;">
+      <div class="script-head wa-head"><span class="pill pill-retain">Retention</span><span class="script-title">Urgency push (Friday)</span></div>
+      <div class="script-body" style="font-size:12px;">Last slots for the week.
+
+Weekend delivery still available.
+
+Express Bento — ₦10,000
+
+Order here → [link]</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 10 RULES ══ -->
+<section class="section section-alt" id="rules">
+  <div class="sec-eyebrow"><span class="sec-num">10</span><span class="sec-tag">Non-negotiable rules</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">What never changes. Regardless of volume or situation.</h2>
+
+  <div class="grid-2">
+    <div>
+      <h3 style="margin-top:0;">Always do</h3>
+      <ul class="chk-list">
+        <li><span class="cb"></span><span><strong>Reply within 10 minutes</strong> during 9AM–7PM. Speed is the first trust signal.</span></li>
+        <li><span class="cb"></span><span><strong>Show price</strong> in every product mention. No hidden pricing, ever.</span></li>
+        <li><span class="cb"></span><span><strong>Send the payment link immediately</strong> after order summary. Don't wait for verbal confirmation.</span></li>
+        <li><span class="cb"></span><span><strong>Use quick replies</strong> for standard flows. Don't freestyle the order conversation.</span></li>
+        <li><span class="cb"></span><span><strong>Tag every buyer in Notion</strong> after each order. CRM discipline = retention system working.</span></li>
+        <li><span class="cb"></span><span><strong>Send Script 03 after every delivery.</strong> No exceptions. The Proof bank depends on this.</span></li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="margin-top:0;">Never do</h3>
+      <ul class="chk-list">
+        <li><span class="cb"></span><span><strong>Never ask "What do you want?"</strong> Always guide with numbered options.</span></li>
+        <li><span class="cb"></span><span><strong>Never delay the payment link.</strong> "I'll pay later" is a lost order. Send the link and close.</span></li>
+        <li><span class="cb"></span><span><strong>Never send the upsell before payment.</strong> After Script 01 only.</span></li>
+        <li><span class="cb"></span><span><strong>Never send the pending reminder twice.</strong> Once is service. Twice is pressure.</span></li>
+        <li><span class="cb"></span><span><strong>Never broadcast to cold contacts.</strong> Broadcast only to buyers who have ordered or interacted.</span></li>
+        <li><span class="cb"></span><span><strong>Never use product names not in the canonical list.</strong> The five Quick Order names are: Quick Birthday Cake, Send Love (Bento), Mini Celebration Box, Just Because Cake, Cupcake Box. Use these exactly — no abbreviations, no invented names.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Daily execution priorities</h3>
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="card-sm" style="border-left:3px solid var(--wa-dk);border-radius:0 10px 10px 0;">
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--wa-dk);margin-bottom:5px;">Priority 1 — always first</p>
+      <p style="font-size:13px;color:var(--text-mid);">Reply to all open WA conversations. Within 10 minutes of receiving during business hours.</p>
+    </div>
+    <div class="card-sm" style="border-left:3px solid var(--wa-dk);border-radius:0 10px 10px 0;">
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--wa-dk);margin-bottom:5px;">Priority 2 — script fires</p>
+      <p style="font-size:13px;color:var(--text-mid);">Check Notion for any Day 7 triggers due today. Send Script 04 to qualifying buyers with direct link.</p>
+    </div>
+    <div class="card-sm" style="border-left:3px solid var(--wa-dk);border-radius:0 10px 10px 0;">
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--wa-dk);margin-bottom:5px;">Priority 3 — broadcast day</p>
+      <p style="font-size:13px;color:var(--text-mid);">Mon/Wed/Fri: send broadcast to segmented list. Proof push on Friday uses the Proof bank photo of the week.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 11 ROADMAP ══ -->
+<section class="section" id="roadmap">
+  <div class="sec-eyebrow"><span class="sec-num">11</span><span class="sec-tag">Roadmap</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">What to activate, test, and expand — in sequence.</h2>
+
+  <div class="roadmap">
+    <div class="rm-item done">
+      <p class="rm-week">Completed — this document</p>
+      <p class="rm-title">Message System v1 — all 18 conflicts resolved</p>
+      <p class="rm-desc">Timing locked to Day 0 + Day 7. SKU collapsed to 3. Scripts de-duplicated. Brand mode tagged throughout. Upsell moved post-payment. Nine CRM labels collapsed to four mapped to Notion. Custom cake path removed. "Next occasion" field added to CRM.</p>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Before first message — blocker</p>
+      <p class="rm-title">Fill bank transfer details + confirm Paystack links</p>
+      <p class="rm-desc">Bank name, account name, and account number must replace placeholders in the order summary script before it is used. All five Paystack links must be tested to confirm they route correctly. Five payment commands: /paybirthday, /paybento, /paybox, /paycasual, /paycupcake.</p>
+      <div class="rm-tags"><span class="rm-tag">Bank details</span><span class="rm-tag">3 Paystack links tested</span><span class="rm-tag">3 payment commands set up</span></div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Week 1 — WA Business setup</p>
+      <p class="rm-title">Configure greeting, away message, quick replies, catalog</p>
+      <p class="rm-desc">Greeting message set as auto-reply. Away message active for outside business hours. Quick replies entered: /menu, /quick, /delivery, /proof. Catalog updated to five Quick Order items with correct prices and Paystack links. Five payment commands active: /paybirthday, /paybento, /paybox, /paycasual, /paycupcake. Four WA labels created and applied to existing contacts retrospectively.</p>
+      <div class="rm-tags"><span class="rm-tag">Greeting on</span><span class="rm-tag">Away message on</span><span class="rm-tag">4 quick replies</span><span class="rm-tag">3-item catalog</span></div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Week 1–2 — Notion sync</p>
+      <p class="rm-title">Add "Next occasion" field to Notion CRM</p>
+      <p class="rm-desc">Sixth field added to the buyer database. Begin populating retroactively from past conversations where occasion was mentioned. Set a Notion reminder filter: "Next occasion" date within 14 days — shows you who to contact proactively each week.</p>
+      <div class="rm-tags"><span class="rm-tag">Notion field update</span><span class="rm-tag">Retroactive population</span><span class="rm-tag">14-day reminder filter</span></div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Month 1–2 — automation</p>
+      <p class="rm-title">Automate Day 7 nudge (Script 04)</p>
+      <p class="rm-desc">At ~15 orders/week, manual Day 7 tracking becomes unreliable. Wire Script 04 as an automated trigger in Wati or Interakt: delivery confirmed → +7 days → Script 04 fires with the correct rotation message based on last product ordered. Script content is unchanged — automation is the delivery mechanism only.</p>
+      <div class="rm-tags"><span class="rm-tag">Wati or Interakt</span><span class="rm-tag">Day 7 trigger</span><span class="rm-tag">Product rotation logic</span></div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Month 3 — Phase 2 review</p>
+      <p class="rm-title">Evaluate three-beat sequence activation</p>
+      <p class="rm-desc">At the Month 3 data review: if Day 7 repeat rate is below 15% over 6 weeks, activate Phase 2 Beat A (Day 3–5) on a 4-week test with a 50% split. If repeat rate is already above 15%, Phase 2 stays dormant — the current system is working and adding more messages creates diminishing returns.</p>
+      <div class="rm-tags"><span class="rm-tag">6-week repeat rate data</span><span class="rm-tag">Phase 2 gate check</span><span class="rm-tag">50% split test if activated</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MANTRA -->
+<section class="section section-alt" style="padding-bottom:64px;">
+  <div class="mantra-block">
+    <p class="mantra-label">Message system principle</p>
+    <p class="mantra-text">"You are not chatting.<br>You are re-triggering gifting behaviour."</p>
+    <p class="mantra-sub">Because Beqa dey Bake. · Send a cake in minutes.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <div>
+    <div class="doc-footer-brand">Beqabakes</div>
+    <div class="doc-footer-tagline">Because Beqa dey Bake.</div>
+  </div>
+  <div class="doc-footer-meta">
+    WhatsApp Message System v1 · April 2026<br>
+    Aligned to Brand v2 · COS v1 · MSOS · Platform OS
+  </div>
+</div>
+
+</div>
+</body>
+</html>

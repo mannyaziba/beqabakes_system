@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beqabakes — Tracking System v1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Mulish:wght@300;400;500;600;700&family=Merienda:wght@600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brown:    #5C2C1D;
+  --brown-dk: #3d1c10;
+  --cream:    #FFE3E9;
+  --cream-lt: #FDFBF9;
+  --cream-md: #F5EDE8;
+  --pink:     #F58BA6;
+  --rose:     #D16681;
+  --blush:    #F7D8DF;
+  --green:    #AAC8A7;
+  --green-dk: #5a8a57;
+  --green-lt: #E8FAF0;
+  --amber:    #F5C518;
+  --amber-lt: #FFF8E1;
+  --red-lt:   #FFEBEE;
+  --red-dk:   #C62828;
+  --text:     #2E2420;
+  --text-mid: #5C4840;
+  --text-dim: #8C7068;
+  --text-lt:  #B8A098;
+  --border:   rgba(92,44,29,.09);
+  --border-md:rgba(92,44,29,.17);
+  --border-dk:rgba(92,44,29,.26);
+  --white:    #ffffff;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Mulish',sans-serif;
+  background:#E8DDD6;
+  color:var(--text);
+  font-size:14px;
+  line-height:1.75;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+.page{max-width:900px;margin:0 auto;background:var(--cream-lt);}
+
+/* COVER */
+.cover-stripe{height:5px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;}
+.cover-stripe span:nth-child(1){background:var(--brown);}
+.cover-stripe span:nth-child(2){background:var(--rose);}
+.cover-stripe span:nth-child(3){background:var(--green);}
+.cover-stripe span:nth-child(4){background:var(--pink);}
+.cover{
+  background:var(--cream-lt);
+  padding:60px 72px 52px;
+  border-bottom:1px solid var(--border-md);
+  position:relative;overflow:hidden;
+}
+.cover::before{content:'';position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(245,139,166,.06);pointer-events:none;}
+.cover-eyebrow{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--rose);margin-bottom:14px;display:flex;align-items:center;gap:12px;}
+.cover-eyebrow::after{content:'';flex:1;height:1px;background:var(--border);}
+.cover h1{font-family:'Playfair Display',serif;font-size:clamp(36px,4.8vw,54px);font-weight:700;color:var(--brown);line-height:1.1;margin-bottom:10px;}
+.cover h1 em{font-style:italic;color:var(--rose);}
+.cover-sub{font-size:14px;color:var(--text-dim);max-width:540px;line-height:1.7;margin:22px 0 36px;padding-top:20px;border-top:1px solid var(--border);}
+.cover-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-md);border:1px solid var(--border-md);border-radius:12px;overflow:hidden;max-width:580px;}
+.cover-tab{padding:16px 18px;background:var(--white);}
+.cover-tab-label{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;}
+.cover-tab-name{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--brown);margin-bottom:3px;}
+.cover-tab-desc{font-size:11px;color:var(--text-dim);line-height:1.5;}
+.cover-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:28px;max-width:580px;}
+.cover-stat{background:var(--cream-md);border-radius:8px;padding:14px 16px;}
+.cover-stat-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--brown);margin-bottom:3px;}
+.cover-stat-label{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-lt);line-height:1.4;}
+.cover-footer{border-top:1px solid var(--border);padding-top:20px;margin-top:28px;display:flex;justify-content:space-between;align-items:center;}
+.cover-footer-meta{font-size:11px;color:var(--text-lt);line-height:1.9;}
+.cover-footer-brand{font-family:'Merienda',cursive;font-size:16px;color:var(--rose);opacity:.65;}
+
+/* NAV */
+.sticky-nav{position:sticky;top:0;z-index:50;background:rgba(253,251,249,.97);backdrop-filter:blur(8px);padding:0 72px;display:flex;align-items:center;justify-content:space-between;height:48px;border-bottom:1px solid var(--border-md);}
+.nav-brand{font-family:'Playfair Display',serif;font-size:13px;color:var(--brown);}
+.nav-links{display:flex;gap:0;list-style:none;}
+.nav-links a{font-size:11px;font-weight:500;text-decoration:none;color:var(--text-dim);padding:5px 11px;border-radius:20px;transition:color .15s,background .15s;letter-spacing:.03em;}
+.nav-links a:hover{color:var(--brown);background:var(--cream-md);}
+.nav-badge{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--rose);color:white;padding:3px 10px;border-radius:20px;}
+
+/* SECTIONS */
+.section{padding:52px 72px;border-bottom:1px solid var(--border);}
+.section-alt{background:var(--cream-md);}
+.sec-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.sec-num{font-family:'Playfair Display',serif;font-size:11px;color:var(--text-lt);min-width:24px;}
+.sec-tag{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);}
+.sec-rule{flex:1;height:1px;background:var(--border);}
+.sec-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--brown);line-height:1.2;margin-bottom:8px;}
+.sec-intro{font-size:14px;color:var(--text-dim);max-width:600px;line-height:1.7;margin-bottom:26px;}
+
+h3{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--brown);margin:26px 0 10px;}
+h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin:20px 0 8px;}
+p{font-size:14px;color:var(--text-mid);line-height:1.75;margin-bottom:12px;}
+p:last-child{margin-bottom:0;}
+strong{font-weight:700;color:var(--text);}
+
+/* CALLOUTS */
+.callout{background:var(--cream);border-left:3px solid var(--rose);border-radius:0 10px 10px 0;padding:13px 17px;margin:16px 0;font-size:13px;line-height:1.65;color:var(--text);}
+.callout strong{color:var(--brown);}
+.callout-law{background:var(--brown-dk);border-radius:10px;padding:18px 22px;color:rgba(255,255,255,.8);margin:20px 0;font-size:13px;line-height:1.7;}
+.callout-law strong{color:var(--pink);}
+.callout-green{background:var(--green-lt);border-left:3px solid var(--green-dk);border-radius:0 10px 10px 0;padding:13px 17px;margin:16px 0;font-size:13px;line-height:1.65;color:var(--text);}
+.callout-green strong{color:var(--green-dk);}
+
+/* CARDS */
+.card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:12px;}
+.card-sm{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:10px;}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+
+/* PILLS */
+.pill{display:inline-block;padding:3px 11px;border-radius:20px;font-size:11px;font-weight:600;}
+.pill-new{background:var(--cream-md);color:var(--brown);border:1px solid var(--border-md);}
+.pill-req{background:var(--rose);color:white;}
+.pill-auto{background:var(--green-lt);color:var(--green-dk);border:1px solid rgba(90,138,87,.25);}
+.pill-opt{background:var(--blush);color:var(--brown);border:1px solid var(--border-md);}
+
+/* FIELD TABLE */
+.field-table{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;}
+.field-table th{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-lt);padding:9px 13px;text-align:left;border-bottom:1px solid var(--border-dk);background:var(--cream-md);}
+.field-table td{padding:11px 13px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text-mid);line-height:1.55;}
+.field-table tr:last-child td{border-bottom:none;}
+.field-table tr:hover td{background:var(--cream-lt);}
+.field-table td strong{color:var(--brown);}
+.field-table td.col-letter{font-family:monospace;font-weight:700;color:var(--rose);font-size:13px;}
+.field-table td.col-req{text-align:center;}
+
+/* STATUS INDICATOR */
+.status-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.status-card{border-radius:10px;padding:14px 18px;border:1px solid transparent;}
+.status-pending{background:var(--amber-lt);border-color:rgba(245,197,24,.3);}
+.status-paid{background:var(--green-lt);border-color:rgba(90,138,87,.25);}
+.status-delivered{background:#E8F5E1;border-color:rgba(37,200,100,.25);}
+.status-cancelled{background:var(--red-lt);border-color:rgba(198,40,40,.15);}
+.status-name{font-size:12px;font-weight:700;color:var(--brown);margin-bottom:3px;}
+.status-desc{font-size:12px;color:var(--text-dim);line-height:1.5;}
+.status-action{font-size:11px;font-weight:600;margin-top:6px;}
+.status-pending .status-action{color:#7B5800;}
+.status-paid .status-action{color:var(--green-dk);}
+.status-delivered .status-action{color:#0A4D2A;}
+.status-cancelled .status-action{color:var(--red-dk);}
+
+/* FORMULA BLOCK */
+.formula-block{background:var(--white);border:1px solid var(--border-md);border-radius:12px;overflow:hidden;margin-bottom:12px;}
+.formula-head{padding:10px 18px;background:var(--cream-md);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;}
+.formula-cell{font-family:monospace;font-size:11px;font-weight:700;color:var(--rose);background:var(--white);border:1px solid var(--border-md);padding:2px 8px;border-radius:4px;}
+.formula-title{font-size:12px;font-weight:700;color:var(--brown);}
+.formula-body{padding:14px 18px;font-family:monospace;font-size:12px;color:var(--text);line-height:1.7;background:var(--cream-lt);}
+.formula-note{padding:8px 18px;font-size:11px;color:var(--text-dim);border-top:1px solid var(--border);font-style:italic;}
+
+/* METRIC CARDS */
+.metric-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;}
+.metric-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px 10px;text-align:center;}
+.metric-num{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--brown);margin-bottom:3px;}
+.metric-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text-lt);line-height:1.4;}
+.metric-source{font-size:10px;color:var(--text-lt);margin-top:4px;font-style:italic;}
+
+/* THRESHOLD CARDS */
+.threshold-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.threshold-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px 20px;}
+.threshold-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-lt);margin-bottom:6px;}
+.threshold-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);margin-bottom:6px;}
+.threshold-val{font-size:12px;color:var(--text-dim);line-height:1.6;}
+.threshold-cell{font-family:monospace;font-size:11px;font-weight:700;color:var(--rose);}
+
+/* WORKFLOW */
+.flow-row{display:grid;grid-template-columns:90px 1fr 130px;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px;align-items:start;}
+.flow-row:last-child{border-bottom:none;}
+.flow-step{font-weight:700;color:var(--brown);}
+.flow-desc{color:var(--text-mid);line-height:1.55;}
+.flow-cell{font-family:monospace;font-size:10px;font-weight:700;color:var(--rose);text-align:right;}
+
+/* ROADMAP */
+.roadmap{position:relative;padding-left:32px;}
+.roadmap::before{content:'';position:absolute;left:9px;top:8px;bottom:8px;width:1px;background:var(--border-dk);}
+.rm-item{position:relative;margin-bottom:22px;}
+.rm-item::before{content:'';position:absolute;left:-26px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--white);border:2px solid var(--rose);}
+.rm-item.done::before{background:var(--rose);}
+.rm-week{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:3px;}
+.rm-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);margin-bottom:3px;}
+.rm-desc{font-size:13px;color:var(--text-dim);line-height:1.65;margin-bottom:7px;}
+.rm-tags{display:flex;flex-wrap:wrap;gap:5px;}
+.rm-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--cream-md);border:1px solid var(--border-md);color:var(--brown);font-weight:500;}
+
+/* MANTRA */
+.mantra-block{background:var(--brown-dk);border-radius:14px;padding:32px 38px;text-align:center;margin-top:8px;}
+.mantra-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:12px;}
+.mantra-text{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--white);line-height:1.5;margin-bottom:6px;}
+.mantra-sub{font-size:12px;color:var(--pink);opacity:.8;}
+
+.divider{border:none;border-top:1px solid var(--border);margin:22px 0;}
+
+/* FOOTER */
+.doc-footer{background:var(--brown-dk);padding:30px 72px;display:flex;justify-content:space-between;align-items:center;}
+.doc-footer-brand{font-family:'Playfair Display',serif;font-size:15px;color:white;}
+.doc-footer-tagline{font-family:'Merienda',cursive;font-size:13px;color:var(--rose);opacity:.65;margin-top:4px;}
+.doc-footer-meta{font-size:11px;color:rgba(255,255,255,.25);line-height:1.9;text-align:right;}
+
+/* SHEET MOCKUP */
+.sheet-tab-row{display:flex;gap:2px;margin-bottom:0;}
+.sheet-tab{padding:7px 18px;border-radius:6px 6px 0 0;font-size:12px;font-weight:600;cursor:pointer;transition:opacity .15s;}
+.sheet-tab.orders{background:var(--brown);color:white;}
+.sheet-tab.summary{background:var(--rose);color:white;}
+.sheet-tab.guide{background:var(--green);color:var(--green-dk);}
+.sheet-body{background:var(--white);border:1px solid var(--border-md);border-radius:0 8px 8px 8px;padding:16px;overflow-x:auto;}
+.excel-table{width:100%;border-collapse:collapse;font-size:11px;font-family:monospace;}
+.excel-table th{background:var(--brown);color:white;padding:6px 10px;text-align:center;font-weight:700;white-space:nowrap;font-family:'Mulish',sans-serif;font-size:10px;}
+.excel-table td{padding:5px 10px;border:1px solid var(--border);vertical-align:middle;white-space:nowrap;color:var(--text);}
+.excel-table tr:nth-child(even) td{background:var(--cream-lt);}
+.excel-table tr:hover td{background:var(--blush);}
+.cell-formula{color:#0A4D2A;font-style:italic;}
+.cell-dropdown{color:var(--rose);}
+.cell-paid{background:#E8FAF0 !important;color:var(--green-dk);font-weight:600;}
+.cell-delivered{background:#C3EED6 !important;color:#0A4D2A;font-weight:600;}
+.cell-pending{background:var(--amber-lt) !important;color:#7B5800;}
+.cell-vip{background:#FFF3CD !important;color:#7B4F00;font-weight:600;}
+.cell-yes{background:var(--green-lt) !important;color:var(--green-dk);}
+.cell-no{background:var(--red-lt) !important;color:var(--red-dk);}
+
+@media print{body{background:white;}.page{max-width:100%;}.cover{break-after:page;}.section{padding:40px 52px;break-inside:avoid;}.sticky-nav{display:none;}}
+@media(min-width:1100px){body{padding:0 40px;}.page{box-shadow:0 0 60px rgba(0,0,0,.1);}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- COVER -->
+<div class="cover-stripe"><span></span><span></span><span></span><span></span></div>
+<div class="cover">
+  <p class="cover-eyebrow">Tracking System &nbsp;·&nbsp; v1 &nbsp;·&nbsp; April 2026</p>
+  <h1>If it isn't tracked,<br>it <em>didn't happen.</em></h1>
+  <p class="cover-sub">A fully upgraded, stack-aligned tracking workbook and reference system. Three sheets, 20 fields, 527 live formulas, and a Summary dashboard that auto-calculates every COS v1 metric and every MSOS expansion threshold from the Orders Log.</p>
+
+  <div class="cover-tabs">
+    <div class="cover-tab">
+      <p class="cover-tab-label" style="color:var(--brown);">Sheet 1</p>
+      <p class="cover-tab-name">Orders Log</p>
+      <p class="cover-tab-desc">20 fields. Every order captured. Dropdowns enforced. Formulas auto-calculate totals.</p>
+    </div>
+    <div class="cover-tab">
+      <p class="cover-tab-label" style="color:var(--rose);">Sheet 2</p>
+      <p class="cover-tab-name">Weekly Summary</p>
+      <p class="cover-tab-desc">Enter a week date. All 5 COS v1 metrics plus revenue, acquisition, and retention health update automatically.</p>
+    </div>
+    <div class="cover-tab">
+      <p class="cover-tab-label" style="color:var(--green-dk);">Sheet 3</p>
+      <p class="cover-tab-name">Field Guide</p>
+      <p class="cover-tab-desc">Every field defined. Every dropdown listed. Every system linkage named. The operating manual for the workbook.</p>
+    </div>
+  </div>
+
+  <div class="cover-stats">
+    <div class="cover-stat"><p class="cover-stat-num">20</p><p class="cover-stat-label">Fields in Orders Log</p></div>
+    <div class="cover-stat"><p class="cover-stat-num">527</p><p class="cover-stat-label">Live formulas, zero errors</p></div>
+    <div class="cover-stat"><p class="cover-stat-num">5</p><p class="cover-stat-label">COS v1 metrics auto-calc</p></div>
+    <div class="cover-stat"><p class="cover-stat-num">4</p><p class="cover-stat-label">Expansion thresholds tracked</p></div>
+  </div>
+
+  <div class="cover-footer">
+    <div class="cover-footer-meta">Aligned to Brand v2 · COS v1 · MSOS · Platform OS · Message System<br>Operator × Giver · Abuja market · 16 problems resolved</div>
+    <div class="cover-footer-brand">Beqabakes</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="sticky-nav">
+  <span class="nav-brand">Beqabakes Tracking System</span>
+  <ul class="nav-links">
+    <li><a href="#changes">What changed</a></li>
+    <li><a href="#orders">Orders Log</a></li>
+    <li><a href="#fields">Field guide</a></li>
+    <li><a href="#dropdowns">Dropdowns</a></li>
+    <li><a href="#summary">Summary sheet</a></li>
+    <li><a href="#formulas">Formulas</a></li>
+    <li><a href="#workflow">Weekly workflow</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+  </ul>
+  <span class="nav-badge">v1 live</span>
+</nav>
+
+<!-- 00 WHAT CHANGED -->
+<section class="section section-alt" id="changes">
+  <div class="sec-eyebrow"><span class="sec-num">00</span><span class="sec-tag">What changed</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">16 problems resolved. Zero formula errors.</h2>
+  <p class="sec-intro">The original file was a blank 11-column template that had never been used. The upgraded workbook has 20 fields, corrected dropdowns, live formulas, a Summary dashboard, a Field Guide sheet, and conditional formatting that makes the status of every order visible at a glance.</p>
+
+  <div class="callout-law">
+    <strong>The most important change:</strong> Start using it. A tracking system with zero rows of data is a fiction. From today, every order — however small — goes into the Orders Log before any other action. The Summary sheet only tells you something real when real data is flowing into it.
+  </div>
+
+  <div class="grid-2" style="margin-top:8px;">
+    <div>
+      <h3 style="margin-top:0;">Critical fixes</h3>
+      <div class="card-sm" style="border-left:3px solid var(--rose);border-radius:0 10px 10px 0;">
+        <strong>Product dropdown: 16 items → 3 canonical</strong>
+        <p style="font-size:12px;color:var(--text-dim);margin-top:4px;">Express Bento / Signature Cake / Gift Set only. All retired variant names removed. Consistent with every other document in the stack.</p>
+      </div>
+      <div class="card-sm" style="border-left:3px solid var(--rose);border-radius:0 10px 10px 0;">
+        <strong>Status dropdown: 3 → 4 options</strong>
+        <p style="font-size:12px;color:var(--text-dim);margin-top:4px;">Pending / Paid / Delivered / Cancelled. Cancelled orders are now visible — essential for calculating a real conversion rate.</p>
+      </div>
+      <div class="card-sm" style="border-left:3px solid var(--rose);border-radius:0 10px 10px 0;">
+        <strong>Source dropdown: aligned to MSOS channels</strong>
+        <p style="font-size:12px;color:var(--text-dim);margin-top:4px;">Instagram / WhatsApp (direct) / Facebook / Referral. "Organic" retired — too vague to be actionable in acquisition analysis.</p>
+      </div>
+      <div class="card-sm" style="border-left:3px solid var(--rose);border-radius:0 10px 10px 0;">
+        <strong>Data validation: fixed and separated</strong>
+        <p style="font-size:12px;color:var(--text-dim);margin-top:4px;">Phone number validation and amount validation are now independent. Amount uses a simple positive-number check. Date-rejection logic removed from both.</p>
+      </div>
+    </div>
+    <div>
+      <h3 style="margin-top:0;">New fields added (9)</h3>
+      <div class="card-sm"><span class="pill pill-new" style="margin-right:8px;">New</span><strong>Delivery Date</strong> — drives Day 7 script timing</div>
+      <div class="card-sm"><span class="pill pill-new" style="margin-right:8px;">New</span><strong>Add-on Amount (₦)</strong> — captures add-on value for AOV</div>
+      <div class="card-sm"><span class="pill pill-new" style="margin-right:8px;">New</span><strong>Total (₦)</strong> — auto-formula: Amount + Add-on Amount</div>
+      <div class="card-sm"><span class="pill pill-new" style="margin-right:8px;">New</span><strong>Payment Method</strong> — Paystack or Bank Transfer</div>
+      <div class="card-sm"><span class="pill pill-new" style="margin-right:8px;">New</span><strong>Buyer Type</strong> — syncs to Notion CRM (New Lead / Repeat / VIP)</div>
+      <div class="card-sm"><span class="pill pill-new" style="margin-right:8px;">New</span><strong>Day 0 Sent</strong> — Script 03 accountability</div>
+      <div class="card-sm"><span class="pill pill-new" style="margin-right:8px;">New</span><strong>Day 7 Sent</strong> — Script 04 accountability</div>
+      <div class="card-sm"><span class="pill pill-new" style="margin-right:8px;">New</span><strong>Proof Collected</strong> — COS v1 metric 5 of 5</div>
+      <div class="card-sm"><span class="pill pill-new" style="margin-right:8px;">New</span><strong>Mode/Campaign</strong> — traces content → orders</div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 ORDERS LOG -->
+<section class="section" id="orders">
+  <div class="sec-eyebrow"><span class="sec-num">01</span><span class="sec-tag">Orders Log — Sheet 1</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">Every order. Every field. One row per delivery.</h2>
+  <p class="sec-intro">The Orders Log is the only place where order data is entered manually. Everything else in the workbook is calculated from it. One row per order. Fill columns A through T in order. Column J (Total) auto-calculates — never edit it directly.</p>
+
+  <div class="sheet-tab-row">
+    <div class="sheet-tab orders">Orders Log</div>
+  </div>
+  <div class="sheet-body">
+    <div style="overflow-x:auto;">
+    <table class="excel-table">
+      <thead>
+        <tr>
+          <th>A — Order Date</th><th>B — Delivery Date</th><th>C — Customer Name</th><th>D — Phone</th><th>E — Product</th><th>F — Size</th><th>G — Amount ₦</th><th>H — Add-on</th><th>I — Add-on ₦</th><th>J — Total ₦</th><th>K — Source</th><th>L — Status</th><th>M — Payment</th><th>N — Buyer Type</th><th>O — Day 0</th><th>P — Day 7</th><th>Q — Proof</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>14 Apr 2026</td><td>15 Apr 2026</td><td>Amara O.</td><td>080123…</td><td class="cell-dropdown">Express Bento</td><td>6"</td><td>10,000</td><td class="cell-dropdown">Ribbon (₦1000)</td><td>1,000</td><td class="cell-formula cell-paid">11,000</td><td class="cell-dropdown">Instagram</td><td class="cell-delivered">Delivered</td><td class="cell-dropdown">Paystack</td><td class="cell-dropdown">New Lead</td><td class="cell-yes">Yes</td><td class="cell-pending">Pending</td><td class="cell-pending">Pending</td>
+        </tr>
+        <tr>
+          <td>16 Apr 2026</td><td>17 Apr 2026</td><td>Tunde A.</td><td>081056…</td><td class="cell-dropdown">Signature Cake</td><td>6"</td><td>18,000</td><td class="cell-dropdown">None</td><td>—</td><td class="cell-formula cell-paid">18,000</td><td class="cell-dropdown">WhatsApp (direct)</td><td class="cell-paid">Paid</td><td class="cell-dropdown">Bank Transfer</td><td class="cell-dropdown vip">Repeat</td><td class="cell-yes">Yes</td><td class="cell-yes">Yes</td><td class="cell-yes">Yes</td>
+        </tr>
+        <tr>
+          <td>18 Apr 2026</td><td></td><td>Chisom E.</td><td>090234…</td><td class="cell-dropdown">Gift Set</td><td>—</td><td>15,000</td><td class="cell-dropdown">Candle (₦500)</td><td>500</td><td class="cell-formula">15,500</td><td class="cell-dropdown">Referral</td><td class="cell-pending">Pending</td><td class="cell-dropdown">Paystack</td><td class="cell-dropdown">New Lead</td><td class="cell-no">No</td><td class="cell-no">No</td><td class="cell-no">No</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:14px;"><strong>Colour coding legend:</strong> Green = Paid / Delivered / Yes. Amber = Pending (action needed). Red = Cancelled / No. VIP buyers shown in gold. All colours are applied automatically by conditional formatting — no manual colouring.</div>
+
+  <h3>Status colour system</h3>
+  <div class="status-grid">
+    <div class="status-card status-pending">
+      <p class="status-name">🟠 Pending</p>
+      <p class="status-desc">Order received, payment not yet confirmed.</p>
+      <p class="status-action">Action: send payment link. Chase once after 2 hours.</p>
+    </div>
+    <div class="status-card status-paid">
+      <p class="status-name">🟢 Paid</p>
+      <p class="status-desc">Payment confirmed. Order in preparation / in transit.</p>
+      <p class="status-action">Action: Script 01 fired. Rider dispatched → Script 02.</p>
+    </div>
+    <div class="status-card status-delivered">
+      <p class="status-name">🟩 Delivered</p>
+      <p class="status-desc">Confirmed delivery. Day 0 script should have fired.</p>
+      <p class="status-action">Action: check Day 0 Sent = Yes. Schedule Day 7.</p>
+    </div>
+    <div class="status-card status-cancelled">
+      <p class="status-name">🔴 Cancelled</p>
+      <p class="status-desc">Order fell through. Payment never received or refunded.</p>
+      <p class="status-action">Action: log reason in Notes. Feeds conversion rate calc.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 02 FIELD GUIDE -->
+<section class="section section-alt" id="fields">
+  <div class="sec-eyebrow"><span class="sec-num">02</span><span class="sec-tag">Field guide</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">20 fields. Each with a defined purpose and system linkage.</h2>
+  <p class="sec-intro">Every field in the Orders Log is listed here with its type, requirement status, and the document in the locked stack it connects to. The three connective tissue fields — Delivery Date, Buyer Type, and Mode/Campaign — are the ones that make the system measurable.</p>
+
+  <table class="field-table">
+    <thead>
+      <tr><th>Col</th><th>Field name</th><th>Type</th><th>Required?</th><th>System linkage</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="col-letter">A</td><td><strong>Order Date</strong></td><td>Date</td><td class="col-req"><span class="pill pill-req">Required</span></td><td>COS v1 — Friday review date range filter</td></tr>
+      <tr><td class="col-letter">B</td><td><strong>Delivery Date</strong> <span class="pill pill-new">New</span></td><td>Date</td><td class="col-req"><span class="pill pill-req">Required</span></td><td>Message System — Day 7 script timing anchor</td></tr>
+      <tr><td class="col-letter">C</td><td><strong>Customer Name</strong></td><td>Text</td><td class="col-req"><span class="pill pill-req">Required</span></td><td>Notion CRM — buyer record identifier</td></tr>
+      <tr><td class="col-letter">D</td><td><strong>Phone No.</strong></td><td>Number</td><td class="col-req"><span class="pill pill-req">Required</span></td><td>Message System — script delivery channel</td></tr>
+      <tr><td class="col-letter">E</td><td><strong>Product</strong></td><td>Dropdown</td><td class="col-req"><span class="pill pill-req">Required</span></td><td>Brand v2 — 3-tier offer stack (3 options only)</td></tr>
+      <tr><td class="col-letter">F</td><td><strong>Size/Variant</strong></td><td>Dropdown</td><td class="col-req"><span class="pill pill-opt">Optional</span></td><td>Product spec — 4" / 6" / 8" / 10"</td></tr>
+      <tr><td class="col-letter">G</td><td><strong>Amount (₦)</strong></td><td>Currency</td><td class="col-req"><span class="pill pill-req">Required</span></td><td>Weekly Summary — revenue calculations</td></tr>
+      <tr><td class="col-letter">H</td><td><strong>Add-on</strong></td><td>Dropdown</td><td class="col-req"><span class="pill pill-opt">Optional</span></td><td>Message System — upsell tracking (post-payment)</td></tr>
+      <tr><td class="col-letter">I</td><td><strong>Add-on Amount (₦)</strong> <span class="pill pill-new">New</span></td><td>Currency</td><td class="col-req"><span class="pill pill-opt">Optional</span></td><td>Weekly Summary — AOV calculation completeness</td></tr>
+      <tr><td class="col-letter">J</td><td><strong>Total (₦)</strong> <span class="pill pill-new">New</span></td><td>Formula</td><td class="col-req"><span class="pill pill-auto">Auto</span></td><td>= Amount + Add-on Amount. Do not edit manually.</td></tr>
+      <tr><td class="col-letter">K</td><td><strong>Source</strong></td><td>Dropdown</td><td class="col-req"><span class="pill pill-req">Required</span></td><td>MSOS — channel matrix acquisition analysis</td></tr>
+      <tr><td class="col-letter">L</td><td><strong>Status</strong></td><td>Dropdown</td><td class="col-req"><span class="pill pill-req">Required</span></td><td>Message System — script trigger gate</td></tr>
+      <tr><td class="col-letter">M</td><td><strong>Payment Method</strong> <span class="pill pill-new">New</span></td><td>Dropdown</td><td class="col-req"><span class="pill pill-req">Required</span></td><td>Platform OS — payment flow optimisation</td></tr>
+      <tr><td class="col-letter">N</td><td><strong>Buyer Type</strong> <span class="pill pill-new">New</span></td><td>Dropdown</td><td class="col-req"><span class="pill pill-req">Required</span></td><td>MSOS / Message System — Notion CRM sync</td></tr>
+      <tr><td class="col-letter">O</td><td><strong>Day 0 Sent</strong> <span class="pill pill-new">New</span></td><td>Dropdown</td><td class="col-req"><span class="pill pill-req">Required</span></td><td>Message System — Script 03 accountability</td></tr>
+      <tr><td class="col-letter">P</td><td><strong>Day 7 Sent</strong> <span class="pill pill-new">New</span></td><td>Dropdown</td><td class="col-req"><span class="pill pill-req">Required</span></td><td>Message System — Script 04 accountability</td></tr>
+      <tr><td class="col-letter">Q</td><td><strong>Proof Collected</strong> <span class="pill pill-new">New</span></td><td>Dropdown</td><td class="col-req"><span class="pill pill-req">Required</span></td><td>COS v1 — metric 5 of 5 (proof bank health)</td></tr>
+      <tr><td class="col-letter">R</td><td><strong>Next Occasion</strong> <span class="pill pill-new">New</span></td><td>Text</td><td class="col-req"><span class="pill pill-opt">Optional</span></td><td>Message System — event-based trigger (14-day)</td></tr>
+      <tr><td class="col-letter">S</td><td><strong>Mode/Campaign</strong> <span class="pill pill-new">New</span></td><td>Dropdown</td><td class="col-req"><span class="pill pill-opt">Recommended</span></td><td>COS v1 — content → orders attribution</td></tr>
+      <tr><td class="col-letter">T</td><td><strong>Notes</strong></td><td>Text</td><td class="col-req"><span class="pill pill-opt">Optional</span></td><td>Knowledge base — special instructions, feedback</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout-green"><strong>The three connective tissue fields:</strong> Delivery Date (Column B) anchors the Day 7 nudge. Buyer Type (Column N) syncs the spreadsheet to Notion CRM. Mode/Campaign (Column S) closes the content → revenue attribution loop that COS v1 depends on. If you only fill three extra fields, make it these three.</div>
+</section>
+
+<!-- 03 DROPDOWNS -->
+<section class="section" id="dropdowns">
+  <div class="sec-eyebrow"><span class="sec-num">03</span><span class="sec-tag">Dropdown reference</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">Every allowed value. Every column. No improvisation.</h2>
+  <p class="sec-intro">The dropdowns enforce the stack. Using any value outside the dropdown list creates data that can't be queried, counted, or reported. If a value you need isn't in the list, add it to the dropdown in the Field Guide sheet before entering it in the Orders Log.</p>
+
+  <div class="grid-2" style="margin-top:8px;">
+    <div>
+      <h3 style="margin-top:0;">Column E — Product</h3>
+      <div class="callout" style="margin-bottom:10px;"><strong>3 items only.</strong> These are the only canonical product names used anywhere in the system.</div>
+      <div class="card-sm"><strong>Express Bento</strong> — ₦10,000 — Entry tier<br><span style="font-size:12px;color:var(--text-dim);">Size: 4" or 6" (capture in Column F)</span></div>
+      <div class="card-sm"><strong>Signature Cake</strong> — ₦18,000 — Core tier<br><span style="font-size:12px;color:var(--text-dim);">Size: 6", 8", or 10" (capture in Column F)</span></div>
+      <div class="card-sm"><strong>Gift Set</strong> — ₦15,000 — Premium tier<br><span style="font-size:12px;color:var(--text-dim);">Cake + note + gift packaging</span></div>
+
+      <h3>Column H — Add-on</h3>
+      <div class="card-sm"><strong>Candle (₦500)</strong> — enter 500 in Column I</div>
+      <div class="card-sm"><strong>Ribbon (₦1,000)</strong> — enter 1000 in Column I</div>
+      <div class="card-sm"><strong>Note Card (₦1,000)</strong> — enter 1000 in Column I</div>
+      <div class="card-sm"><strong>Love Card (₦1,000)</strong> — enter 1000 in Column I</div>
+      <div class="card-sm"><strong>None</strong> — leave Column I blank (auto totals as 0)</div>
+
+      <h3>Column L — Status</h3>
+      <div class="card-sm cell-pending"><strong>Pending</strong> — order received, payment not confirmed</div>
+      <div class="card-sm cell-paid" style="background:var(--green-lt);"><strong>Paid</strong> — payment confirmed, preparing / in transit</div>
+      <div class="card-sm" style="background:#E8F5E1;"><strong>Delivered</strong> — confirmed delivery to recipient</div>
+      <div class="card-sm" style="background:var(--red-lt);"><strong>Cancelled</strong> — order fell through — log reason in Notes</div>
+    </div>
+    <div>
+      <h3 style="margin-top:0;">Column K — Source</h3>
+      <div class="callout" style="margin-bottom:10px;"><strong>Maps to MSOS channel matrix.</strong> "Organic" is retired. Every order came from one of these four channels.</div>
+      <div class="card-sm"><strong>Instagram</strong> — buyer found via IG post or Story CTA</div>
+      <div class="card-sm"><strong>WhatsApp (direct)</strong> — direct message, broadcast, or Lookbook link</div>
+      <div class="card-sm"><strong>Facebook</strong> — buyer came from FB post or Messenger redirect</div>
+      <div class="card-sm"><strong>Referral</strong> — referred by an existing buyer (Script 06 territory)</div>
+
+      <h3>Column N — Buyer Type</h3>
+      <div class="callout" style="margin-bottom:10px;"><strong>Sync this to Notion CRM on every update.</strong> VIP threshold = 3+ total orders.</div>
+      <div class="card-sm"><strong>New Lead</strong> — first order from this buyer</div>
+      <div class="card-sm"><strong>Repeat</strong> — second order confirmed</div>
+      <div class="card-sm cell-vip" style="background:#FFF3CD;border:1px solid #F5C518;"><strong>VIP</strong> — three or more orders. Loyalty mechanic eligible (Month 3).</div>
+      <div class="card-sm"><strong>Inquiry Only</strong> — contacted but did not order</div>
+
+      <h3>Column S — Mode/Campaign</h3>
+      <div class="card-sm"><strong>Express (Monday post)</strong> — order triggered by Monday feed post</div>
+      <div class="card-sm"><strong>Celebration (Wednesday post)</strong> — triggered by Wednesday post</div>
+      <div class="card-sm"><strong>Retention (Friday post)</strong> — triggered by proof/retention post</div>
+      <div class="card-sm"><strong>Broadcast</strong> — triggered by WhatsApp broadcast</div>
+      <div class="card-sm"><strong>Referral</strong> — came via Script 06 referral prompt</div>
+      <div class="card-sm"><strong>Direct</strong> — buyer messaged independently, no attribution</div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 WEEKLY SUMMARY -->
+<section class="section section-alt" id="summary">
+  <div class="sec-eyebrow"><span class="sec-num">04</span><span class="sec-tag">Weekly Summary — Sheet 2</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">Enter a week date. Everything else auto-calculates.</h2>
+  <p class="sec-intro">The Summary sheet reads from the Orders Log using COUNTIFS and SUMIFS formulas filtered by the week date you enter. Every Friday, enter the Monday date of the week just completed. All metrics update instantly — no manual counting.</p>
+
+  <div class="sheet-tab-row">
+    <div class="sheet-tab summary">Weekly Summary</div>
+  </div>
+  <div class="sheet-body">
+    <div style="display:grid;grid-template-columns:260px 1fr;gap:20px;font-size:13px;">
+      <div>
+        <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:8px;">Week selector</p>
+        <div style="border:2px solid var(--rose);border-radius:8px;padding:12px 14px;background:var(--cream);margin-bottom:12px;">
+          <p style="font-size:11px;font-weight:700;color:var(--rose);margin-bottom:4px;">ENTER WEEK START DATE →</p>
+          <p style="font-size:16px;font-weight:700;color:var(--brown);font-family:'Playfair Display',serif;">Cell B4</p>
+          <p style="font-size:11px;color:var(--text-dim);margin-top:3px;">Format: DD MMM YYYY (Monday)</p>
+        </div>
+        <p style="font-size:11px;color:var(--text-dim);line-height:1.6;">Week end date calculates automatically in C4. All metrics update to show data for that 7-day window.</p>
+      </div>
+      <div>
+        <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:8px;">Five COS v1 metrics (auto-calculated)</p>
+        <div class="metric-row">
+          <div class="metric-card"><p class="metric-num">—</p><p class="metric-label">Posts published</p><p class="metric-source">Manual entry</p></div>
+          <div class="metric-card"><p class="metric-num">—</p><p class="metric-label">WA orders / week</p><p class="metric-source">COUNTIFS on Paid</p></div>
+          <div class="metric-card"><p class="metric-num">—</p><p class="metric-label">Revenue (₦)</p><p class="metric-source">SUMIFS Delivered</p></div>
+          <div class="metric-card"><p class="metric-num">—</p><p class="metric-label">AOV (₦)</p><p class="metric-source">Revenue ÷ Orders</p></div>
+          <div class="metric-card"><p class="metric-num">—</p><p class="metric-label">Proof collected</p><p class="metric-source">COUNTIFS Yes</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Summary sheet sections</h3>
+  <div class="grid-2" style="margin-top:8px;">
+    <div class="card-sm" style="border-left:3px solid var(--brown);border-radius:0 10px 10px 0;">
+      <strong>COS v1 — Five core metrics</strong>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:4px;">Posts published (manual), WA orders, Revenue, AOV, Proof collected. All filtered to selected week.</p>
+    </div>
+    <div class="card-sm" style="border-left:3px solid var(--rose);border-radius:0 10px 10px 0;">
+      <strong>Revenue breakdown</strong>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:4px;">Orders by product tier, add-on revenue, cancelled orders, and conversion rate — all for the selected week.</p>
+    </div>
+    <div class="card-sm" style="border-left:3px solid var(--rose);border-radius:0 10px 10px 0;">
+      <strong>Acquisition breakdown</strong>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:4px;">Paid orders split by source channel — Instagram / WhatsApp (direct) / Facebook / Referral.</p>
+    </div>
+    <div class="card-sm" style="border-left:3px solid var(--green-dk);border-radius:0 10px 10px 0;">
+      <strong>Retention health (all time)</strong>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:4px;">Unique buyers, repeat buyers, VIP count, repeat rate, Day 7 scripts sent, proof collection rate.</p>
+    </div>
+    <div class="card-sm" style="border-left:3px solid var(--brown);border-radius:0 10px 10px 0;">
+      <strong>Expansion thresholds (MSOS)</strong>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:4px;">Paid ads gate (15+ orders/week), proof bank count (10+ target), corporate Gift Set count, VIP count (5+ for loyalty).</p>
+    </div>
+    <div class="card-sm" style="border-left:3px solid var(--green-dk);border-radius:0 10px 10px 0;">
+      <strong>Auto-highlight thresholds</strong>
+      <p style="font-size:12px;color:var(--text-dim);margin-top:4px;">Threshold cells turn green automatically when the MSOS conditions are met. No manual checking required.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 KEY FORMULAS -->
+<section class="section" id="formulas">
+  <div class="sec-eyebrow"><span class="sec-num">05</span><span class="sec-tag">Key formulas</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">527 live formulas. Zero errors. How they work.</h2>
+  <p class="sec-intro">All formulas live in the Summary sheet and Column J of the Orders Log. The Orders Log is data entry only — no manual formulas needed there except the Total column which auto-fills. These are the formulas you should understand to trust the numbers.</p>
+
+  <div class="formula-block">
+    <div class="formula-head"><span class="formula-cell">J2</span><span class="formula-title">Total (₦) — auto-calculates every row</span></div>
+    <div class="formula-body">=IF(G2="","",G2+IF(I2="",0,I2))</div>
+    <div class="formula-note">If Amount is blank, Total stays blank. If Add-on Amount is blank, it counts as zero. Never shows an error.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-head"><span class="formula-cell">B8</span><span class="formula-title">WA orders this week (Summary)</span></div>
+    <div class="formula-body">=IF(B4="","-",COUNTIFS('Orders Log'!A$2:A$501,">="&B4,
+                  'Orders Log'!A$2:A$501,"<="&D4,
+                  'Orders Log'!L$2:L$501,"Paid"))</div>
+    <div class="formula-note">Counts orders where: Order Date is in the selected week AND Status = Paid. Blank if no week date entered.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-head"><span class="formula-cell">B9</span><span class="formula-title">Revenue this week (₦)</span></div>
+    <div class="formula-body">=IF(B4="","-",SUMIFS('Orders Log'!J$2:J$501,
+                 'Orders Log'!A$2:A$501,">="&B4,
+                 'Orders Log'!A$2:A$501,"<="&D4,
+                 'Orders Log'!L$2:L$501,"Delivered"))</div>
+    <div class="formula-note">Sums Column J (Total ₦) only for Delivered orders in the week. Paid-but-not-yet-delivered orders are excluded from revenue.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-head"><span class="formula-cell">B10</span><span class="formula-title">AOV — average order value</span></div>
+    <div class="formula-body">=IF(OR(B4="",B8="",B8=0),"-",B9/B8)</div>
+    <div class="formula-note">Revenue divided by order count. Shows "-" if either is zero — prevents #DIV/0! error.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-head"><span class="formula-cell">B19</span><span class="formula-title">Conversion rate</span></div>
+    <div class="formula-body">=IF(OR(B4="",COUNTIFS('Orders Log'!A$2:A$501,">="&B4,
+               'Orders Log'!A$2:A$501,"<="&D4)=0),"-",
+    COUNTIFS(…,"Paid")/COUNTIFS(…))</div>
+    <div class="formula-note">Paid orders as % of all orders in the week (including Pending and Cancelled). Shows the real conversion rate, not just volume.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-head"><span class="formula-cell">B33</span><span class="formula-title">Proof collection rate (all time)</span></div>
+    <div class="formula-body">=IF(COUNTIF('Orders Log'!L$2:L$501,"Delivered")=0,"-",
+   COUNTIF('Orders Log'!Q$2:Q$501,"Yes")/
+   COUNTIF('Orders Log'!L$2:L$501,"Delivered"))</div>
+    <div class="formula-note">Photos received as % of deliveries. The Proof bank health metric. Target: every delivered order eventually yields a photo — 100% is aspirational, 50%+ is healthy.</div>
+  </div>
+
+  <div class="callout"><strong>If a formula shows an error:</strong> check that the sheet name in the formula still reads <code>'Orders Log'</code> exactly — do not rename Sheet 1. Column references are locked with $. Never insert or delete columns in the Orders Log as this will shift the COUNTIFS column references.</div>
+</section>
+
+<!-- 06 WORKFLOW -->
+<section class="section section-alt" id="workflow">
+  <div class="sec-eyebrow"><span class="sec-num">06</span><span class="sec-tag">Weekly workflow</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">When to update. What to check. Every week.</h2>
+
+  <div class="callout-law">
+    <strong>The discipline that makes this work:</strong> The tracking sheet is updated at three moments — when an order is placed, when it is delivered, and every Friday for the review. If these three moments are missed, the data degrades within weeks and the Summary becomes unreliable.
+  </div>
+
+  <div class="card" style="padding:8px 24px;">
+    <div class="flow-row">
+      <span class="flow-step">On order</span>
+      <span class="flow-desc">Add a new row. Fill Columns A, C, D, E, F, G, H, I, K, L (Pending), M, N (New Lead), S. Leave B (Delivery Date), O, P, Q blank until delivery.</span>
+      <span class="flow-cell">Cols A–N, S</span>
+    </div>
+    <div class="flow-row">
+      <span class="flow-step">On payment</span>
+      <span class="flow-desc">Update Column L from Pending → Paid. Update Notion CRM buyer tag simultaneously. Script 01 fires.</span>
+      <span class="flow-cell">Col L → Paid</span>
+    </div>
+    <div class="flow-row">
+      <span class="flow-step">On delivery</span>
+      <span class="flow-desc">Fill Column B (Delivery Date). Update Column L → Delivered. Send Script 03 → mark Column O = Yes. Update Buyer Type in Column N if this is a second order (New Lead → Repeat).</span>
+      <span class="flow-cell">Cols B, L, N, O</span>
+    </div>
+    <div class="flow-row">
+      <span class="flow-step">Day 7</span>
+      <span class="flow-desc">Check Notion CRM for buyers with Delivery Date = 7 days ago. Send Script 04. Mark Column P = Yes. If buyer responds and re-orders, upgrade Buyer Type to VIP if this is their 3rd order.</span>
+      <span class="flow-cell">Col P → Yes</span>
+    </div>
+    <div class="flow-row">
+      <span class="flow-step">On proof</span>
+      <span class="flow-desc">When buyer shares delivery photo: mark Column Q = Yes. Add to Notion Proof bank with permission noted. ₦500 credit logged in Notes (Column T).</span>
+      <span class="flow-cell">Col Q → Yes</span>
+    </div>
+    <div class="flow-row" style="border-bottom:none;">
+      <span class="flow-step">Friday review</span>
+      <span class="flow-desc">Open Weekly Summary sheet. Enter this week's Monday date in Cell B4. Review all five COS v1 metrics. Check threshold cells. Note any metric below target. Pre-assign next week's three post situations before closing.</span>
+      <span class="flow-cell">Summary B4</span>
+    </div>
+  </div>
+
+  <h3>Notion CRM sync rule</h3>
+  <p>Every time Column N (Buyer Type) is updated in the spreadsheet, make the matching update in Notion CRM. The two systems are not technically linked — they stay in sync through discipline. Notion is the permanent record; the spreadsheet is the operational layer. When they conflict, Notion wins.</p>
+
+  <div class="grid-3" style="margin-top:12px;">
+    <div class="card-sm" style="border-top:3px solid var(--brown);">
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--brown);margin-bottom:5px;">New Lead → Repeat</p>
+      <p style="font-size:12px;color:var(--text-dim);">Trigger: second confirmed order in Column L = Paid. Update Column N + Notion buyer type simultaneously.</p>
+    </div>
+    <div class="card-sm" style="border-top:3px solid var(--rose);">
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);margin-bottom:5px;">Repeat → VIP</p>
+      <p style="font-size:12px;color:var(--text-dim);">Trigger: third confirmed order. VIP flag activates loyalty mechanic (Month 3). Update Column N + Notion.</p>
+    </div>
+    <div class="card-sm" style="border-top:3px solid var(--green-dk);">
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--green-dk);margin-bottom:5px;">Proof = Yes → Proof bank</p>
+      <p style="font-size:12px;color:var(--text-dim);">Trigger: Column Q = Yes. Photo tagged in Notion Proof bank with date, product, and permission status.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 THRESHOLDS -->
+<section class="section" id="thresholds">
+  <div class="sec-eyebrow"><span class="sec-num">07</span><span class="sec-tag">Expansion thresholds</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">The Summary sheet tells you when to expand. Watch these four cells.</h2>
+  <p class="sec-intro">The four MSOS expansion thresholds all have dedicated cells in the Summary sheet that auto-calculate from the Orders Log. Cells turn green when the condition is met. Nothing is guessed — the spreadsheet makes the decision obvious.</p>
+
+  <div class="threshold-grid">
+    <div class="threshold-card">
+      <p class="threshold-label">Paid ads gate</p>
+      <p class="threshold-name">15+ WA orders/week</p>
+      <p class="threshold-val">Cell <span class="threshold-cell">B37</span> tracks this week's Paid order count. Must hit 15+ for four consecutive weeks before Instagram or Facebook ads activate.</p>
+    </div>
+    <div class="threshold-card">
+      <p class="threshold-label">Proof bank target</p>
+      <p class="threshold-name">10+ proof items</p>
+      <p class="threshold-val">Cell <span class="threshold-cell">B38</span> counts all-time rows where Column Q = Yes. Must also be 10+ before paid ads activate. Both conditions required simultaneously.</p>
+    </div>
+    <div class="threshold-card">
+      <p class="threshold-label">Corporate pipeline</p>
+      <p class="threshold-name">Month 2 activation</p>
+      <p class="threshold-val">Cell <span class="threshold-cell">B39</span> counts Gift Set orders (all time). Track corporate interest alongside the Lookbook PDF build and Script 05 readiness.</p>
+    </div>
+    <div class="threshold-card">
+      <p class="threshold-label">Loyalty mechanic</p>
+      <p class="threshold-name">5+ VIP buyers</p>
+      <p class="threshold-val">Cell <span class="threshold-cell">B40</span> counts VIP entries in Column N. When this hits 5, "Beqa's Circle" stamp-card mechanic activates in Month 3.</p>
+    </div>
+  </div>
+
+  <div class="callout-green" style="margin-top:16px;"><strong>The green cell signal:</strong> Threshold cells in the Summary sheet are formatted to turn green automatically when their condition is met. On your Friday review, a green threshold cell means one thing: time to act on the next phase. The spreadsheet removes the decision — you just have to look.</div>
+</section>
+
+<!-- 08 ROADMAP -->
+<section class="section section-alt" id="roadmap">
+  <div class="sec-eyebrow"><span class="sec-num">08</span><span class="sec-tag">Roadmap</span><span class="sec-rule"></span></div>
+  <h2 class="sec-title">What to do first. In order.</h2>
+
+  <div class="roadmap">
+    <div class="rm-item done">
+      <p class="rm-week">Completed — this build</p>
+      <p class="rm-title">Tracking System v1 — all 16 problems resolved</p>
+      <p class="rm-desc">20-field Orders Log. Corrected dropdowns (3 products, 4 statuses, MSOS-aligned sources). 9 new fields including Delivery Date, Buyer Type, follow-up accountability, and proof tracking. Total (₦) auto-formula. Summary sheet with 527 live formulas, zero errors. Field Guide sheet. Conditional formatting throughout.</p>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Immediately — blocker</p>
+      <p class="rm-title">Start using it today</p>
+      <p class="rm-desc">Open the Orders Log. Enter every order from today forward. If you have records from previous orders in WhatsApp or notebooks, enter them retrospectively — even incomplete records are better than nothing. The Summary sheet only produces meaningful numbers when real data is flowing in.</p>
+      <div class="rm-tags"><span class="rm-tag">Enter all historic orders</span><span class="rm-tag">Set up weekly Friday review habit</span></div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Week 1 — discipline</p>
+      <p class="rm-title">Establish the three update moments</p>
+      <p class="rm-desc">Build the habit of updating the sheet at three specific moments: on order placed (fill Columns A–N, S), on delivery (fill B, update L, mark O), and on Day 7 (mark P). If these three moments are consistently captured, everything else in the system calculates automatically. Miss them and the data is noise.</p>
+      <div class="rm-tags"><span class="rm-tag">On order: cols A–N, S</span><span class="rm-tag">On delivery: B, L, O</span><span class="rm-tag">Day 7: col P</span></div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Week 1 — sync</p>
+      <p class="rm-title">Retrospectively populate Notion CRM from Orders Log</p>
+      <p class="rm-desc">Every buyer in the Orders Log should have a matching record in Notion CRM with the same Buyer Type. Go through existing contacts and tag each one. This is a one-time catch-up — after that, every new order creates both records simultaneously.</p>
+      <div class="rm-tags"><span class="rm-tag">Notion CRM sync</span><span class="rm-tag">Buyer Type tags</span><span class="rm-tag">Next Occasion field populated</span></div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Week 2 — first Friday review</p>
+      <p class="rm-title">Run the first complete Summary review</p>
+      <p class="rm-desc">Enter the Monday date of the first complete week in Cell B4 of the Summary sheet. Review all five COS v1 metrics. Record them in a separate log (Notion or paper) — this becomes the baseline everything is measured against. The numbers will feel small. That's fine — baseline is the starting point, not a judgment.</p>
+      <div class="rm-tags"><span class="rm-tag">First metric baseline</span><span class="rm-tag">Log to Notion</span></div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Month 1 — pattern recognition</p>
+      <p class="rm-title">Four weeks of data — first insights</p>
+      <p class="rm-desc">After four weekly reviews: which Source channel produces the most orders? Which product tier sells fastest? What is the real conversion rate (Paid ÷ all orders)? Which mode/campaign drove the most orders? These questions answer themselves from the data — no guessing required.</p>
+      <div class="rm-tags"><span class="rm-tag">Channel attribution</span><span class="rm-tag">Product mix</span><span class="rm-tag">Conversion rate baseline</span></div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Month 3 — system review</p>
+      <p class="rm-title">Data review feeds COS v2 and MSOS v2</p>
+      <p class="rm-desc">The Month 3 data review uses 6 weeks of tracking data to answer the questions the system was built around: Is the Day 7 nudge driving repeat orders? What is the repeat rate? Have any threshold cells turned green? This review sets the direction for Phase 2 of the Message System and triggers the Brand System v3 planning process.</p>
+      <div class="rm-tags"><span class="rm-tag">6-week data review</span><span class="rm-tag">Phase 2 gate check</span><span class="rm-tag">COS v2 + MSOS v2 planning</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- MANTRA -->
+<section class="section" style="padding-bottom:64px;">
+  <div class="mantra-block">
+    <p class="mantra-label">Tracking system principle</p>
+    <p class="mantra-text">"Data is not bureaucracy.<br>It is the proof that the system is working."</p>
+    <p class="mantra-sub">Because Beqa dey Bake. · Send a cake in minutes. · Every box feels like a celebration.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <div>
+    <div class="doc-footer-brand">Beqabakes</div>
+    <div class="doc-footer-tagline">Because Beqa dey Bake.</div>
+  </div>
+  <div class="doc-footer-meta">
+    Tracking System v1 · April 2026<br>
+    Aligned to Brand v2 · COS v1 · MSOS · Platform OS · Message System<br>
+    527 formulas · 0 errors · 20 fields
+  </div>
+</div>
+
+</div>
+</body>
+</html>

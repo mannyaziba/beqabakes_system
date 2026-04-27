@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beqabakes — Master System Index</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Mulish:wght@300;400;500;600;700&family=Merienda:wght@600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brown:    #5C2C1D;
+  --brown-dk: #3d1c10;
+  --cream:    #FFE3E9;
+  --cream-lt: #FFFBF9;
+  --cream-md: #F7F0ED;
+  --pink:     #F58BA6;
+  --rose:     #D16681;
+  --blush:    #F7D8DF;
+  --green:    #AAC8A7;
+  --green-dk: #5a8a57;
+  --text:     #2E2420;
+  --text-mid: #5C4840;
+  --text-dim: #8C7068;
+  --text-lt:  #B8A098;
+  --border:   rgba(92,44,29,.1);
+  --border-md:rgba(92,44,29,.18);
+  --white:    #ffffff;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Mulish',sans-serif;
+  background:#EDE3DD;
+  color:var(--text);
+  font-size:14px;
+  line-height:1.75;
+  min-height:100vh;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+.page{max-width:860px;margin:0 auto;background:var(--cream-lt);}
+
+/* ── HERO ── */
+.hero{
+  background:var(--brown-dk);
+  padding:64px 64px 56px;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;
+  top:-100px;right:-100px;
+  width:400px;height:400px;border-radius:50%;
+  background:rgba(245,139,166,.06);
+  pointer-events:none;
+}
+.hero-accent{height:5px;background:linear-gradient(90deg,var(--rose),var(--pink),var(--rose));margin-bottom:0;}
+.hero-eyebrow{
+  font-size:10px;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--rose);
+  margin-bottom:18px;
+  display:flex;align-items:center;gap:12px;
+}
+.hero-eyebrow::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.07);}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(32px,4.5vw,50px);
+  font-weight:700;color:white;line-height:1.1;
+  margin-bottom:14px;
+}
+.hero h1 em{color:var(--rose);font-style:italic;}
+.hero-sub{
+  font-size:14px;color:rgba(255,255,255,.45);
+  max-width:520px;line-height:1.7;
+  margin-bottom:40px;
+}
+.hero-mantra{
+  font-family:'Merienda',cursive;
+  font-size:15px;color:var(--rose);
+  opacity:.65;
+  border-top:1px solid rgba(255,255,255,.07);
+  padding-top:20px;
+}
+
+/* ── STACK OVERVIEW ── */
+.stack{padding:48px 64px;border-bottom:1px solid var(--border);}
+.stack-eyebrow{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);margin-bottom:8px;}
+.stack-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--brown);margin-bottom:24px;}
+
+.stack-row{
+  display:grid;grid-template-columns:24px 1fr auto;
+  gap:16px;padding:16px 0;
+  border-bottom:1px solid var(--border);
+  align-items:center;
+}
+.stack-row:last-child{border-bottom:none;}
+.stack-layer-num{
+  font-family:'Playfair Display',serif;
+  font-size:13px;color:var(--text-lt);
+  text-align:right;
+}
+.stack-layer-body{}
+.stack-layer-name{
+  font-family:'Playfair Display',serif;
+  font-size:16px;font-weight:700;color:var(--brown);
+  margin-bottom:3px;
+}
+.stack-layer-desc{font-size:12px;color:var(--text-dim);line-height:1.55;}
+.stack-layer-owns{
+  font-size:11px;color:var(--text-lt);
+  margin-top:5px;
+}
+.stack-layer-owns span{
+  display:inline-block;
+  background:var(--cream-md);border:1px solid var(--border-md);
+  border-radius:20px;padding:2px 8px;
+  font-size:10px;font-weight:600;color:var(--brown);
+  margin-right:4px;margin-top:3px;
+}
+.stack-badge{
+  font-size:10px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;padding:4px 12px;
+  border-radius:20px;white-space:nowrap;
+}
+.badge-live{background:var(--green);color:var(--green-dk);border:1px solid rgba(90,138,87,.25);}
+.badge-locked{background:var(--rose);color:white;}
+
+/* ── DOCUMENT CARDS ── */
+.docs{padding:48px 64px;border-bottom:1px solid var(--border);background:var(--cream-md);}
+.docs-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--brown);margin-bottom:24px;}
+.doc-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:16px;overflow:hidden;margin-bottom:14px;
+}
+.doc-card-head{
+  padding:18px 24px;
+  display:grid;grid-template-columns:auto 1fr auto;
+  gap:16px;align-items:center;
+  border-bottom:1px solid var(--border);
+}
+.doc-num{
+  font-family:'Playfair Display',serif;
+  font-size:24px;font-weight:700;
+  width:40px;text-align:center;
+}
+.doc-info{}
+.doc-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--brown);margin-bottom:3px;}
+.doc-meta{font-size:11px;color:var(--text-lt);letter-spacing:.04em;}
+.doc-card-body{padding:16px 24px;}
+.doc-owns-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:8px;}
+.doc-owns-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;}
+.doc-own-item{
+  font-size:12px;color:var(--text-mid);
+  padding:3px 0;padding-left:12px;
+  position:relative;line-height:1.5;
+}
+.doc-own-item::before{
+  content:'—';position:absolute;left:0;
+  color:var(--text-lt);font-size:11px;
+}
+.doc-card-footer{
+  padding:12px 24px;
+  background:var(--cream-lt);
+  border-top:1px solid var(--border);
+  font-size:12px;color:var(--text-dim);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.doc-sections{display:flex;flex-wrap:wrap;gap:6px;}
+.section-chip{
+  font-size:10px;font-weight:600;
+  background:var(--cream-md);border:1px solid var(--border-md);
+  border-radius:20px;padding:2px 9px;color:var(--brown);
+}
+
+/* ── RULES QUICK-REF ── */
+.rules{padding:48px 64px;border-bottom:1px solid var(--border);}
+.rules-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--brown);margin-bottom:24px;}
+.rule-block{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:12px;}
+.rule-block-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rose);margin-bottom:8px;}
+.rule-block-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);margin-bottom:8px;}
+.rule-list{list-style:none;}
+.rule-list li{font-size:13px;color:var(--text-mid);padding:5px 0;border-bottom:1px solid var(--border);line-height:1.55;padding-left:14px;position:relative;}
+.rule-list li:last-child{border-bottom:none;}
+.rule-list li::before{content:'—';position:absolute;left:0;color:var(--text-lt);}
+.rule-law{
+  background:var(--brown-dk);border-radius:12px;
+  padding:18px 22px;margin-bottom:12px;
+}
+.rule-law-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rose);margin-bottom:6px;}
+.rule-law-text{font-family:'Playfair Display',serif;font-style:italic;font-size:15px;color:white;line-height:1.55;}
+
+/* ── NON-OVERLAP TABLE ── */
+.overlap{padding:48px 64px;border-bottom:1px solid var(--border);background:var(--cream-md);}
+.overlap-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--brown);margin-bottom:20px;}
+.overlap-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border-md);
+  border:1px solid var(--border-md);border-radius:12px;overflow:hidden;
+}
+.overlap-col{background:var(--white);padding:18px 20px;}
+.overlap-col-head{
+  font-size:10px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--rose);
+  margin-bottom:12px;padding-bottom:8px;
+  border-bottom:1px solid var(--border);
+}
+.overlap-item{
+  font-size:12px;color:var(--text-mid);
+  padding:5px 0;border-bottom:1px solid var(--border);
+  line-height:1.5;
+}
+.overlap-item:last-child{border-bottom:none;}
+.overlap-item.strong{color:var(--text);font-weight:600;}
+
+/* ── ROADMAP TIMELINE ── */
+.timeline{padding:48px 64px;border-bottom:1px solid var(--border);}
+.timeline-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--brown);margin-bottom:24px;}
+.tl{position:relative;padding-left:32px;}
+.tl::before{content:'';position:absolute;left:9px;top:8px;bottom:8px;width:1px;background:var(--border-md);}
+.tl-item{position:relative;margin-bottom:20px;}
+.tl-item::before{content:'';position:absolute;left:-26px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--white);border:2px solid var(--rose);}
+.tl-item.done::before{background:var(--rose);}
+.tl-week{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:3px;}
+.tl-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);margin-bottom:3px;}
+.tl-desc{font-size:12px;color:var(--text-dim);line-height:1.6;}
+.tl-tags{margin-top:6px;display:flex;flex-wrap:wrap;gap:5px;}
+.tl-tag{font-size:10px;padding:2px 9px;border-radius:20px;background:var(--cream-md);border:1px solid var(--border-md);color:var(--brown);font-weight:500;}
+
+/* ── MODE QUICK-REF ── */
+.modes{padding:48px 64px;border-bottom:1px solid var(--border);}
+.modes-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--brown);margin-bottom:20px;}
+.mode-row{
+  display:grid;grid-template-columns:120px 1fr 160px;gap:16px;
+  padding:14px 0;border-bottom:1px solid var(--border);
+  align-items:start;font-size:13px;
+}
+.mode-row:last-child{border-bottom:none;}
+.mode-pill{display:inline-block;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:600;}
+.pill-exp{background:var(--rose);color:white;}
+.pill-cel{background:var(--pink);color:var(--brown);}
+.pill-ret{background:var(--blush);color:var(--brown);border:1px solid var(--border-md);}
+.mode-desc{color:var(--text-mid);line-height:1.55;}
+.mode-example{font-family:'Playfair Display',serif;font-style:italic;font-size:13px;color:var(--brown);}
+
+/* ── METRICS ── */
+.metrics{padding:48px 64px;border-bottom:1px solid var(--border);background:var(--cream-md);}
+.metrics-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--brown);margin-bottom:20px;}
+.metrics-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px;}
+.metric-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px 12px;text-align:center;}
+.metric-num{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--brown);margin-bottom:3px;}
+.metric-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text-lt);line-height:1.4;}
+.threshold-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.threshold-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.threshold-cond{font-size:12px;font-weight:700;color:var(--brown);margin-bottom:4px;}
+.threshold-val{font-size:12px;color:var(--text-dim);line-height:1.55;}
+
+/* ── FOOTER ── */
+.footer{
+  background:var(--brown-dk);padding:32px 64px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.footer-brand{font-family:'Playfair Display',serif;font-size:16px;color:white;}
+.footer-tagline{font-family:'Merienda',cursive;font-size:13px;color:var(--rose);opacity:.65;margin-top:5px;}
+.footer-meta{font-size:11px;color:rgba(255,255,255,.25);line-height:1.9;text-align:right;}
+
+.divider{border:none;border-top:1px solid var(--border);margin:20px 0;}
+
+@media print{
+  body{background:white;}
+  .page{max-width:100%;}
+  .hero{break-after:page;}
+  .doc-card{break-inside:avoid;}
+}
+@media(min-width:1100px){body{padding:0 40px;}.page{box-shadow:0 0 60px rgba(0,0,0,.12);}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ── HERO ── -->
+<div class="hero-accent"></div>
+<div class="hero">
+  <p class="hero-eyebrow">Beqabakes &nbsp;·&nbsp; Master System Index &nbsp;·&nbsp; April 2026</p>
+  <h1>The complete<br><em>operating stack.</em></h1>
+  <p class="hero-sub">Seven documents. Seven layers. One system. This index is the single entry point — it maps every document, every rule, every ownership boundary, and every next action. Start here before opening anything else.</p>
+  <p class="hero-mantra">Because Beqa dey Bake. &nbsp;·&nbsp; Send a cake in minutes. &nbsp;·&nbsp; Every box feels like a celebration.</p>
+</div>
+
+<!-- ── STACK ── -->
+<div class="stack">
+  <p class="stack-eyebrow">System architecture</p>
+  <p class="stack-title">Four layers. Each owns its territory.</p>
+
+  <div class="stack-row">
+    <span class="stack-layer-num">1</span>
+    <div class="stack-layer-body">
+      <p class="stack-layer-name">Brand System v2</p>
+      <p class="stack-layer-desc">Identity layer. Governs everything visual, tonal, and architectural. Every downstream decision defers to this document first.</p>
+      <div class="stack-layer-owns">
+        <span>Color system</span><span>Typography</span><span>Mode definitions</span><span>Tone + archetype</span><span>Audience definition</span><span>Pre-output checklist</span>
+      </div>
+    </div>
+    <span class="stack-badge badge-locked">Locked</span>
+  </div>
+
+  <div class="stack-row">
+    <span class="stack-layer-num">2</span>
+    <div class="stack-layer-body">
+      <p class="stack-layer-name">Content Operating System v1</p>
+      <p class="stack-layer-desc">Production layer. Owns the weekly content engine — what gets made, how it gets made, and how it gets measured.</p>
+      <div class="stack-layer-owns">
+        <span>SIA+ brief template</span><span>Weekly calendar</span><span>Scripts 01–06</span><span>Proof bank system</span><span>5-metric framework</span><span>Execution tracks</span>
+      </div>
+    </div>
+    <span class="stack-badge badge-live">Live</span>
+  </div>
+
+  <div class="stack-row">
+    <span class="stack-layer-num">3</span>
+    <div class="stack-layer-body">
+      <p class="stack-layer-name">Marketing &amp; Sales Operating System v1</p>
+      <p class="stack-layer-desc">Strategy layer. Owns market intelligence, acquisition architecture, CRM structure, campaign logic, and growth sequencing.</p>
+      <div class="stack-layer-owns">
+        <span>Acquisition channels</span><span>Awareness → content map</span><span>Notion CRM schema</span><span>Campaign 4-beat structure</span><span>Expansion thresholds</span>
+      </div>
+    </div>
+    <span class="stack-badge badge-live">Live</span>
+  </div>
+
+  <div class="stack-row">
+    <span class="stack-layer-num">4</span>
+    <div class="stack-layer-body">
+      <p class="stack-layer-name">Platform Operating System v1</p>
+      <p class="stack-layer-desc">Execution layer. Owns the per-platform setup, script bank, cadence, and daily workflow for Instagram, WhatsApp, and Facebook.</p>
+      <div class="stack-layer-owns">
+        <span>IG profile + feed</span><span>WA scripts bank</span><span>FB cross-post rules</span><span>One-input production flow</span><span>Platform metrics</span>
+      </div>
+    </div>
+    <span class="stack-badge badge-live">Live</span>
+  </div>
+
+  <div class="stack-row">
+    <span class="stack-layer-num">5</span>
+    <div class="stack-layer-body">
+      <p class="stack-layer-name">WhatsApp Message System v1</p>
+      <p class="stack-layer-desc">Conversion layer. Owns the complete WhatsApp message architecture — entry flow, order flow, retention sequence, CRM labels, and broadcast templates.</p>
+      <div class="stack-layer-owns">
+        <span>Entry + away messages</span><span>3-item Quick Order menu</span><span>Order flow scripts</span><span>Day 0 + Day 7 retention</span><span>4 WA labels → Notion</span><span>Broadcast templates</span>
+      </div>
+    </div>
+    <span class="stack-badge badge-live">Live</span>
+  </div>
+
+  <div class="stack-row">
+    <span class="stack-layer-num">6</span>
+    <div class="stack-layer-body">
+      <p class="stack-layer-name">Tracking System v1</p>
+      <p class="stack-layer-desc">Data layer. Owns the Orders Log (20 fields), Weekly Summary dashboard (527 formulas, zero errors), Field Guide, and all COS v1 metric calculations plus MSOS expansion threshold monitoring.</p>
+      <div class="stack-layer-owns">
+        <span>Orders Log (20 fields)</span><span>Weekly Summary auto-calc</span><span>5 COS v1 metrics</span><span>Retention + proof rates</span><span>4 expansion thresholds</span>
+      </div>
+    </div>
+    <span class="stack-badge badge-live">Live</span>
+  </div>
+
+  <div class="stack-row">
+    <span class="stack-layer-num">7</span>
+    <div class="stack-layer-body">
+      <p class="stack-layer-name">Pinned Posts — Three Posts</p>
+      <p class="stack-layer-desc">Content layer. Owns the three pinned Instagram posts — Quick Order (Express), Lookbook (Celebration), and Custom Order (Celebration soft) — with full SIA+ briefs, captions, Canva specs, and pre-output checklist results.</p>
+      <div class="stack-layer-owns">
+        <span>Pin 01: Quick Order</span><span>Pin 02: Lookbook</span><span>Pin 03: Custom Order</span><span>Canva specs all three</span><span>Bio link architecture confirmed</span>
+      </div>
+    </div>
+    <span class="stack-badge badge-live">Live</span>
+  </div>
+</div>
+
+<!-- ── DOCUMENT CARDS ── -->
+<div class="docs">
+  <p class="docs-title">The seven documents</p>
+
+  <!-- DOC 1: Brand v2 -->
+  <div class="doc-card">
+    <div class="doc-card-head">
+      <span class="doc-num" style="color:var(--pink);">01</span>
+      <div class="doc-info">
+        <p class="doc-name">Brand System v2</p>
+        <p class="doc-meta">beqabakes_brand_system_v2.html &nbsp;·&nbsp; Identity layer &nbsp;·&nbsp; Locked April 2026</p>
+      </div>
+      <span class="stack-badge badge-locked">Identity</span>
+    </div>
+    <div class="doc-card-body">
+      <p class="doc-owns-label">This document owns</p>
+      <div class="doc-owns-grid">
+        <span class="doc-own-item">Color system — 7 colors, locked roles</span>
+        <span class="doc-own-item">Typography — Playfair / Mulish / Merienda</span>
+        <span class="doc-own-item">Express / Celebration / Retention modes</span>
+        <span class="doc-own-item">Operator × Giver archetype</span>
+        <span class="doc-own-item">Audience: women 22–40 primary</span>
+        <span class="doc-own-item">Pre-output checklist (6 points)</span>
+        <span class="doc-own-item">Cake-Card Wedge rule</span>
+        <span class="doc-own-item">Visual hierarchy: cake → context → brand</span>
+      </div>
+    </div>
+    <div class="doc-card-footer">
+      <div class="doc-sections">
+        <span class="section-chip">Resolutions (8)</span>
+        <span class="section-chip">Color system</span>
+        <span class="section-chip">Typography</span>
+        <span class="section-chip">Voice modes</span>
+        <span class="section-chip">WA scripts</span>
+        <span class="section-chip">Weekly calendar</span>
+        <span class="section-chip">Roadmap</span>
+      </div>
+      <span style="font-size:11px;color:var(--text-lt);">7 sections</span>
+    </div>
+  </div>
+
+  <!-- DOC 2: COS -->
+  <div class="doc-card">
+    <div class="doc-card-head">
+      <span class="doc-num" style="color:var(--rose);">02</span>
+      <div class="doc-info">
+        <p class="doc-name">Content Operating System v1</p>
+        <p class="doc-meta">beqabakes_content_ops_system.html &nbsp;·&nbsp; Production layer &nbsp;·&nbsp; Live April 2026</p>
+      </div>
+      <span class="stack-badge badge-live">Production</span>
+    </div>
+    <div class="doc-card-body">
+      <p class="doc-owns-label">This document owns</p>
+      <div class="doc-owns-grid">
+        <span class="doc-own-item">SIA+ brief template (10 fields + mode)</span>
+        <span class="doc-own-item">Mon / Wed / Fri calendar (3 tracks)</span>
+        <span class="doc-own-item">Scripts 01–05 canonical text</span>
+        <span class="doc-own-item">Proof bank — 7-field Notion schema</span>
+        <span class="doc-own-item">5-metric Friday review framework</span>
+        <span class="doc-own-item">Content stack (4 layers + targets)</span>
+        <span class="doc-own-item">Monthly themes tied to products</span>
+        <span class="doc-own-item">Knowledge base (4 databases)</span>
+      </div>
+    </div>
+    <div class="doc-card-footer">
+      <div class="doc-sections">
+        <span class="section-chip">System overview</span>
+        <span class="section-chip">Brand modes</span>
+        <span class="section-chip">SIA+ template</span>
+        <span class="section-chip">Checklist</span>
+        <span class="section-chip">Content stack</span>
+        <span class="section-chip">Pillars + themes</span>
+        <span class="section-chip">Visual system</span>
+        <span class="section-chip">Platform adapters</span>
+        <span class="section-chip">WA scripts</span>
+        <span class="section-chip">Calendar</span>
+        <span class="section-chip">Execution</span>
+        <span class="section-chip">Proof system</span>
+        <span class="section-chip">Tracking</span>
+        <span class="section-chip">Roadmap</span>
+      </div>
+      <span style="font-size:11px;color:var(--text-lt);">15 sections</span>
+    </div>
+  </div>
+
+  <!-- DOC 3: MSOS -->
+  <div class="doc-card">
+    <div class="doc-card-head">
+      <span class="doc-num" style="color:var(--brown);">03</span>
+      <div class="doc-info">
+        <p class="doc-name">Marketing &amp; Sales Operating System v1</p>
+        <p class="doc-meta">beqabakes_marketing_sales_system.html &nbsp;·&nbsp; Strategy layer &nbsp;·&nbsp; Live April 2026</p>
+      </div>
+      <span class="stack-badge" style="background:var(--brown);color:white;">Strategy</span>
+    </div>
+    <div class="doc-card-body">
+      <p class="doc-owns-label">This document owns</p>
+      <div class="doc-owns-grid">
+        <span class="doc-own-item">Market reality — audience, tensions, objections</span>
+        <span class="doc-own-item">Offer stack (Entry / Core / Premium)</span>
+        <span class="doc-own-item">Channel matrix (IG / WA / Referral / Ads)</span>
+        <span class="doc-own-item">Awareness stages → content assignment</span>
+        <span class="doc-own-item">Notion CRM — 5-field schema + tagging</span>
+        <span class="doc-own-item">Campaign 4-beat structure</span>
+        <span class="doc-own-item">3 growth loops + expansion thresholds</span>
+        <span class="doc-own-item">Tool stack (6 tools, defined roles)</span>
+      </div>
+    </div>
+    <div class="doc-card-footer">
+      <div class="doc-sections">
+        <span class="section-chip">Ownership</span>
+        <span class="section-chip">Market reality</span>
+        <span class="section-chip">Offer system</span>
+        <span class="section-chip">Acquisition</span>
+        <span class="section-chip">Awareness map</span>
+        <span class="section-chip">Nurture sequence</span>
+        <span class="section-chip">Conversion</span>
+        <span class="section-chip">CRM</span>
+        <span class="section-chip">Campaigns</span>
+        <span class="section-chip">Growth</span>
+        <span class="section-chip">Tools</span>
+        <span class="section-chip">Control</span>
+        <span class="section-chip">Roadmap</span>
+      </div>
+      <span style="font-size:11px;color:var(--text-lt);">13 sections</span>
+    </div>
+  </div>
+
+  <!-- DOC 4: Platform OS -->
+  <div class="doc-card">
+    <div class="doc-card-head">
+      <span class="doc-num" style="color:#C13584;">04</span>
+      <div class="doc-info">
+        <p class="doc-name">Platform Operating System v1</p>
+        <p class="doc-meta">beqabakes_platform_system.html &nbsp;·&nbsp; Execution layer &nbsp;·&nbsp; Live April 2026</p>
+      </div>
+      <span class="stack-badge" style="background:#C13584;color:white;">Platform</span>
+    </div>
+    <div class="doc-card-body">
+      <p class="doc-owns-label">This document owns</p>
+      <div class="doc-owns-grid">
+        <span class="doc-own-item">IG profile, bio, Highlights (6 covers)</span>
+        <span class="doc-own-item">IG feed system, Stories, Reels, captions</span>
+        <span class="doc-own-item">WA Business setup + catalog (3 items)</span>
+        <span class="doc-own-item">WA auto-replies + quick replies</span>
+        <span class="doc-own-item">Scripts 01–06 (canonical full text)</span>
+        <span class="doc-own-item">WA Status — ephemeral derivative layer</span>
+        <span class="doc-own-item">FB page setup — CTA: WhatsApp only</span>
+        <span class="doc-own-item">FB cross-post rules + Messenger redirect</span>
+      </div>
+    </div>
+    <div class="doc-card-footer">
+      <div class="doc-sections">
+        <span class="section-chip">Foundation</span>
+        <span class="section-chip">Pricing ref</span>
+        <span class="section-chip">IG profile</span>
+        <span class="section-chip">Highlights</span>
+        <span class="section-chip">IG feed</span>
+        <span class="section-chip">Stories</span>
+        <span class="section-chip">Reels</span>
+        <span class="section-chip">Captions</span>
+        <span class="section-chip">WA setup</span>
+        <span class="section-chip">Auto-replies</span>
+        <span class="section-chip">Scripts 01–06</span>
+        <span class="section-chip">Status</span>
+        <span class="section-chip">FB setup</span>
+        <span class="section-chip">FB content</span>
+        <span class="section-chip">Messenger</span>
+        <span class="section-chip">Production</span>
+        <span class="section-chip">Metrics</span>
+        <span class="section-chip">Roadmap</span>
+      </div>
+      <span style="font-size:11px;color:var(--text-lt);">18 sections</span>
+    </div>
+  </div>
+
+  <!-- DOC 5: Message System -->
+  <div class="doc-card">
+    <div class="doc-card-head">
+      <span class="doc-num" style="color:#25D366;">05</span>
+      <div class="doc-info">
+        <p class="doc-name">WhatsApp Message System v1</p>
+        <p class="doc-meta">beqabakes_message_system.html &nbsp;·&nbsp; Conversion layer &nbsp;·&nbsp; Live April 2026</p>
+      </div>
+      <span class="stack-badge" style="background:#128C7E;color:white;">Messaging</span>
+    </div>
+    <div class="doc-card-body">
+      <p class="doc-owns-label">This document owns</p>
+      <div class="doc-owns-grid">
+        <span class="doc-own-item">Entry system — greeting, away, quick replies</span>
+        <span class="doc-own-item">Quick Order menu — 3 items, locked names</span>
+        <span class="doc-own-item">Order flow — details → summary → payment</span>
+        <span class="doc-own-item">Upsell system — post-payment add-ons only</span>
+        <span class="doc-own-item">Retention sequence — Day 0 + Day 7 (locked)</span>
+        <span class="doc-own-item">Phase 2 reactivation — gated until Month 3</span>
+        <span class="doc-own-item">4 WA labels mapped to Notion CRM</span>
+        <span class="doc-own-item">Broadcast templates — weekly push (3/week)</span>
+      </div>
+    </div>
+    <div class="doc-card-footer">
+      <div class="doc-sections">
+        <span class="section-chip">Principles</span>
+        <span class="section-chip">Setup</span>
+        <span class="section-chip">Entry system</span>
+        <span class="section-chip">Order flow</span>
+        <span class="section-chip">Scripts 01–06</span>
+        <span class="section-chip">Upsell</span>
+        <span class="section-chip">Retention</span>
+        <span class="section-chip">Reactivation</span>
+        <span class="section-chip">CRM labels</span>
+        <span class="section-chip">Broadcast</span>
+        <span class="section-chip">Rules</span>
+        <span class="section-chip">Roadmap</span>
+      </div>
+      <span style="font-size:11px;color:var(--text-lt);">12 sections</span>
+    </div>
+  </div>
+
+  <!-- DOC 6: Tracking System -->
+  <div class="doc-card">
+    <div class="doc-card-head">
+      <span class="doc-num" style="color:var(--green-dk);">06</span>
+      <div class="doc-info">
+        <p class="doc-name">Tracking System v1</p>
+        <p class="doc-meta">beqabakes_tracking_system.html + beqabakes_tracking_v2.xlsx &nbsp;·&nbsp; Data layer &nbsp;·&nbsp; Live April 2026</p>
+      </div>
+      <span class="stack-badge" style="background:var(--green-dk);color:white;">Data</span>
+    </div>
+    <div class="doc-card-body">
+      <p class="doc-owns-label">This document owns</p>
+      <div class="doc-owns-grid">
+        <span class="doc-own-item">Orders Log — 20 fields, 500 rows, validated</span>
+        <span class="doc-own-item">Weekly Summary — 527 formulas, auto-calc</span>
+        <span class="doc-own-item">COS v1 five metrics auto-calculated</span>
+        <span class="doc-own-item">Revenue, AOV, product + channel breakdown</span>
+        <span class="doc-own-item">Retention health — repeat rate, proof rate</span>
+        <span class="doc-own-item">Expansion threshold cells (auto-green)</span>
+        <span class="doc-own-item">Field Guide — every dropdown defined</span>
+        <span class="doc-own-item">Weekly update workflow (3 trigger moments)</span>
+      </div>
+    </div>
+    <div class="doc-card-footer">
+      <div class="doc-sections">
+        <span class="section-chip">What changed</span>
+        <span class="section-chip">Orders Log</span>
+        <span class="section-chip">Field guide</span>
+        <span class="section-chip">Dropdowns</span>
+        <span class="section-chip">Summary sheet</span>
+        <span class="section-chip">Key formulas</span>
+        <span class="section-chip">Weekly workflow</span>
+        <span class="section-chip">Thresholds</span>
+        <span class="section-chip">Roadmap</span>
+      </div>
+      <span style="font-size:11px;color:var(--text-lt);">3 sheets · 9 sections</span>
+    </div>
+  </div>
+
+  <!-- DOC 7: Pinned Posts -->
+  <div class="doc-card">
+    <div class="doc-card-head">
+      <span class="doc-num" style="color:var(--rose);">07</span>
+      <div class="doc-info">
+        <p class="doc-name">Three Pinned Posts</p>
+        <p class="doc-meta">beqabakes_pinned_posts.html &nbsp;·&nbsp; Content layer &nbsp;·&nbsp; Live April 2026</p>
+      </div>
+      <span class="stack-badge badge-live">Content</span>
+    </div>
+    <div class="doc-card-body">
+      <p class="doc-owns-label">This document owns</p>
+      <div class="doc-owns-grid">
+        <span class="doc-own-item">Pin 01: Quick Order — Express mode, 5 items</span>
+        <span class="doc-own-item">Pin 02: Lookbook — Celebration mode, site live</span>
+        <span class="doc-own-item">Pin 03: Custom Order — "Planning a bigger celebration?"</span>
+        <span class="doc-own-item">SIA+ brief for each post (all three modes)</span>
+        <span class="doc-own-item">Primary + short caption variants (all three)</span>
+        <span class="doc-own-item">Canva build spec — hex codes, fonts, sizes</span>
+        <span class="doc-own-item">Pre-output checklist results (all three)</span>
+        <span class="doc-own-item">Bio link three-path architecture confirmed</span>
+      </div>
+    </div>
+    <div class="doc-card-footer">
+      <div class="doc-sections">
+        <span class="section-chip">Pin 01 Quick Order</span>
+        <span class="section-chip">Pin 02 Lookbook</span>
+        <span class="section-chip">Pin 03 Custom Order</span>
+        <span class="section-chip">Pinned set overview</span>
+        <span class="section-chip">Awareness stage map</span>
+      </div>
+      <span style="font-size:11px;color:var(--text-lt);">3 posts · all unblocked</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── NON-OVERLAP OWNERSHIP ── -->
+<div class="overlap">
+  <p class="overlap-title">Non-overlap rule — who owns what</p>
+  <div class="overlap-grid">
+    <div class="overlap-col">
+      <p class="overlap-col-head">Brand System v2 owns</p>
+      <p class="overlap-item strong">Color roles (Rosewood = CTA only)</p>
+      <p class="overlap-item strong">Mode definitions (Express / Celebration / Retention)</p>
+      <p class="overlap-item strong">Audience definition (women 22–40 primary)</p>
+      <p class="overlap-item strong">Archetype (Operator × Giver)</p>
+      <p class="overlap-item">Typography rules</p>
+      <p class="overlap-item">Pre-output checklist</p>
+      <p class="overlap-item">Cake-Card Wedge rule</p>
+    </div>
+    <div class="overlap-col">
+      <p class="overlap-col-head">COS v1 + Platform OS own</p>
+      <p class="overlap-item strong">Scripts 01–06 (Platform OS = canonical text)</p>
+      <p class="overlap-item strong">Weekly Mon/Wed/Fri calendar</p>
+      <p class="overlap-item strong">SIA+ brief template</p>
+      <p class="overlap-item strong">Proof bank collection system</p>
+      <p class="overlap-item strong">Day 0 / Day 7 nurture timing</p>
+      <p class="overlap-item">5-metric framework</p>
+      <p class="overlap-item">Content stack (4 layers)</p>
+    </div>
+    <div class="overlap-col">
+      <p class="overlap-col-head">MSOS owns exclusively</p>
+      <p class="overlap-item strong">Awareness stages → content map</p>
+      <p class="overlap-item strong">Notion CRM schema + tagging logic</p>
+      <p class="overlap-item strong">Paid ads threshold (15+ WA orders × 4 wks)</p>
+      <p class="overlap-item strong">Campaign 4-beat structure</p>
+      <p class="overlap-item strong">Expansion path sequencing</p>
+      <p class="overlap-item">Market reality (tensions, objections)</p>
+      <p class="overlap-item">Growth loop architecture</p>
+    </div>
+  </div>
+  <div style="margin-top:14px;padding:14px 18px;background:var(--white);border:1px solid var(--border-md);border-radius:10px;font-size:13px;color:var(--text-mid);">
+    <strong style="color:var(--brown);">Non-overlap law:</strong> Any rule appearing in more than one document is moved to its owner and removed from the others. When in doubt — identity question → Brand v2, production question → COS v1, strategy question → MSOS, platform setup question → Platform OS.
+  </div>
+</div>
+
+<!-- ── MODE QUICK-REF ── -->
+<div class="modes">
+  <p style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);margin-bottom:8px;">Quick reference</p>
+  <p class="modes-title">Brand mode decision table</p>
+
+  <div class="mode-row">
+    <span class="mode-pill pill-exp">Express</span>
+    <div class="mode-desc">Urgency + sales. Lead with action. Price visible. Max 2 lines before CTA. Single WA link. Rosewood (#D16681) CTA. Used for Monday posts, offer broadcasts, same-day pushes.</div>
+    <span class="mode-example">"Pick. Pay. Done."</span>
+  </div>
+  <div class="mode-row">
+    <span class="mode-pill pill-cel">Celebration</span>
+    <div class="mode-desc">Warmth + gift moment. Recipient-first. Slightly longer, still ends in action. Cake-Card Wedge visual. Pink (#F58BA6) accent. Used for Wednesday posts, Reels, packaging.</div>
+    <span class="mode-example">"Every box feels like a celebration."</span>
+  </div>
+  <div class="mode-row" style="border-bottom:none;">
+    <span class="mode-pill pill-ret">Retention</span>
+    <div class="mode-desc">Soft + relational. Acknowledge the gift. Low pressure, one action only. BACK500 code. Blush palette. Used for Friday posts, Day 7 nudge, loyalty mechanic, packaging insert.</div>
+    <span class="mode-example">"Hope they loved it."</span>
+  </div>
+
+  <div style="margin-top:16px;padding:14px 18px;background:var(--cream-md);border-radius:10px;font-size:13px;color:var(--text-mid);">
+    <strong style="color:var(--brown);">Mode decision tree (3 questions):</strong> 1. Has this customer already ordered? → Retention. 2. Is this driving an order right now? → Express. 3. Does it show a gift moment or emotion? → Celebration. If none → rethink, don't publish.
+  </div>
+</div>
+
+<!-- ── METRICS ── -->
+<div class="metrics">
+  <p style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);margin-bottom:8px;">Quick reference</p>
+  <p class="metrics-title">Five metrics. Reviewed every Friday.</p>
+
+  <div class="metrics-row">
+    <div class="metric-card"><p class="metric-num">3</p><p class="metric-label">Posts / week minimum</p></div>
+    <div class="metric-card"><p class="metric-num">↑</p><p class="metric-label">Avg reach growing</p></div>
+    <div class="metric-card"><p class="metric-num">3%+</p><p class="metric-label">WA reply rate</p></div>
+    <div class="metric-card"><p class="metric-num">6+</p><p class="metric-label">WA orders / week</p></div>
+    <div class="metric-card"><p class="metric-num">1+</p><p class="metric-label">Proof collected</p></div>
+  </div>
+
+  <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-lt);margin-bottom:10px;">Expansion thresholds</p>
+  <div class="threshold-row">
+    <div class="threshold-card">
+      <p class="threshold-cond">Paid ads (IG + FB)</p>
+      <p class="threshold-val">15+ WA order initiations/week for 4 consecutive weeks AND 10+ proof items in bank.</p>
+    </div>
+    <div class="threshold-card">
+      <p class="threshold-cond">Corporate pipeline</p>
+      <p class="threshold-val">Activates Month 2. Script 05 live + Lookbook PDF built + Notion pipeline tracker set up.</p>
+    </div>
+    <div class="threshold-card">
+      <p class="threshold-cond">Loyalty mechanic</p>
+      <p class="threshold-val">5+ VIP buyers (3+ orders each) in CRM. Stamp card: 5 orders = free add-on. Month 3.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── TIMELINE ── -->
+<div class="timeline">
+  <p style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);margin-bottom:8px;">Quick reference</p>
+  <p class="timeline-title">Master roadmap — all systems consolidated</p>
+
+  <div class="tl">
+    <div class="tl-item done">
+      <p class="tl-week">Complete</p>
+      <p class="tl-title">Full system stack built — 4 documents live</p>
+      <p class="tl-desc">Brand v2, COS v1, MSOS v1, Platform OS v1, Message System v1, Tracking System v1, Pinned Posts. All conflicts audited and resolved across 100+ problems. Non-overlap rules established. 527 tracking formulas live. Quick Order architecture confirmed as five-item fast lane. Bio link three-path router confirmed.</p>
+    </div>
+    <div class="tl-item">
+      <p class="tl-week">Before first post — blocker</p>
+      <p class="tl-title">Confirm all five Quick Order Paystack links are live</p>
+      <p class="tl-desc">Five links, five payment commands: /paybirthday (Quick Birthday Cake ₦18k), /paybento (Send Love ₦10k), /paybox (Mini Celebration Box ₦15k), /paycasual (Just Because Cake ₦7k), /paycupcake (Cupcake Box ₦12k). Test each link end-to-end before pinning Post 01 or activating any WA quick reply. Nothing publishes with a broken payment link.</p>
+      <div class="tl-tags"><span class="tl-tag">5 Paystack links</span><span class="tl-tag">5 payment commands</span><span class="tl-tag">End-to-end test</span></div>
+    </div>
+    <div class="tl-item">
+      <p class="tl-week">Week 1 — setup</p>
+      <p class="tl-title">Configure all three platforms + build Notion CRM</p>
+      <p class="tl-desc">IG profile, WA Business catalog (3 items), FB CTA → WhatsApp, Messenger auto-reply. Notion CRM: 5-field buyer database. Tag all existing buyers retrospectively.</p>
+      <div class="tl-tags"><span class="tl-tag">IG + WA + FB setup</span><span class="tl-tag">Notion CRM</span><span class="tl-tag">FAQ Highlight</span></div>
+    </div>
+    <div class="tl-item">
+      <p class="tl-week">Week 1–2</p>
+      <p class="tl-title">Write 9 SIA+ briefs (3 weeks ahead) + activate Script 06</p>
+      <p class="tl-desc">Pre-writing briefs removes the blank-page problem. Script 06 (referral prompt) written and added to WA script bank. Proof bank: manually send Script 03 to last 20 buyers to stock the bank.</p>
+      <div class="tl-tags"><span class="tl-tag">9 SIA+ briefs</span><span class="tl-tag">Script 06</span><span class="tl-tag">Proof bank 10+ items</span></div>
+    </div>
+    <div class="tl-item">
+      <p class="tl-week">Week 2</p>
+      <p class="tl-title">First production cycle — Mon / Wed / Fri live</p>
+      <p class="tl-desc">Run the full weekly flow: 3 briefs → 3 posts (IG + FB cross-post) → 3 WA Status. Monday broadcast. Scripts fire on delivery. Friday metrics review logged in Notion.</p>
+      <div class="tl-tags"><span class="tl-tag">3 posts all platforms</span><span class="tl-tag">WA broadcast</span><span class="tl-tag">Friday review</span></div>
+    </div>
+    <div class="tl-item">
+      <p class="tl-week">Month 1</p>
+      <p class="tl-title">Build Quick Menu image + Lookbook PDF + first 4-beat campaign</p>
+      <p class="tl-desc">"No-stress gifting" campaign (Express Bento hero). Quick Menu fills IG Prices Highlight and !order quick reply. Lookbook sent to corporate inquiries. Run Pre → Launch → Post → Retention beats.</p>
+      <div class="tl-tags"><span class="tl-tag">Quick Menu</span><span class="tl-tag">Lookbook PDF</span><span class="tl-tag">4-beat campaign</span></div>
+    </div>
+    <div class="tl-item">
+      <p class="tl-week">Month 2</p>
+      <p class="tl-title">Corporate pipeline + "Make someone smile" campaign</p>
+      <p class="tl-desc">Corporate one-pager + Notion pipeline tracker. Gift Sets upsell campaign. WA automation evaluation (if 15+ orders/week).</p>
+      <div class="tl-tags"><span class="tl-tag">Corporate one-pager</span><span class="tl-tag">Pipeline tracker</span><span class="tl-tag">Gift Sets campaign</span></div>
+    </div>
+    <div class="tl-item">
+      <p class="tl-week">Month 3</p>
+      <p class="tl-title">Loyalty mechanic + data review + v2 planning</p>
+      <p class="tl-desc">"Last-minute saves" relaunch. Loyalty stamp card if 5+ VIPs in CRM. 6-week data review → feeds Brand v3, COS v2, MSOS v2 planning.</p>
+      <div class="tl-tags"><span class="tl-tag">Loyalty mechanic</span><span class="tl-tag">Relaunch campaign</span><span class="tl-tag">6-week review</span><span class="tl-tag">v2 planning</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── LAWS ── -->
+<div class="rules">
+  <p style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);margin-bottom:8px;">Quick reference</p>
+  <p class="rules-title">The non-negotiable laws</p>
+
+  <div class="rule-law">
+    <p class="rule-law-label">System law</p>
+    <p class="rule-law-text">"We don't create content. We trigger gifting decisions."</p>
+  </div>
+  <div class="rule-law">
+    <p class="rule-law-label">Platform law</p>
+    <p class="rule-law-text">"Instagram creates desire. WhatsApp closes it. One brief builds both."</p>
+  </div>
+  <div class="rule-law">
+    <p class="rule-law-label">Conversion law</p>
+    <p class="rule-law-text">"Remove thinking → show options → ask 'which one?' Every extra step is a lost order."</p>
+  </div>
+
+  <div class="rule-block" style="margin-top:20px;">
+    <p class="rule-block-label">Production rules</p>
+    <p class="rule-block-title">What is true every single week</p>
+    <ul class="rule-list">
+      <li>3 posts minimum. Never fewer. Mon (Express) · Wed (Celebration) · Fri (Proof/Retention).</li>
+      <li>Every post starts with a completed SIA+ brief with mode assigned before any copy or visual work.</li>
+      <li>Every post passes the 6-point pre-output checklist before publishing. No checklist pass = no publish.</li>
+      <li>Every delivery triggers Script 03 (Day 0 photo prompt) and schedules Script 04 (Day 7 nudge).</li>
+      <li>All five metrics are logged in Notion every Friday. No exceptions.</li>
+      <li>The Proof bank is checked before any Friday post is created. If bank &lt; 4 items, flag immediately.</li>
+    </ul>
+  </div>
+
+  <div class="rule-block">
+    <p class="rule-block-label">Absolute limits</p>
+    <p class="rule-block-title">Things that never happen</p>
+    <ul class="rule-list">
+      <li>No post publishes with ₦[X] — a missing price destroys trust faster than a missing image.</li>
+      <li>No CTA destination other than WhatsApp — directly or via the bio link router (which also closes to WhatsApp on every path).</li>
+      <li>Rosewood (#D16681) is the only CTA color. Primary Pink (#F58BA6) is never used on buttons.</li>
+      <li>Merienda font is used on physical gift tags and note cards only — never in digital UI or captions.</li>
+      <li>Facebook never runs a Sunday post. No content day is added without a SIA+ brief and checklist.</li>
+      <li>No paid ads before threshold: 15+ WA order initiations/week × 4 consecutive weeks.</li>
+      <li>No separate content systems per platform. One SIA+ brief produces all three platform outputs.</li>
+      <li>Quick Order product names are canonical: Quick Birthday Cake, Send Love (Bento), Mini Celebration Box, Just Because Cake, Cupcake Box. No abbreviations, no invented names — these appear identically in posts, scripts, Paystack links, and the tracking sheet.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<div class="footer">
+  <div>
+    <div class="footer-brand">Beqabakes</div>
+    <div class="footer-tagline">Because Beqa dey Bake.</div>
+  </div>
+  <div class="footer-meta">
+    Master System Index &nbsp;·&nbsp; April 2026<br>
+    Brand v2 · COS v1 · MSOS v1 · Platform OS v1 · Message System v1 · Tracking v1 · Pinned Posts<br>
+    Operator × Giver &nbsp;·&nbsp; Abuja market
+  </div>
+</div>
+
+</div>
+</body>
+</html>

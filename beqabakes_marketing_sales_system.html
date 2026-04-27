@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beqabakes — Marketing & Sales Operating System v1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Mulish:wght@300;400;500;600;700&family=Merienda:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --brown:      #5C2C1D;
+  --brown-dk:   #3d1c10;
+  --brown-lt:   #7a3d2a;
+  --cream:      #FFE3E9;
+  --cream-lt:   #FFF7F9;
+  --cream-mid:  #FDEEF2;
+  --pink:       #F58BA6;
+  --rose:       #D16681;
+  --rose-dk:    #a84d63;
+  --blush:      #F7D8DF;
+  --green:      #AAC8A7;
+  --green-dk:   #5a8a57;
+  --text:       #2E2E2E;
+  --text-mid:   #5a4a4e;
+  --text-muted: #8a7074;
+  --text-light: #b8a0a6;
+  --border:     rgba(92,44,29,.1);
+  --border-md:  rgba(92,44,29,.18);
+  --border-dk:  rgba(92,44,29,.28);
+  --white:      #ffffff;
+  --ink:        #1a0e09;
+}
+
+html { scroll-behavior:smooth }
+
+body {
+  font-family:'Mulish',sans-serif;
+  background:#2a1208;
+  color:var(--text);
+  font-size:14px;
+  line-height:1.75;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+
+.page {
+  max-width:900px;
+  margin:0 auto;
+  background:var(--cream-lt);
+}
+
+/* ── COVER ── */
+.cover {
+  background:var(--brown-dk);
+  padding:0;
+  min-height:100vh;
+  display:grid;
+  grid-template-rows:1fr auto;
+  position:relative;
+  overflow:hidden;
+}
+.cover-grid-overlay {
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(245,139,166,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,139,166,.04) 1px, transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;
+}
+.cover-accent-bar {
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width:6px;
+  background:var(--rose);
+}
+.cover-top {
+  padding:72px 80px 48px 86px;
+  position:relative;
+  z-index:1;
+}
+.cover-system-label {
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--rose);
+  margin-bottom:14px;
+}
+.cover-doc-type {
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.3);
+  margin-bottom:32px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.cover-doc-type::after {
+  content:'';
+  flex:1;
+  height:1px;
+  background:rgba(255,255,255,.08);
+}
+.cover h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(40px,5.5vw,64px);
+  font-weight:700;
+  color:var(--white);
+  line-height:1.1;
+  margin-bottom:8px;
+}
+.cover h1 .accent { color:var(--rose); }
+.cover h1 .sub-line {
+  display:block;
+  font-size:clamp(20px,2.8vw,32px);
+  font-weight:400;
+  font-style:italic;
+  color:rgba(255,255,255,.45);
+  margin-top:8px;
+}
+.cover-desc {
+  font-size:15px;
+  color:rgba(255,255,255,.45);
+  max-width:520px;
+  line-height:1.7;
+  margin:32px 0 40px;
+  padding-top:28px;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.cover-pillars {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:10px;
+  overflow:hidden;
+  max-width:560px;
+}
+.cover-pillar {
+  padding:16px 18px;
+  background:rgba(255,255,255,.03);
+}
+.cover-pillar-label {
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--rose);
+  margin-bottom:6px;
+}
+.cover-pillar-val {
+  font-family:'Playfair Display',serif;
+  font-size:20px;
+  font-weight:700;
+  color:var(--white);
+}
+.cover-bottom {
+  padding:28px 80px 40px 86px;
+  border-top:1px solid rgba(255,255,255,.07);
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  position:relative;
+  z-index:1;
+}
+.cover-bottom-meta {
+  font-size:11px;
+  color:rgba(255,255,255,.25);
+  line-height:1.9;
+}
+.cover-bottom-brand {
+  font-family:'Merienda',cursive;
+  font-size:20px;
+  color:var(--rose);
+  opacity:.6;
+}
+.cover-quad {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:10px;
+  overflow:hidden;
+  margin-top:36px;
+  max-width:560px;
+}
+.cover-quad-item {
+  padding:14px 18px;
+  background:rgba(255,255,255,.03);
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.cover-quad-dot {
+  width:8px;height:8px;border-radius:50%;flex-shrink:0;
+}
+.cover-quad-text {
+  font-size:12px;font-weight:500;
+  color:rgba(255,255,255,.45);
+}
+
+/* ── NAV ── */
+.sticky-nav {
+  position:sticky;top:0;z-index:50;
+  background:rgba(61,28,16,.97);
+  backdrop-filter:blur(8px);
+  padding:0 72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:48px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.nav-brand {
+  font-family:'Playfair Display',serif;
+  font-size:13px;
+  color:var(--rose);
+  letter-spacing:.04em;
+}
+.nav-links {
+  display:flex;gap:0;list-style:none;
+}
+.nav-links a {
+  font-size:11px;font-weight:500;text-decoration:none;
+  color:rgba(255,255,255,.38);
+  padding:5px 11px;border-radius:20px;
+  transition:color .15s,background .15s;
+  letter-spacing:.04em;
+}
+.nav-links a:hover { color:white;background:rgba(255,255,255,.07); }
+.nav-status {
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  background:var(--rose);color:white;
+  padding:3px 10px;border-radius:20px;
+}
+
+/* ── TOC ── */
+.toc-page {
+  background:var(--brown);
+  padding:64px 72px;
+}
+.toc-eyebrow {
+  font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--rose);margin-bottom:24px;
+}
+.toc-title {
+  font-family:'Playfair Display',serif;
+  font-size:22px;font-weight:700;color:var(--white);
+  margin-bottom:32px;
+}
+.toc-grid { display:grid;grid-template-columns:1fr 1fr;gap:4px 24px; }
+.toc-item {
+  display:flex;align-items:baseline;gap:0;
+  padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);
+  text-decoration:none;color:inherit;
+  transition:color .15s;
+}
+.toc-item:hover .toc-name { color:var(--rose); }
+.toc-num { font-family:'Playfair Display',serif;font-size:11px;color:rgba(255,255,255,.2);min-width:28px; }
+.toc-name { font-size:13px;font-weight:500;color:rgba(255,255,255,.5);flex:1;line-height:1.4; }
+
+/* ── SECTION SHELL ── */
+.section { padding:60px 72px;border-bottom:1px solid var(--border); }
+.section:last-child { border-bottom:none; }
+.section-dark { background:var(--brown);color:white; }
+.section-mid  { background:var(--cream-mid); }
+.section-alt  { background:var(--blush); }
+
+.sec-eyebrow {
+  display:flex;align-items:center;gap:12px;margin-bottom:18px;
+}
+.sec-num { font-family:'Playfair Display',serif;font-size:11px;color:var(--text-light);min-width:24px; }
+.sec-tag {
+  font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--rose);
+}
+.sec-tag-dark { color:var(--rose); }
+.sec-rule { flex:1;height:1px;background:var(--border); }
+.sec-rule-dark { flex:1;height:1px;background:rgba(255,255,255,.1); }
+
+.sec-title {
+  font-family:'Playfair Display',serif;
+  font-size:26px;font-weight:700;color:var(--brown);
+  line-height:1.2;margin-bottom:10px;
+}
+.sec-title-dark { color:var(--white); }
+.sec-intro {
+  font-size:14px;color:var(--text-muted);max-width:600px;
+  line-height:1.7;margin-bottom:32px;
+}
+.sec-intro-dark { color:rgba(255,255,255,.45); }
+
+/* ── TYPOGRAPHY ── */
+h3 { font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--brown);margin:30px 0 10px; }
+h3.dk { color:var(--white); }
+h4 { font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin:22px 0 8px; }
+p { font-size:14px;color:var(--text-mid);line-height:1.75;margin-bottom:12px; }
+p.dk { color:rgba(255,255,255,.55); }
+p:last-child { margin-bottom:0; }
+strong { font-weight:700;color:var(--text); }
+strong.dk { color:var(--white); }
+
+/* ── CALLOUTS ── */
+.callout {
+  background:var(--cream);border-left:3px solid var(--rose);
+  border-radius:0 10px 10px 0;
+  padding:14px 18px;margin:18px 0;
+  font-size:13px;line-height:1.65;color:var(--text);
+}
+.callout strong { color:var(--brown); }
+.callout-law {
+  background:var(--brown-dk);border:none;border-radius:10px;
+  padding:20px 24px;color:rgba(255,255,255,.8);margin:22px 0;
+}
+.callout-law strong { color:var(--rose); }
+.callout-dk {
+  background:rgba(255,255,255,.05);border-left:3px solid var(--rose);
+  border-radius:0 10px 10px 0;padding:14px 18px;margin:18px 0;
+  font-size:13px;line-height:1.65;color:rgba(255,255,255,.65);
+}
+.callout-dk strong { color:var(--rose); }
+
+/* ── CARDS ── */
+.card { background:var(--white);border:1px solid var(--border);border-radius:14px;padding:22px 26px;margin-bottom:12px; }
+.card-sm { background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:10px; }
+.card-dk { background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:22px 26px;margin-bottom:12px; }
+
+/* ── GRID ── */
+.grid-2 { display:grid;grid-template-columns:1fr 1fr;gap:14px; }
+.grid-3 { display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px; }
+.grid-4 { display:grid;grid-template-columns:repeat(4,1fr);gap:10px; }
+.grid-auto { display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px; }
+
+/* ── PILLS ── */
+.pill { display:inline-block;padding:3px 12px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:.03em; }
+.pill-express  { background:var(--rose);color:white; }
+.pill-celeb    { background:var(--pink);color:var(--brown); }
+.pill-retain   { background:var(--blush);color:var(--brown);border:1px solid var(--border-md); }
+.pill-acq      { background:var(--green);color:var(--green-dk);border:1px solid rgba(90,138,87,.3); }
+.pill-corp     { background:var(--brown);color:white; }
+.pill-tag      { background:var(--cream);color:var(--brown);border:1px solid var(--border-md);font-family:monospace; }
+
+/* ── AWARENESS TABLE ── */
+.awareness-table { width:100%;border-collapse:collapse;font-size:13px;margin:14px 0; }
+.awareness-table th {
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);padding:10px 14px;text-align:left;
+  border-bottom:1px solid rgba(255,255,255,.1);
+}
+.awareness-table td {
+  padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.06);
+  vertical-align:top;color:rgba(255,255,255,.55);line-height:1.55;
+}
+.awareness-table tr:last-child td { border-bottom:none; }
+.awareness-table tr:hover td { background:rgba(255,255,255,.03); }
+
+/* ── DATA TABLE (light) ── */
+.data-table { width:100%;border-collapse:collapse;font-size:13px;margin:14px 0; }
+.data-table th {
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-muted);padding:10px 14px;text-align:left;
+  border-bottom:1px solid var(--border-dk);background:var(--cream-mid);
+}
+.data-table td {
+  padding:11px 14px;border-bottom:1px solid var(--border);
+  vertical-align:top;color:var(--text-mid);line-height:1.55;
+}
+.data-table tr:last-child td { border-bottom:none; }
+.data-table tr:hover td { background:var(--cream-lt); }
+.data-table td strong { color:var(--text); }
+
+/* ── OFFER STACK ── */
+.offer-stack { display:grid;grid-template-columns:repeat(3,1fr);gap:0; }
+.offer-tier {
+  padding:20px 20px;border:1px solid var(--border);
+  background:var(--white);
+}
+.offer-tier:first-child { border-radius:12px 0 0 12px; }
+.offer-tier:last-child  { border-radius:0 12px 12px 0; }
+.offer-tier + .offer-tier { border-left:none; }
+.offer-tier.featured { background:var(--brown);border-color:var(--brown); }
+.offer-label { font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:8px; }
+.offer-label-dk { color:rgba(255,255,255,.35); }
+.offer-name { font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--brown);margin-bottom:6px; }
+.offer-name-dk { color:var(--white); }
+.offer-role { font-size:12px;color:var(--text-muted);line-height:1.55; }
+.offer-role-dk { color:rgba(255,255,255,.45); }
+
+/* ── FUNNEL STAGES ── */
+.funnel-row {
+  display:grid;grid-template-columns:110px 1fr 130px;gap:12px;
+  padding:13px 0;border-bottom:1px solid var(--border);
+  font-size:13px;align-items:center;
+}
+.funnel-row:last-child { border-bottom:none; }
+.funnel-stage { font-weight:700;color:var(--brown); }
+.funnel-desc  { color:var(--text-muted);line-height:1.55; }
+.funnel-metric { font-size:12px;font-weight:600;color:var(--green-dk);text-align:right; }
+
+/* ── OBJECTION MAP ── */
+.obj-row {
+  display:grid;grid-template-columns:180px 180px 1fr;gap:12px;
+  padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.06);
+  font-size:13px;align-items:start;
+}
+.obj-row:last-child { border-bottom:none; }
+.obj-row:hover { background:rgba(255,255,255,.03); }
+.obj-q { color:var(--white);font-weight:600; }
+.obj-why { color:rgba(255,255,255,.45); }
+.obj-fix { color:var(--rose); }
+
+/* ── CRM ── */
+.crm-tag-row {
+  display:grid;grid-template-columns:140px 1fr 120px 100px;gap:12px;
+  padding:12px 14px;border-bottom:1px solid var(--border);
+  font-size:13px;align-items:center;
+}
+.crm-tag-row:last-child { border-bottom:none; }
+.crm-tag-row:hover { background:var(--cream-lt); }
+.crm-tag-label { font-weight:600;color:var(--brown); }
+.crm-tag-def  { color:var(--text-muted); }
+.crm-tag-trig { font-size:12px;color:var(--text-light); }
+.crm-tag-vip  { font-size:12px;color:var(--rose);font-weight:600; }
+
+/* ── CAMPAIGN CARD ── */
+.campaign-card {
+  background:var(--white);border:1px solid var(--border);
+  border-radius:12px;overflow:hidden;margin-bottom:12px;
+}
+.campaign-head {
+  padding:12px 20px;background:var(--cream-mid);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.campaign-body { padding:16px 20px; }
+.campaign-beat {
+  display:grid;grid-template-columns:80px 1fr;gap:10px;
+  padding:8px 0;border-bottom:1px solid var(--border);
+  font-size:13px;align-items:start;
+}
+.campaign-beat:last-child { border-bottom:none; }
+.beat-label { font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-light); }
+.beat-content { color:var(--text-mid);line-height:1.55; }
+
+/* ── GROWTH THRESHOLDS ── */
+.threshold-card {
+  background:var(--white);border:1px solid var(--border);
+  border-radius:12px;padding:20px 22px;
+}
+.threshold-num { font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--brown);margin-bottom:6px; }
+.threshold-label { font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:10px; }
+.threshold-condition { font-size:12px;color:var(--text-muted);line-height:1.65; }
+
+/* ── TOOL STACK ── */
+.tool-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px; }
+.tool-card {
+  background:var(--white);border:1px solid var(--border);
+  border-radius:10px;padding:14px 16px;
+}
+.tool-initial {
+  width:36px;height:36px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;font-weight:700;
+  margin-bottom:10px;
+}
+.tool-name { font-size:13px;font-weight:700;color:var(--brown);margin-bottom:3px; }
+.tool-role { font-size:11px;color:var(--text-muted);line-height:1.5; }
+
+/* ── METRICS ── */
+.metrics-5 { display:grid;grid-template-columns:repeat(5,1fr);gap:8px; }
+.metric-card {
+  background:var(--white);border:1px solid var(--border);
+  border-radius:10px;padding:14px 10px;text-align:center;
+}
+.metric-num { font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--brown);margin-bottom:3px; }
+.metric-lbl { font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text-light);line-height:1.4; }
+
+/* ── CONTROL CHECKLIST ── */
+.check-list { list-style:none; }
+.check-list li {
+  display:flex;align-items:flex-start;gap:12px;
+  padding:10px 0;border-bottom:1px solid var(--border);
+  font-size:13px;color:var(--text-mid);line-height:1.55;
+}
+.check-list li:last-child { border-bottom:none; }
+.cb { width:17px;height:17px;border:1.5px solid var(--border-dk);border-radius:4px;flex-shrink:0;margin-top:1px; }
+
+/* ── ROADMAP ── */
+.roadmap { position:relative;padding-left:34px; }
+.roadmap::before { content:'';position:absolute;left:10px;top:8px;bottom:8px;width:1px;background:var(--border-dk); }
+.rm-item { position:relative;margin-bottom:26px; }
+.rm-item::before {
+  content:'';position:absolute;left:-28px;top:5px;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--white);border:2px solid var(--rose);
+}
+.rm-item.done::before { background:var(--rose); }
+.rm-week { font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:4px; }
+.rm-title { font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--brown);margin-bottom:4px; }
+.rm-desc { font-size:13px;color:var(--text-muted);line-height:1.65;margin-bottom:8px; }
+.rm-tags { display:flex;flex-wrap:wrap;gap:5px; }
+.rm-tag { font-size:11px;padding:3px 10px;border-radius:20px;background:var(--cream);border:1px solid var(--border-md);color:var(--brown);font-weight:500; }
+
+/* ── INSIGHT ── */
+.insight { background:var(--cream);border:1px solid var(--border-md);border-radius:12px;padding:18px 22px;margin:18px 0; }
+.insight-label { font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--rose);margin-bottom:6px; }
+.insight-text { font-family:'Playfair Display',serif;font-style:italic;font-size:16px;color:var(--brown);line-height:1.5; }
+
+/* ── PIPELINE STRIP ── */
+.pipeline-strip {
+  display:flex;flex-wrap:wrap;align-items:center;
+  gap:0;padding:18px 22px;background:var(--brown-dk);
+  border-radius:12px;
+}
+.pipeline-node {
+  padding:7px 16px;border-radius:20px;
+  font-size:12px;font-weight:600;
+  white-space:nowrap;
+}
+.pipeline-arrow { color:rgba(255,255,255,.2);margin:0 6px;font-size:16px; }
+
+/* ── NURTURE SEQUENCE ── */
+.nurture-seq {
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  border:1px solid var(--border-md);border-radius:12px;overflow:hidden;
+}
+.nurture-step { padding:16px 18px;background:var(--white); }
+.nurture-step + .nurture-step { border-left:1px solid var(--border); }
+.nurture-day { font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:6px; }
+.nurture-title { font-size:13px;font-weight:700;color:var(--brown);margin-bottom:4px; }
+.nurture-detail { font-size:11px;color:var(--text-muted);line-height:1.55; }
+.nurture-step.active { background:var(--rose); }
+.nurture-step.active .nurture-day   { color:rgba(255,255,255,.55); }
+.nurture-step.active .nurture-title { color:white; }
+.nurture-step.active .nurture-detail{ color:rgba(255,255,255,.7); }
+
+/* ── MANTRA ── */
+.mantra-block {
+  background:var(--brown-dk);border-radius:14px;
+  padding:40px 44px;text-align:center;margin-top:8px;
+}
+.mantra-label { font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:16px; }
+.mantra-text { font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:var(--white);line-height:1.5;margin-bottom:8px; }
+.mantra-sub { font-size:12px;color:var(--rose);opacity:.8; }
+
+/* ── DIVIDERS ── */
+.divider { border:none;border-top:1px solid var(--border);margin:26px 0; }
+.divider-dk { border:none;border-top:1px solid rgba(255,255,255,.08);margin:26px 0; }
+
+/* ── FOOTER ── */
+.doc-footer {
+  background:var(--brown-dk);padding:36px 72px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.doc-footer-brand { font-family:'Playfair Display',serif;font-size:16px;color:var(--white); }
+.doc-footer-tagline { font-family:'Merienda',cursive;font-size:13px;color:var(--rose);opacity:.65;margin-top:6px; }
+.doc-footer-meta { font-size:11px;color:rgba(255,255,255,.25);line-height:1.9;text-align:right; }
+
+/* ── SYSTEM OWNERSHIP BAND ── */
+.ownership-band {
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;overflow:hidden;
+  margin:24px 0;
+}
+.ob-col { padding:18px 20px;background:var(--brown-dk); }
+.ob-system { font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rose);margin-bottom:10px; }
+.ob-owns-label { font-size:11px;font-weight:600;color:rgba(255,255,255,.3);margin-bottom:6px; }
+.ob-item { font-size:12px;color:rgba(255,255,255,.5);padding:3px 0;border-bottom:1px solid rgba(255,255,255,.04);line-height:1.5; }
+.ob-item:last-child { border-bottom:none; }
+.ob-owns-this { color:rgba(255,255,255,.85); }
+
+/* ── PRINT ── */
+@media print {
+  body { background:white; }
+  .page { max-width:100%; }
+  .cover { min-height:auto;padding-bottom:48px;break-after:page; }
+  .toc-page { break-after:page; }
+  .section { padding:44px 52px;break-inside:avoid; }
+  .sticky-nav { display:none; }
+}
+
+@media (min-width:1100px) {
+  body { padding:0 40px; }
+  .page { box-shadow:0 0 80px rgba(0,0,0,.4); }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ══════════════════════════════════
+     COVER
+══════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-grid-overlay"></div>
+  <div class="cover-accent-bar"></div>
+
+  <div class="cover-top">
+    <p class="cover-system-label">Marketing &amp; Sales Operating System</p>
+    <p class="cover-doc-type">Beqabakes &nbsp;·&nbsp; v1 &nbsp;·&nbsp; April 2026 &nbsp;·&nbsp; Strategy layer</p>
+
+    <h1>
+      Convert gifting situations
+      <span class="sub-line">into fast decisions and repeat orders.</span>
+    </h1>
+
+    <p class="cover-desc">A complete acquisition → conversion → retention → growth system. Aligned to Brand System v2 and COS v1. The MSOS is the strategy layer — it owns what the other systems don't: market reality, awareness mapping, CRM architecture, campaign structure, and expansion sequencing.</p>
+
+    <div class="cover-pillars">
+      <div class="cover-pillar">
+        <p class="cover-pillar-label">Acquisition</p>
+        <p class="cover-pillar-val">IG → WA</p>
+      </div>
+      <div class="cover-pillar">
+        <p class="cover-pillar-label">Conversion</p>
+        <p class="cover-pillar-val">Scripts</p>
+      </div>
+      <div class="cover-pillar">
+        <p class="cover-pillar-label">Retention</p>
+        <p class="cover-pillar-val">Day 0 + 7</p>
+      </div>
+      <div class="cover-pillar">
+        <p class="cover-pillar-label">Growth</p>
+        <p class="cover-pillar-val">Thresholds</p>
+      </div>
+    </div>
+
+    <div class="cover-quad">
+      <div class="cover-quad-item">
+        <span class="cover-quad-dot" style="background:#D16681;"></span>
+        <span class="cover-quad-text">Audience definition locked — women 22–40 primary</span>
+      </div>
+      <div class="cover-quad-item">
+        <span class="cover-quad-dot" style="background:#F58BA6;"></span>
+        <span class="cover-quad-text">Brand modes govern every campaign and message</span>
+      </div>
+      <div class="cover-quad-item">
+        <span class="cover-quad-dot" style="background:#AAC8A7;"></span>
+        <span class="cover-quad-text">Nurture sequence aligned to COS v1 (Day 0 / Day 7)</span>
+      </div>
+      <div class="cover-quad-item">
+        <span class="cover-quad-dot" style="background:#F7D8DF;"></span>
+        <span class="cover-quad-text">Paid ads, corporate, loyalty: gated by defined thresholds</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-bottom-meta">
+      Aligned to Brand System v2 &nbsp;·&nbsp; COS v1<br>
+      Operator × Giver archetype &nbsp;·&nbsp; Abuja market<br>
+      Status: Live system
+    </div>
+    <div class="cover-bottom-brand">Beqabakes</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     STICKY NAV
+══════════════════════════════════ -->
+<nav class="sticky-nav">
+  <span class="nav-brand">Beqabakes MSOS</span>
+  <ul class="nav-links">
+    <li><a href="#ownership">Ownership</a></li>
+    <li><a href="#market">Market</a></li>
+    <li><a href="#offer">Offer</a></li>
+    <li><a href="#acquisition">Acquisition</a></li>
+    <li><a href="#awareness">Awareness</a></li>
+    <li><a href="#nurture">Nurture</a></li>
+    <li><a href="#conversion">Conversion</a></li>
+    <li><a href="#crm">CRM</a></li>
+    <li><a href="#campaigns">Campaigns</a></li>
+    <li><a href="#growth">Growth</a></li>
+    <li><a href="#tools">Tools</a></li>
+    <li><a href="#control">Control</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+  </ul>
+  <span class="nav-status">v1 live</span>
+</nav>
+
+<!-- ══════════════════════════════════
+     TABLE OF CONTENTS
+══════════════════════════════════ -->
+<div class="toc-page">
+  <p class="toc-eyebrow">Contents</p>
+  <p class="toc-title">What this system covers</p>
+  <div class="toc-grid">
+    <a class="toc-item" href="#ownership"><span class="toc-num">00</span><span class="toc-name">System ownership — what MSOS owns</span></a>
+    <a class="toc-item" href="#market"><span class="toc-num">01</span><span class="toc-name">Market reality — audience + tensions</span></a>
+    <a class="toc-item" href="#offer"><span class="toc-num">02</span><span class="toc-name">Offer positioning system</span></a>
+    <a class="toc-item" href="#acquisition"><span class="toc-num">03</span><span class="toc-name">Acquisition engine — channel strategy</span></a>
+    <a class="toc-item" href="#awareness"><span class="toc-num">04</span><span class="toc-name">Awareness stages → content assignment</span></a>
+    <a class="toc-item" href="#nurture"><span class="toc-num">05</span><span class="toc-name">Nurture sequence (locked Day 0 / Day 7)</span></a>
+    <a class="toc-item" href="#conversion"><span class="toc-num">06</span><span class="toc-name">Conversion engine — chat structure</span></a>
+    <a class="toc-item" href="#crm"><span class="toc-num">07</span><span class="toc-name">CRM tagging — Notion schema</span></a>
+    <a class="toc-item" href="#campaigns"><span class="toc-num">08</span><span class="toc-name">Campaign architecture — 4-beat structure</span></a>
+    <a class="toc-item" href="#growth"><span class="toc-num">09</span><span class="toc-name">Growth system — loops + thresholds</span></a>
+    <a class="toc-item" href="#tools"><span class="toc-num">10</span><span class="toc-name">Tool stack — full with delivery + proof</span></a>
+    <a class="toc-item" href="#control"><span class="toc-num">11</span><span class="toc-name">Control system — pre + post checklists</span></a>
+    <a class="toc-item" href="#roadmap"><span class="toc-num">12</span><span class="toc-name">Roadmap — sequenced with thresholds</span></a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     00 — SYSTEM OWNERSHIP
+══════════════════════════════════ -->
+<section class="section section-dark" id="ownership">
+  <div class="sec-eyebrow">
+    <span class="sec-num" style="color:rgba(255,255,255,.2);">00</span>
+    <span class="sec-tag-dark">System ownership</span>
+    <span class="sec-rule-dark"></span>
+  </div>
+  <h2 class="sec-title sec-title-dark">What MSOS owns. What it doesn't.</h2>
+  <p class="sec-intro sec-intro-dark">Three documents govern Beqabakes. Each owns a distinct layer. Any rule appearing in more than one document is moved to its owner and deleted from the others. This is the law that prevents contradiction drift.</p>
+
+  <div class="ownership-band">
+    <div class="ob-col">
+      <p class="ob-system">Brand System v2</p>
+      <p class="ob-owns-label">Identity layer — owns:</p>
+      <p class="ob-item ob-owns-this">Visual identity + color system</p>
+      <p class="ob-item ob-owns-this">Typography rules (Playfair / Mulish / Merienda)</p>
+      <p class="ob-item ob-owns-this">Mode definitions (Express / Celebration / Retention)</p>
+      <p class="ob-item ob-owns-this">Tone + archetype (Operator × Giver)</p>
+      <p class="ob-item ob-owns-this">Audience definition (women 22–40 primary)</p>
+    </div>
+    <div class="ob-col">
+      <p class="ob-system">COS v1</p>
+      <p class="ob-owns-label">Production layer — owns:</p>
+      <p class="ob-item ob-owns-this">SIA+ brief + pre-output checklist</p>
+      <p class="ob-item ob-owns-this">Weekly calendar (3-post structure)</p>
+      <p class="ob-item ob-owns-this">WhatsApp scripts 01–05</p>
+      <p class="ob-item ob-owns-this">Proof bank collection system</p>
+      <p class="ob-item ob-owns-this">5-metric weekly tracking framework</p>
+    </div>
+    <div class="ob-col">
+      <p class="ob-system">MSOS — this document</p>
+      <p class="ob-owns-label">Strategy layer — owns:</p>
+      <p class="ob-item ob-owns-this">Acquisition strategy + channel matrix</p>
+      <p class="ob-item ob-owns-this">Awareness stages → content assignment</p>
+      <p class="ob-item ob-owns-this">CRM tagging + Notion schema</p>
+      <p class="ob-item ob-owns-this">Campaign architecture (4-beat)</p>
+      <p class="ob-item ob-owns-this">Growth sequencing + expansion thresholds</p>
+    </div>
+  </div>
+
+  <div class="callout-dk" style="margin-top:4px;">
+    <strong>Non-overlap rule:</strong> The nurture timeline, conversion scripts, metrics, and mode definitions all live in their respective owner documents. The MSOS references them but never redefines them. When in doubt about which document owns a rule, ask: is this about identity, production, or strategy?
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     01 — MARKET REALITY
+══════════════════════════════════ -->
+<section class="section" id="market">
+  <div class="sec-eyebrow">
+    <span class="sec-num">01</span>
+    <span class="sec-tag">Market reality</span>
+    <span class="sec-rule"></span>
+  </div>
+  <h2 class="sec-title">Who we sell to. What stops them. What moves them.</h2>
+  <p class="sec-intro">This section is the intelligence layer. It defines the audience, maps the psychological journey from unaware to order-placed, and names every objection and core tension. Everything downstream — campaigns, scripts, content — is a direct response to this section.</p>
+
+  <div class="insight">
+    <p class="insight-label">Market truth</p>
+    <p class="insight-text">People are not buying cake. They are buying fast emotional delivery.</p>
+  </div>
+
+  <h3>Audience definition (locked — Brand v2 owns this)</h3>
+  <div class="grid-2" style="margin-top:8px;">
+    <div class="card" style="border-top:4px solid var(--rose);">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:10px;">Primary audience</p>
+      <p style="font-size:15px;font-weight:700;color:var(--brown);margin-bottom:8px;">Women 22–40, Abuja</p>
+      <p style="font-size:13px;color:var(--text-muted);line-height:1.65;">Planned and urgent gifters. Birthday planners, party organisers, romantic gesture buyers. Instagram-present, aesthetics-aware, time-constrained.</p>
+      <hr class="divider" style="margin:12px 0;">
+      <p style="font-size:12px;color:var(--text-muted);">Triggers: <span style="color:var(--text);">"It's their birthday today" / "I need something beautiful fast"</span></p>
+    </div>
+    <div class="card" style="border-top:4px solid var(--pink);">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:10px;">Secondary audience</p>
+      <p style="font-size:15px;font-weight:700;color:var(--brown);margin-bottom:8px;">Men 25–45, Abuja</p>
+      <p style="font-size:13px;color:var(--text-muted);line-height:1.65;">Romantic surprise buyers. Typically last-minute, high-urgency, lower product knowledge. Need reassurance more than options.</p>
+      <hr class="divider" style="margin:12px 0;">
+      <p style="font-size:12px;color:var(--text-muted);">Triggers: <span style="color:var(--text);">"I forgot our anniversary" / "I need something today"</span></p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Not our customer:</strong> Highly custom, complex cake buyers requiring 3+ days lead time, detailed consultation, or multi-tier structural builds. They are not wrong — they are just a different business. Redirect them warmly.
+  </div>
+
+  <h3>Core tensions</h3>
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="card-sm"><p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);margin-bottom:6px;">Problem</p><p style="font-size:13px;color:var(--text-mid);">Need a meaningful gift quickly</p></div>
+    <div class="card-sm"><p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);margin-bottom:6px;">Pain</p><p style="font-size:13px;color:var(--text-mid);">Time pressure + decision stress</p></div>
+    <div class="card-sm"><p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);margin-bottom:6px;">Desire</p><p style="font-size:13px;color:var(--text-mid);">Make someone feel genuinely special</p></div>
+    <div class="card-sm"><p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);margin-bottom:6px;">Fear</p><p style="font-size:13px;color:var(--text-mid);">It won't arrive on time or look good</p></div>
+    <div class="card-sm"><p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);margin-bottom:6px;">Frustration</p><p style="font-size:13px;color:var(--text-mid);">Too many options, slow vendors</p></div>
+    <div class="card-sm"><p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);margin-bottom:6px;">False belief</p><p style="font-size:13px;color:var(--text-mid);">"Good gifts take time to plan"</p></div>
+  </div>
+
+  <h3>Objection map</h3>
+  <div class="card" style="padding:8px 0 0;overflow:hidden;">
+    <div style="display:grid;grid-template-columns:180px 200px 1fr;background:var(--cream-mid);padding:10px 14px;border-bottom:1px solid var(--border);">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">Objection</p>
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">Root cause</p>
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">Removal strategy</p>
+    </div>
+    <div style="padding:0 14px;">
+      <div class="funnel-row" style="grid-template-columns:180px 200px 1fr;">
+        <span style="color:var(--text);font-weight:600;">"Will it be nice?"</span>
+        <span style="color:var(--text-muted);">Trust gap — new vendor</span>
+        <span style="color:var(--text-mid);">Delivery photos in every post. Proof bank on Friday feed. Never show product without context.</span>
+      </div>
+      <div class="funnel-row" style="grid-template-columns:180px 200px 1fr;">
+        <span style="color:var(--text);font-weight:600;">"How fast can it come?"</span>
+        <span style="color:var(--text-muted);">Time sensitivity</span>
+        <span style="color:var(--text-mid);">"Ready today" + same-day messaging on every Monday Express post and WA broadcast.</span>
+      </div>
+      <div class="funnel-row" style="grid-template-columns:180px 200px 1fr;">
+        <span style="color:var(--text);font-weight:600;">"How much does it cost?"</span>
+        <span style="color:var(--text-muted);">Hidden pricing fear</span>
+        <span style="color:var(--text-mid);">Price always visible on posts and in WhatsApp. No price = no card rule is absolute.</span>
+      </div>
+      <div class="funnel-row" style="grid-template-columns:180px 200px 1fr;">
+        <span style="color:var(--text);font-weight:600;">"Can I trust you?"</span>
+        <span style="color:var(--text-muted);">Vendor uncertainty</span>
+        <span style="color:var(--text-mid);">Testimonials, delivery photos, packaging visuals. Friday proof post closes this consistently.</span>
+      </div>
+      <div class="funnel-row" style="grid-template-columns:180px 200px 1fr;border-bottom:none;">
+        <span style="color:var(--text);font-weight:600;">"Is ordering stressful?"</span>
+        <span style="color:var(--text-muted);">Past bad experience</span>
+        <span style="color:var(--text-mid);">"No stress" messaging in Express mode. Pre-built bundles eliminate choice paralysis.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     02 — OFFER POSITIONING
+══════════════════════════════════ -->
+<section class="section section-mid" id="offer">
+  <div class="sec-eyebrow">
+    <span class="sec-num">02</span>
+    <span class="sec-tag">Offer system</span>
+    <span class="sec-rule"></span>
+  </div>
+  <h2 class="sec-title">Three tiers. One decision logic.</h2>
+  <p class="sec-intro">The offer stack is not a menu. It is a funnel. Each tier serves a specific buyer state and purchase intent. Content is not a product tier — it is a distribution mechanism that feeds all three tiers.</p>
+
+  <div class="offer-stack">
+    <div class="offer-tier">
+      <p class="offer-label">Entry tier</p>
+      <p class="offer-name">Express Bento</p>
+      <p class="offer-role">For urgent, last-minute gifters. Pre-built. No decisions. Same-day delivery. The fastest path from "I need a gift" to "done."</p>
+      <hr class="divider" style="margin:12px 0 10px;">
+      <p style="font-size:11px;color:var(--text-muted);">Mode: <span class="pill pill-express" style="font-size:10px;padding:2px 8px;">Express</span></p>
+    </div>
+    <div class="offer-tier featured">
+      <p class="offer-label offer-label-dk">Core tier</p>
+      <p class="offer-name offer-name-dk">Signature Cakes</p>
+      <p class="offer-role offer-role-dk">Primary revenue SKU. Planned and semi-planned buyers. Emotional gifting with visual impact. Higher price point, higher attachment.</p>
+      <hr class="divider-dk" style="margin:12px 0 10px;">
+      <p style="font-size:11px;color:rgba(255,255,255,.35);">Mode: <span class="pill pill-celeb" style="font-size:10px;padding:2px 8px;">Celebration</span></p>
+    </div>
+    <div class="offer-tier">
+      <p class="offer-label">Premium tier</p>
+      <p class="offer-name">Gift Sets</p>
+      <p class="offer-role">Upsell to highest AOV. Full experience purchase. Corporate-adjacent. Planned gifters who want to send the most complete gift possible.</p>
+      <hr class="divider" style="margin:12px 0 10px;">
+      <p style="font-size:11px;color:var(--text-muted);">Mode: <span class="pill pill-celeb" style="font-size:10px;padding:2px 8px;">Celebration</span> <span class="pill pill-corp" style="font-size:10px;padding:2px 8px;margin-left:4px;">Corporate</span></p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:16px;">
+    <strong>Content is not a tier.</strong> Instagram posts are a distribution mechanism, not a "Free" product. Framing content as a tier trains the wrong mental model — it suggests leads need to be nurtured up a product ladder, when what actually happens is simpler: see post → feel urgency → WhatsApp → order.
+  </div>
+
+  <h3>Value equation</h3>
+  <div class="grid-2" style="margin-top:8px;">
+    <div class="card-sm"><p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rose);margin-bottom:6px;">Dream outcome</p><p style="font-size:13px;color:var(--text-mid);">Make someone feel celebrated instantly — without any stress</p></div>
+    <div class="card-sm"><p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rose);margin-bottom:6px;">Likelihood of success</p><p style="font-size:13px;color:var(--text-mid);">High — delivery photos, testimonials, and packaging proof are visible at every stage</p></div>
+    <div class="card-sm"><p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rose);margin-bottom:6px;">Time delay</p><p style="font-size:13px;color:var(--text-mid);">Minimal — same-day delivery is the core promise. "Send a cake in minutes" is the system line.</p></div>
+    <div class="card-sm"><p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rose);margin-bottom:6px;">Effort required</p><p style="font-size:13px;color:var(--text-mid);">Near zero — WhatsApp quick order, pre-built options, one tap from post to conversation</p></div>
+  </div>
+
+  <h3>Offer framing rule</h3>
+  <div class="callout-law">
+    <strong>This is NOT</strong> a complex cake ordering process.<br>
+    <strong>This IS</strong> a fast, simple gifting solution for people who need a gift today — without thinking.<br><br>
+    If a prospect asks "can you do a five-tier fondant display piece for 200 guests?" the answer is: warmly redirect. That is not our business. Protecting the system protects the speed promise.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     03 — ACQUISITION ENGINE
+══════════════════════════════════ -->
+<section class="section" id="acquisition">
+  <div class="sec-eyebrow">
+    <span class="sec-num">03</span>
+    <span class="sec-tag">Acquisition engine</span>
+    <span class="sec-rule"></span>
+  </div>
+  <h2 class="sec-title">How new buyers find us and enter the system.</h2>
+  <p class="sec-intro">Acquisition is the demand-generation layer. It feeds the conversion system. Every channel is assessed by volume, intent, and control. Instagram creates desire. WhatsApp closes it. Paid ads unlock when organic proves itself.</p>
+
+  <h3>Channel matrix</h3>
+  <div class="card" style="padding:8px 0 0;overflow:hidden;">
+    <div style="display:grid;grid-template-columns:130px 80px 80px 80px 1fr;background:var(--cream-mid);padding:10px 14px;border-bottom:1px solid var(--border);">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">Channel</p>
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">Volume</p>
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">Intent</p>
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">Control</p>
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">Status</p>
+    </div>
+    <div style="padding:0 14px;">
+      <div class="funnel-row" style="grid-template-columns:130px 80px 80px 80px 1fr;">
+        <span style="font-weight:700;color:var(--text);">Instagram (organic)</span>
+        <span style="color:var(--text-mid);">High</span>
+        <span style="color:var(--text-mid);">Medium</span>
+        <span style="color:var(--text-mid);">Medium</span>
+        <span><span class="pill pill-acq">Primary — live now</span></span>
+      </div>
+      <div class="funnel-row" style="grid-template-columns:130px 80px 80px 80px 1fr;">
+        <span style="font-weight:700;color:var(--text);">WhatsApp (direct)</span>
+        <span style="color:var(--text-mid);">Medium</span>
+        <span style="color:var(--text-mid);">Very high</span>
+        <span style="color:var(--text-mid);">Very high</span>
+        <span><span class="pill pill-acq">Primary — live now</span></span>
+      </div>
+      <div class="funnel-row" style="grid-template-columns:130px 80px 80px 80px 1fr;">
+        <span style="font-weight:700;color:var(--text);">Referral loop</span>
+        <span style="color:var(--text-mid);">Low → growing</span>
+        <span style="color:var(--text-mid);">Very high</span>
+        <span style="color:var(--text-mid);">Medium</span>
+        <span><span class="pill pill-retain">Build — Month 1</span></span>
+      </div>
+      <div class="funnel-row" style="grid-template-columns:130px 80px 80px 80px 1fr;border-bottom:none;">
+        <span style="font-weight:700;color:var(--text);">Instagram Ads</span>
+        <span style="color:var(--text-mid);">Scalable</span>
+        <span style="color:var(--text-mid);">High</span>
+        <span style="color:var(--text-mid);">High</span>
+        <span><span class="pill pill-express">Gated — threshold required</span></span>
+      </div>
+    </div>
+  </div>
+
+  <h3>Campaign type matrix</h3>
+  <div class="data-table" style="margin-top:12px;">
+    <table class="data-table">
+      <thead>
+        <tr><th>Campaign type</th><th>Purpose</th><th>Trigger</th><th>Brand mode</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Awareness</strong></td><td>Reach cold audiences at gift-moment trigger points</td><td>Monthly theme launch</td><td><span class="pill pill-celeb">Celebration</span></td></tr>
+        <tr><td><strong>Lead generation</strong></td><td>Drive WhatsApp conversations from IG posts</td><td>Monday Express post</td><td><span class="pill pill-express">Express</span></td></tr>
+        <tr><td><strong>Conversion</strong></td><td>Push hot leads to order decision</td><td>Offer / urgency window</td><td><span class="pill pill-express">Express</span></td></tr>
+        <tr><td><strong>Proof</strong></td><td>Build belief and social trust</td><td>After deliveries batch</td><td><span class="pill pill-retain">Retention</span></td></tr>
+        <tr><td><strong>Relaunch</strong></td><td>Re-engage inactive buyers (90+ days)</td><td>Month 3 campaign sprint</td><td><span class="pill pill-retain">Retention</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Lead capture flow</h3>
+  <div class="pipeline-strip" style="margin-top:12px;">
+    <span class="pipeline-node" style="background:rgba(245,139,166,.12);color:var(--pink);">IG post</span>
+    <span class="pipeline-arrow">→</span>
+    <span class="pipeline-node" style="background:rgba(245,139,166,.12);color:var(--pink);">Interest triggered</span>
+    <span class="pipeline-arrow">→</span>
+    <span class="pipeline-node" style="background:rgba(245,139,166,.12);color:var(--pink);">Bio link / Story CTA</span>
+    <span class="pipeline-arrow">→</span>
+    <span class="pipeline-node" style="background:#D16681;color:white;">WhatsApp opened</span>
+    <span class="pipeline-arrow">→</span>
+    <span class="pipeline-node" style="background:rgba(170,200,167,.15);color:var(--green);">Quick reply sent</span>
+    <span class="pipeline-arrow">→</span>
+    <span class="pipeline-node" style="background:rgba(170,200,167,.15);color:var(--green);">Order placed</span>
+  </div>
+
+  <h3>Lead magnets (to build — Month 1)</h3>
+  <div class="grid-2" style="margin-top:8px;">
+    <div class="card-sm">
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);margin-bottom:6px;">Lookbook</p>
+      <p style="font-size:13px;color:var(--text-mid);margin-bottom:8px;">One-page PDF showing all three tiers with photos, pricing, and a direct WA order link. Shareable in a single WhatsApp message. Converts Solution-aware and Product-aware prospects instantly.</p>
+      <span class="pill pill-retain">Build: Month 1</span>
+    </div>
+    <div class="card-sm">
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);margin-bottom:6px;">Quick Menu</p>
+      <p style="font-size:13px;color:var(--text-mid);margin-bottom:8px;">Single-screen Express Bento options with prices. DM-able image. No PDF download required. Eliminates the "what do you have and how much?" back-and-forth entirely.</p>
+      <span class="pill pill-retain">Build: Month 1</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     04 — AWARENESS STAGES
+══════════════════════════════════ -->
+<section class="section section-dark" id="awareness">
+  <div class="sec-eyebrow">
+    <span class="sec-num" style="color:rgba(255,255,255,.2);">04</span>
+    <span class="sec-tag-dark">Awareness mapping</span>
+    <span class="sec-rule-dark"></span>
+  </div>
+  <h2 class="sec-title sec-title-dark">Five stages. Each with assigned content, mode, and script.</h2>
+  <p class="sec-intro sec-intro-dark">The awareness model describes how a gifting decision builds from zero to order-placed. Each stage requires a different type of content and a different type of action. This is the map that was missing from the original MSOS.</p>
+
+  <table class="awareness-table">
+    <thead>
+      <tr>
+        <th>Stage</th>
+        <th>Current belief</th>
+        <th>Content type + mode</th>
+        <th>Action / script</th>
+        <th>Success signal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong style="color:rgba(255,255,255,.7);">Unaware</strong></td>
+        <td>"I'll figure something out"</td>
+        <td>Reel / <span class="pill pill-celeb" style="font-size:10px;padding:2px 8px;">Celebration</span><br><span style="font-size:11px;color:rgba(255,255,255,.35);margin-top:4px;display:block;">Gift-moment content. Situation hook in first frame. Emotional pull, no hard sell.</span></td>
+        <td>IG follow / save. No WA script yet — awareness is enough at this stage.</td>
+        <td>Profile visit or post save</td>
+      </tr>
+      <tr>
+        <td><strong style="color:rgba(255,255,255,.7);">Problem-aware</strong></td>
+        <td>"I need a gift fast"</td>
+        <td>Feed post / <span class="pill pill-express" style="font-size:10px;padding:2px 8px;">Express</span><br><span style="font-size:11px;color:rgba(255,255,255,.35);margin-top:4px;display:block;">"Forgot a birthday?" hook. Urgency + ease. Story swipe-up to WA.</span></td>
+        <td>Bio link or Story CTA → WhatsApp opened. No script fires yet.</td>
+        <td>WhatsApp DM received</td>
+      </tr>
+      <tr>
+        <td><strong style="color:rgba(255,255,255,.7);">Solution-aware</strong></td>
+        <td>"Cake is an option"</td>
+        <td>Speed-proof post / <span class="pill pill-express" style="font-size:10px;padding:2px 8px;">Express</span> + <span class="pill pill-celeb" style="font-size:10px;padding:2px 8px;">Celebration</span><br><span style="font-size:11px;color:rgba(255,255,255,.35);margin-top:4px;display:block;">"Ready in minutes." Show the ordering speed, not just the product. Lookbook DM shareable.</span></td>
+        <td>Lookbook or Quick Menu shared via WA DM. No formal script — conversational.</td>
+        <td>Inquiry message or price question</td>
+      </tr>
+      <tr>
+        <td><strong style="color:rgba(255,255,255,.7);">Product-aware</strong></td>
+        <td>"Maybe Beqabakes?"</td>
+        <td>Proof post / <span class="pill pill-retain" style="font-size:10px;padding:2px 8px;">Retention</span><br><span style="font-size:11px;color:rgba(255,255,255,.35);margin-top:4px;display:block;">Testimonials, delivery photos, packaging visuals. Friday proof post does this job weekly.</span></td>
+        <td>Script 01 opening. Price + options sent. Answer "Will it be nice?" + "How fast?"</td>
+        <td>Price asked / options requested</td>
+      </tr>
+      <tr>
+        <td><strong style="color:white;">Ready to order</strong><br><span style="background:#D16681;color:white;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;">Convert now</span></td>
+        <td>"Let me order now"</td>
+        <td>Express offer post / <span class="pill pill-express" style="font-size:10px;padding:2px 8px;">Express</span><br><span style="font-size:11px;color:rgba(255,255,255,.35);margin-top:4px;display:block;">Remove all friction. 6-point checklist pass mandatory. Single CTA to WA.</span></td>
+        <td>Scripts 01 + 02 (confirmation + delivery). Payment via Paystack link.</td>
+        <td>Order placed + payment confirmed</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout-dk" style="margin-top:16px;">
+    <strong>The MSOS owns the pre-order map above.</strong> Once an order is placed, the COS v1 nurture sequence takes over: Day 0 photo prompt (Script 03) → Day 7 re-order nudge (Script 04) → if reshare → referral prompt fires. Do not duplicate that logic here.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     05 — NURTURE SEQUENCE
+══════════════════════════════════ -->
+<section class="section" id="nurture">
+  <div class="sec-eyebrow">
+    <span class="sec-num">05</span>
+    <span class="sec-tag">Nurture sequence</span>
+    <span class="sec-rule"></span>
+  </div>
+  <h2 class="sec-title">Locked. Owned by COS v1. Referenced here.</h2>
+  <p class="sec-intro">The nurture sequence fires after every order. It is owned and maintained in COS v1. The MSOS references it here for completeness but does not redefine it. Any timing or script changes are made in COS v1 only.</p>
+
+  <div class="nurture-seq">
+    <div class="nurture-step active">
+      <p class="nurture-day">Day 0 — delivery</p>
+      <p class="nurture-title">Photo prompt</p>
+      <p class="nurture-detail">Script 03 fires post-delivery. "Hope it made them smile!" + ₦500 reshare incentive. Feeds Proof bank.</p>
+    </div>
+    <div class="nurture-step">
+      <p class="nurture-day">Day 7 — re-order</p>
+      <p class="nurture-title">Nudge + BACK500</p>
+      <p class="nurture-detail">Script 04 fires exactly Day 7. Soft, warm re-order invitation. BACK500 discount code.</p>
+    </div>
+    <div class="nurture-step">
+      <p class="nurture-day">If reshare occurs</p>
+      <p class="nurture-title">Referral prompt</p>
+      <p class="nurture-detail">"Your friends saw that — want to send them one?" Direct WA link. Zero-cost acquisition.</p>
+    </div>
+    <div class="nurture-step">
+      <p class="nurture-day">New entry</p>
+      <p class="nurture-title">New lead enters</p>
+      <p class="nurture-detail">Referred lead enters awareness map at Solution-aware or Product-aware stage. Loop restarts.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:16px;">
+    <strong>What changed from the original MSOS:</strong> The Day 1 and Day 14 touchpoints listed in the original have been removed. The Day 0 / Day 7 sequence is proven, tight, and consistent. Adding more touchpoints before this cadence is established adds complexity without evidence. Revisit at the Month 3 data review if retention data supports it.
+  </div>
+
+  <h3>Nurture logic by buyer state</h3>
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="card-sm">
+      <p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rose);margin-bottom:6px;">If engaged (replies / reshares)</p>
+      <p style="font-size:13px;color:var(--text-mid);">Trigger upsell to Gift Set on next WA conversation. Tag as Repeat in CRM.</p>
+    </div>
+    <div class="card-sm">
+      <p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rose);margin-bottom:6px;">If inactive after Day 7</p>
+      <p style="font-size:13px;color:var(--text-mid);">No further automated contact until Month 3 relaunch campaign. Avoid over-messaging.</p>
+    </div>
+    <div class="card-sm">
+      <p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rose);margin-bottom:6px;">If happy + reshares</p>
+      <p style="font-size:13px;color:var(--text-mid);">Referral prompt fires. Tag as VIP if 3+ orders. Eligible for loyalty mechanic (Month 3).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     06 — CONVERSION ENGINE
+══════════════════════════════════ -->
+<section class="section section-mid" id="conversion">
+  <div class="sec-eyebrow">
+    <span class="sec-num">06</span>
+    <span class="sec-tag">Conversion engine</span>
+    <span class="sec-rule"></span>
+  </div>
+  <h2 class="sec-title">The WhatsApp chat that closes every order.</h2>
+  <p class="sec-intro">Conversion happens in WhatsApp. The chat structure below is the conceptual scaffolding. Each step maps to a specific COS v1 script or action. The scripts are the operational layer — this is the strategic logic behind them.</p>
+
+  <div class="callout-law">
+    <strong>Closing logic:</strong> Remove thinking → show options → ask "which one?" Every extra question, every extra decision, every unclear price is a conversion that doesn't happen.
+  </div>
+
+  <h3>Chat conversion structure</h3>
+  <div class="card" style="padding:8px 0 0;overflow:hidden;">
+    <div style="display:grid;grid-template-columns:50px 120px 1fr 140px;background:var(--cream-mid);padding:10px 16px;border-bottom:1px solid var(--border);">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">Step</p>
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">Action</p>
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">What to say / do</p>
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">COS v1 ref</p>
+    </div>
+    <div style="padding:0 16px;">
+      <div class="funnel-row" style="grid-template-columns:50px 120px 1fr 140px;">
+        <span style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);">1</span>
+        <span style="font-weight:700;color:var(--text);">Greeting</span>
+        <span style="color:var(--text-muted);">Warm, fast, first-name. Set the tone immediately. Never formal.</span>
+        <span><span class="pill pill-tag">Script 01 opening</span></span>
+      </div>
+      <div class="funnel-row" style="grid-template-columns:50px 120px 1fr 140px;">
+        <span style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);">2</span>
+        <span style="font-weight:700;color:var(--text);">Options</span>
+        <span style="color:var(--text-muted);">Offer 2–3 clear options maximum. More than 3 = decision paralysis. Send Quick Menu image if helpful.</span>
+        <span><span class="pill pill-tag">Quick Menu / Lookbook</span></span>
+      </div>
+      <div class="funnel-row" style="grid-template-columns:50px 120px 1fr 140px;">
+        <span style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);">3</span>
+        <span style="font-weight:700;color:var(--text);">Price clarity</span>
+        <span style="color:var(--text-muted);">State price clearly. No "it depends." No hidden extras after payment. Full price upfront.</span>
+        <span><span class="pill pill-tag">Pre-output checklist</span></span>
+      </div>
+      <div class="funnel-row" style="grid-template-columns:50px 120px 1fr 140px;">
+        <span style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);">4</span>
+        <span style="font-weight:700;color:var(--text);">Selection</span>
+        <span style="color:var(--text-muted);">Ask "Which one?" not "What would you like?" Force a single decision. Confirm address + delivery time.</span>
+        <span><span class="pill pill-tag">Script 01</span></span>
+      </div>
+      <div class="funnel-row" style="grid-template-columns:50px 120px 1fr 140px;">
+        <span style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);">5</span>
+        <span style="font-weight:700;color:var(--text);">Payment</span>
+        <span style="color:var(--text-muted);">Send Paystack link immediately. Do not wait for "let me think about it" — send link, it creates commitment.</span>
+        <span><span class="pill pill-tag">Paystack</span></span>
+      </div>
+      <div class="funnel-row" style="grid-template-columns:50px 120px 1fr 140px;border-bottom:none;">
+        <span style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);">6</span>
+        <span style="font-weight:700;color:var(--text);">Confirmation</span>
+        <span style="color:var(--text-muted);">Script 01 confirmation fires. Delivery update (Script 02) fires when rider dispatches. Loop closes.</span>
+        <span><span class="pill pill-tag">Scripts 01 + 02</span></span>
+      </div>
+    </div>
+  </div>
+
+  <h3>Trust assets — used at Product-aware and Ready stages</h3>
+  <div class="grid-2" style="margin-top:8px;">
+    <div class="card-sm"><strong>Delivery images</strong><p style="font-size:12px;color:var(--text-muted);margin-top:4px;">Real photos from the Proof bank. Sent proactively when a lead is wavering. Never stock.</p></div>
+    <div class="card-sm"><strong>Testimonials</strong><p style="font-size:12px;color:var(--text-muted);margin-top:4px;">Screenshot of customer WhatsApp message. Permission confirmed. Name truncated for privacy.</p></div>
+    <div class="card-sm"><strong>Packaging visuals</strong><p style="font-size:12px;color:var(--text-muted);margin-top:4px;">Product shot with ribbon, sticker, and note card visible. Shows premium presentation at a glance.</p></div>
+    <div class="card-sm"><strong>"Ready today" confirmation</strong><p style="font-size:12px;color:var(--text-muted);margin-top:4px;">Explicit same-day availability stated in every Express conversation. Removes the "will it arrive?" fear.</p></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     07 — CRM SYSTEM
+══════════════════════════════════ -->
+<section class="section" id="crm">
+  <div class="sec-eyebrow">
+    <span class="sec-num">07</span>
+    <span class="sec-tag">CRM system</span>
+    <span class="sec-rule"></span>
+  </div>
+  <h2 class="sec-title">A real CRM. Not a mental one.</h2>
+  <p class="sec-intro">The original MSOS described a "Mental CRM" — buyer tags held in memory. This is replaced with a defined Notion schema. Five fields, one database, tagged after every order. The retention and growth systems depend on this.</p>
+
+  <div class="callout-law">
+    <strong>"Mental CRM" is retired.</strong> Once weekly order volume exceeds 10, memory-based tagging fails and the Day 7 nudge, VIP identification, and referral logic all break down. The Notion schema below takes 20 minutes to build and runs indefinitely.
+  </div>
+
+  <h3>Notion buyer database — field schema</h3>
+  <div class="card" style="padding:8px 0 0;overflow:hidden;">
+    <div class="crm-tag-row" style="background:var(--cream-mid);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);">
+      <span>Field name</span><span>Definition</span><span>Tagging trigger</span><span>Notes</span>
+    </div>
+    <div class="crm-tag-row">
+      <span class="crm-tag-label">Buyer name</span>
+      <span class="crm-tag-def">First name + last initial</span>
+      <span class="crm-tag-trig">On order confirmed</span>
+      <span class="crm-tag-vip">Required</span>
+    </div>
+    <div class="crm-tag-row">
+      <span class="crm-tag-label">Buyer type</span>
+      <span class="crm-tag-def">New lead / Repeat / VIP / Inquiry only</span>
+      <span class="crm-tag-trig">After each order</span>
+      <span class="crm-tag-vip">VIP = 3+ orders</span>
+    </div>
+    <div class="crm-tag-row">
+      <span class="crm-tag-label">Last order date</span>
+      <span class="crm-tag-def">ISO date of most recent confirmed delivery</span>
+      <span class="crm-tag-trig">On delivery confirmed</span>
+      <span class="crm-tag-vip">Drives Day 7 nudge</span>
+    </div>
+    <div class="crm-tag-row">
+      <span class="crm-tag-label">Total orders</span>
+      <span class="crm-tag-def">Cumulative count of completed orders</span>
+      <span class="crm-tag-trig">After each order</span>
+      <span class="crm-tag-vip">AOV tracking</span>
+    </div>
+    <div class="crm-tag-row" style="border-bottom:none;">
+      <span class="crm-tag-label">Proof shared</span>
+      <span class="crm-tag-def">Y / N — has this buyer shared a delivery photo?</span>
+      <span class="crm-tag-trig">When photo received</span>
+      <span class="crm-tag-vip">Feeds referral logic</span>
+    </div>
+  </div>
+
+  <h3>Tagging automation logic</h3>
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="card-sm">
+      <p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rose);margin-bottom:6px;">New → Repeat</p>
+      <p style="font-size:13px;color:var(--text-mid);">Auto-upgrade after second confirmed order. Repeat buyers receive BACK500 on Day 7 nudge.</p>
+    </div>
+    <div class="card-sm">
+      <p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rose);margin-bottom:6px;">Repeat → VIP</p>
+      <p style="font-size:13px;color:var(--text-mid);">Upgrade at 3 total orders. VIP buyers eligible for loyalty stamp card (activates Month 3).</p>
+    </div>
+    <div class="card-sm">
+      <p style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--rose);margin-bottom:6px;">Proof shared → Referral</p>
+      <p style="font-size:13px;color:var(--text-mid);">If Proof = Y and reshare occurred, referral prompt fires. Tag updates to include "referrer" flag.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     08 — CAMPAIGN ARCHITECTURE
+══════════════════════════════════ -->
+<section class="section section-alt" id="campaigns">
+  <div class="sec-eyebrow">
+    <span class="sec-num">08</span>
+    <span class="sec-tag">Campaign architecture</span>
+    <span class="sec-rule"></span>
+  </div>
+  <h2 class="sec-title">Four beats. Every campaign runs this structure.</h2>
+  <p class="sec-intro">The original MSOS had a 3-beat campaign structure (Pre / Launch / Post). The fourth beat — Retention — has been added. Every campaign that ends at "Post" leaves the repeat purchase loop disconnected. Retention closes it.</p>
+
+  <div class="grid-2">
+    <div class="campaign-card">
+      <div class="campaign-head">
+        <span class="pill pill-celeb">Celebration</span>
+        <span style="font-size:13px;font-weight:700;color:var(--brown);margin-left:6px;">Beat 1 — Pre-launch (tease)</span>
+      </div>
+      <div class="campaign-body">
+        <div class="campaign-beat">
+          <span class="beat-label">Goal</span>
+          <span class="beat-content">Build anticipation. Prime the audience's gifting intent before the offer appears.</span>
+        </div>
+        <div class="campaign-beat">
+          <span class="beat-label">Content</span>
+          <span class="beat-content">Gift-moment Stories, "something's coming" teaser posts, behind-the-scenes baking Reel.</span>
+        </div>
+        <div class="campaign-beat" style="border-bottom:none;">
+          <span class="beat-label">Duration</span>
+          <span class="beat-content">2–3 days before launch day</span>
+        </div>
+      </div>
+    </div>
+    <div class="campaign-card">
+      <div class="campaign-head">
+        <span class="pill pill-express">Express</span>
+        <span style="font-size:13px;font-weight:700;color:var(--brown);margin-left:6px;">Beat 2 — Launch (offer + urgency)</span>
+      </div>
+      <div class="campaign-body">
+        <div class="campaign-beat">
+          <span class="beat-label">Goal</span>
+          <span class="beat-content">Drive immediate orders. All friction removed. Single CTA to WhatsApp.</span>
+        </div>
+        <div class="campaign-beat">
+          <span class="beat-label">Content</span>
+          <span class="beat-content">Monday Express post + WhatsApp broadcast. Price visible. "Ready today" stated. Rosewood CTA.</span>
+        </div>
+        <div class="campaign-beat" style="border-bottom:none;">
+          <span class="beat-label">Duration</span>
+          <span class="beat-content">Launch day + 24 hours</span>
+        </div>
+      </div>
+    </div>
+    <div class="campaign-card">
+      <div class="campaign-head">
+        <span class="pill pill-retain">Retention</span>
+        <span style="font-size:13px;font-weight:700;color:var(--brown);margin-left:6px;">Beat 3 — Post (proof + social)</span>
+      </div>
+      <div class="campaign-body">
+        <div class="campaign-beat">
+          <span class="beat-label">Goal</span>
+          <span class="beat-content">Capture proof from campaign orders. Build trust for the next campaign cycle.</span>
+        </div>
+        <div class="campaign-beat">
+          <span class="beat-label">Content</span>
+          <span class="beat-content">Friday proof post from deliveries. Script 03 photo prompt sent to all campaign buyers.</span>
+        </div>
+        <div class="campaign-beat" style="border-bottom:none;">
+          <span class="beat-label">Duration</span>
+          <span class="beat-content">Day 3–7 post-launch</span>
+        </div>
+      </div>
+    </div>
+    <div class="campaign-card" style="border-top:4px solid var(--rose);">
+      <div class="campaign-head">
+        <span class="pill pill-retain">Retention</span>
+        <span style="font-size:13px;font-weight:700;color:var(--brown);margin-left:6px;">Beat 4 — Retention (re-order push)</span>
+      </div>
+      <div class="campaign-body">
+        <div class="campaign-beat">
+          <span class="beat-label">Goal</span>
+          <span class="beat-content">Convert campaign buyers into repeat customers. This is the revenue multiplier beat.</span>
+        </div>
+        <div class="campaign-beat">
+          <span class="beat-label">Content</span>
+          <span class="beat-content">Script 04 (Day 7 re-order nudge) to all campaign buyers. BACK500 code. Soft, relational tone.</span>
+        </div>
+        <div class="campaign-beat" style="border-bottom:none;">
+          <span class="beat-label">Duration</span>
+          <span class="beat-content">Day 7 exactly post-delivery</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Campaign calendar note:</strong> Monthly themes from COS v1 anchor each campaign — Month 1 = "No-stress gifting" (Express Bento focus), Month 2 = "Make someone smile" (Gift Sets), Month 3 = "Last-minute saves" (same-day relaunch). Each campaign runs all four beats.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     09 — GROWTH SYSTEM
+══════════════════════════════════ -->
+<section class="section" id="growth">
+  <div class="sec-eyebrow">
+    <span class="sec-num">09</span>
+    <span class="sec-tag">Growth system</span>
+    <span class="sec-rule"></span>
+  </div>
+  <h2 class="sec-title">Three loops. Three expansion paths. All gated.</h2>
+  <p class="sec-intro">Growth happens through compounding loops, not one-time pushes. Each loop feeds the next. Expansion into new channels and business models is gated behind defined thresholds — so nothing activates before the foundation is proven.</p>
+
+  <h3>The three core loops</h3>
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="card" style="border-top:4px solid var(--rose);">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:10px;">Content loop</p>
+      <div class="pipeline-strip" style="padding:10px 14px;border-radius:8px;flex-direction:column;align-items:flex-start;gap:4px;">
+        <span style="font-size:12px;color:rgba(255,255,255,.5);">Post</span>
+        <span style="color:rgba(255,255,255,.2);font-size:11px;">↓</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.5);">Order placed</span>
+        <span style="color:rgba(255,255,255,.2);font-size:11px;">↓</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.5);">Delivery + photo</span>
+        <span style="color:rgba(255,255,255,.2);font-size:11px;">↓</span>
+        <span style="font-size:12px;color:white;font-weight:600;">Friday proof post</span>
+        <span style="color:rgba(255,255,255,.2);font-size:11px;">↓ more orders</span>
+      </div>
+    </div>
+    <div class="card" style="border-top:4px solid var(--pink);">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:10px;">Referral loop</p>
+      <div class="pipeline-strip" style="padding:10px 14px;border-radius:8px;flex-direction:column;align-items:flex-start;gap:4px;">
+        <span style="font-size:12px;color:rgba(255,255,255,.5);">Buyer reshares</span>
+        <span style="color:rgba(255,255,255,.2);font-size:11px;">↓</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.5);">Referral prompt fires</span>
+        <span style="color:rgba(255,255,255,.2);font-size:11px;">↓</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.5);">Friend sees → WA link</span>
+        <span style="color:rgba(255,255,255,.2);font-size:11px;">↓</span>
+        <span style="font-size:12px;color:white;font-weight:600;">New customer enters</span>
+        <span style="color:rgba(255,255,255,.2);font-size:11px;">↓ zero-cost acquisition</span>
+      </div>
+    </div>
+    <div class="card" style="border-top:4px solid var(--green);">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:10px;">Retention loop</p>
+      <div class="pipeline-strip" style="padding:10px 14px;border-radius:8px;flex-direction:column;align-items:flex-start;gap:4px;">
+        <span style="font-size:12px;color:rgba(255,255,255,.5);">Order confirmed</span>
+        <span style="color:rgba(255,255,255,.2);font-size:11px;">↓</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.5);">Day 7 nudge sent</span>
+        <span style="color:rgba(255,255,255,.2);font-size:11px;">↓</span>
+        <span style="font-size:12px;color:rgba(255,255,255,.5);">BACK500 redeemed</span>
+        <span style="color:rgba(255,255,255,.2);font-size:11px;">↓</span>
+        <span style="font-size:12px;color:white;font-weight:600;">Repeat order placed</span>
+        <span style="color:rgba(255,255,255,.2);font-size:11px;">↓ AOV compounds</span>
+      </div>
+    </div>
+  </div>
+
+  <h3>Expansion paths — with activation thresholds</h3>
+  <div class="grid-3" style="margin-top:8px;">
+    <div class="threshold-card">
+      <p class="threshold-label">Paid ads (Instagram)</p>
+      <p class="threshold-num">15+</p>
+      <p class="threshold-condition">WA order initiations per week for 4 consecutive weeks <strong>AND</strong> 10+ proof items in the bank. Until both conditions are met, all budget stays on organic.</p>
+      <div style="margin-top:10px;"><span class="pill pill-express">Month 2–3</span></div>
+    </div>
+    <div class="threshold-card">
+      <p class="threshold-label">Corporate pipeline</p>
+      <p class="threshold-num">Month 2</p>
+      <p class="threshold-condition">Activates when Script 05 is live, Lookbook PDF is built, and Notion pipeline tracker is set up. Does not require organic threshold — corporate is a parallel channel, not a scaled version of retail.</p>
+      <div style="margin-top:10px;"><span class="pill pill-corp">Month 2</span></div>
+    </div>
+    <div class="threshold-card">
+      <p class="threshold-label">Loyalty mechanic</p>
+      <p class="threshold-num">5 VIPs</p>
+      <p class="threshold-condition">Activates when 5+ buyers have reached VIP status (3+ orders each) in the CRM. Stamp-card logic (5 orders = free add-on). WhatsApp-tracked. No app required.</p>
+      <div style="margin-top:10px;"><span class="pill pill-acq">Month 3</span></div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:16px;">
+    <strong>What's not on this list:</strong> Subscription gifting and seasonal campaign packs are acknowledged as future directions but have no activation threshold yet. They enter the roadmap at the Month 3 data review when enough order history exists to design them around real buying patterns.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     10 — TOOL STACK
+══════════════════════════════════ -->
+<section class="section section-mid" id="tools">
+  <div class="sec-eyebrow">
+    <span class="sec-num">10</span>
+    <span class="sec-tag">Tool stack</span>
+    <span class="sec-rule"></span>
+  </div>
+  <h2 class="sec-title">Six tools. Each with a single, defined role.</h2>
+  <p class="sec-intro">The original tool stack listed four tools and omitted delivery tracking and proof-bank management. The updated stack adds two — and defines what each tool does and does not do, to prevent role-bleed.</p>
+
+  <div class="tool-grid">
+    <div class="tool-card">
+      <div class="tool-initial" style="background:rgba(170,200,167,.2);color:var(--green-dk);">WA</div>
+      <p class="tool-name">WhatsApp Business</p>
+      <p class="tool-role">Primary sales channel. All order conversations, scripts 01–05, Day 0 + Day 7 nurture. CRM tagging trigger.</p>
+    </div>
+    <div class="tool-card">
+      <div class="tool-initial" style="background:rgba(245,139,166,.15);color:var(--rose);">IG</div>
+      <p class="tool-name">Instagram</p>
+      <p class="tool-role">Discovery + desire. 3 posts/week, daily Stories, Reels. Feeds WhatsApp with warm leads. Not a sales channel.</p>
+    </div>
+    <div class="tool-card">
+      <div class="tool-initial" style="background:rgba(92,44,29,.1);color:var(--brown);">Pa</div>
+      <p class="tool-name">Paystack</p>
+      <p class="tool-role">Payment processing only. Link sent in WhatsApp after selection confirmed. No other role in the flow.</p>
+    </div>
+    <div class="tool-card">
+      <div class="tool-initial" style="background:rgba(209,102,129,.12);color:var(--rose);">No</div>
+      <p class="tool-name">Notion</p>
+      <p class="tool-role">CRM database + Proof bank + Content brief archive + Campaign pipeline tracker + Weekly metrics log.</p>
+    </div>
+    <div class="tool-card">
+      <div class="tool-initial" style="background:rgba(170,200,167,.2);color:var(--green-dk);">Rd</div>
+      <p class="tool-name">Rider / Delivery</p>
+      <p class="tool-role">Delivery confirmation trigger. When rider marks delivered → Scripts 02 + 03 fire. Tracked in Notion CRM.</p>
+    </div>
+    <div class="tool-card">
+      <div class="tool-initial" style="background:rgba(92,44,29,.08);color:var(--brown);">Dr</div>
+      <p class="tool-name">Google Drive</p>
+      <p class="tool-role">Approved visual asset library. Raw shoot files + final post images. Brand assets + Lookbook PDF storage.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:16px;">
+    <strong>Future tool:</strong> WhatsApp automation (Wati or Interakt) activates when order volume makes manual script-sending inefficient — estimated at 15+ orders/week. Until then, scripts are sent manually. The infrastructure is identical; automation is a volume decision, not a capability decision.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     11 — CONTROL SYSTEM
+══════════════════════════════════ -->
+<section class="section" id="control">
+  <div class="sec-eyebrow">
+    <span class="sec-num">11</span>
+    <span class="sec-tag">Control system</span>
+    <span class="sec-rule"></span>
+  </div>
+  <h2 class="sec-title">Pre-publish and post-delivery quality gates.</h2>
+  <p class="sec-intro">Two checklists govern every output — one before it goes out, one after it lands. The pre-publish checklist is owned by COS v1 (referenced here). The post-delivery checklist is owned by the MSOS — it governs operational completeness, not content quality.</p>
+
+  <div class="grid-2">
+    <div>
+      <h4 style="margin-top:0;">Pre-publish (owned by COS v1)</h4>
+      <div class="card" style="padding:8px 20px;">
+        <ul class="check-list">
+          <li><span class="cb"></span><span>Can someone order immediately from this?</span></li>
+          <li><span class="cb"></span><span>Is the price visible?</span></li>
+          <li><span class="cb"></span><span>Is it clear in under 3 seconds?</span></li>
+          <li><span class="cb"></span><span>Is there exactly one CTA?</span></li>
+          <li><span class="cb"></span><span>Does it reduce thinking — not add it?</span></li>
+          <li><span class="cb"></span><span>Does it trigger emotion or urgency?</span></li>
+        </ul>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:8px;">6 of 6 required. See COS v1 for full detail.</p>
+    </div>
+    <div>
+      <h4 style="margin-top:0;">Post-delivery (owned by MSOS)</h4>
+      <div class="card" style="padding:8px 20px;">
+        <ul class="check-list">
+          <li><span class="cb"></span><span>Order confirmed and logged in Notion CRM?</span></li>
+          <li><span class="cb"></span><span>Buyer type tagged (New / Repeat / VIP)?</span></li>
+          <li><span class="cb"></span><span>Delivery confirmed by rider?</span></li>
+          <li><span class="cb"></span><span>Script 03 (photo prompt) sent — Day 0?</span></li>
+          <li><span class="cb"></span><span>Script 04 (re-order nudge) scheduled — Day 7?</span></li>
+          <li><span class="cb"></span><span>Proof received? Tagged in Proof bank?</span></li>
+        </ul>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:8px;">6 of 6 required per order. No exceptions.</p>
+    </div>
+  </div>
+
+  <h3>Operating principles (5 laws)</h3>
+  <div class="grid-auto" style="margin-top:8px;">
+    <div class="card-sm" style="border-left:3px solid var(--rose);border-radius:0 10px 10px 0;">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:4px;">Law 1</p>
+      <p style="font-size:13px;font-weight:700;color:var(--brown);">Speed wins sales</p>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">Faster response, faster ordering, faster delivery beats prettier every time.</p>
+    </div>
+    <div class="card-sm" style="border-left:3px solid var(--pink);border-radius:0 10px 10px 0;">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:4px;">Law 2</p>
+      <p style="font-size:13px;font-weight:700;color:var(--brown);">Simplicity drives conversion</p>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">Every extra choice, every extra step, every unclear price is a lost order.</p>
+    </div>
+    <div class="card-sm" style="border-left:3px solid var(--blush);border-radius:0 10px 10px 0;">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:4px;">Law 3</p>
+      <p style="font-size:13px;font-weight:700;color:var(--brown);">Emotion drives action</p>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">Logic justifies. Emotion decides. Every post leads with a feeling, not a feature.</p>
+    </div>
+    <div class="card-sm" style="border-left:3px solid var(--green);border-radius:0 10px 10px 0;">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:4px;">Law 4</p>
+      <p style="font-size:13px;font-weight:700;color:var(--brown);">Proof builds trust</p>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">One real delivery photo is worth ten designed posts. The Proof bank is the most valuable asset in this system.</p>
+    </div>
+    <div class="card-sm" style="border-left:3px solid var(--brown);border-radius:0 10px 10px 0;">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:4px;">Law 5</p>
+      <p style="font-size:13px;font-weight:700;color:var(--brown);">Follow-up creates repeat</p>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">The Day 7 nudge is not optional. Every uncontacted past buyer is a missed re-order that costs nothing to prevent.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     12 — ROADMAP
+══════════════════════════════════ -->
+<section class="section section-dark" id="roadmap">
+  <div class="sec-eyebrow">
+    <span class="sec-num" style="color:rgba(255,255,255,.2);">12</span>
+    <span class="sec-tag-dark">Roadmap</span>
+    <span class="sec-rule-dark"></span>
+  </div>
+  <h2 class="sec-title sec-title-dark">What to build. In order. With thresholds.</h2>
+  <p class="sec-intro sec-intro-dark">Every item in this roadmap is sequenced by revenue impact. Nothing activates without its threshold condition being met. The next decision is always obvious — because the threshold tells you exactly when to move.</p>
+
+  <div class="roadmap">
+
+    <div class="rm-item done">
+      <p class="rm-week">Completed — this document</p>
+      <p class="rm-title" style="color:white;">MSOS v1 — all conflicts resolved</p>
+      <p class="rm-desc" style="color:rgba(255,255,255,.45);">Audience definition aligned to Brand v2. "Mental CRM" replaced with Notion schema. Nurture timeline unified to COS v1 Day 0 / Day 7. Conversion structure linked to scripts. 4-beat campaign structure. Brand mode language applied throughout. Paid ads threshold defined. Referral mechanism specified.</p>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Week 1 — immediate</p>
+      <p class="rm-title" style="color:white;">Build the Notion CRM database</p>
+      <p class="rm-desc" style="color:rgba(255,255,255,.45);">5 fields, one database, 20 minutes to set up. Tag every existing buyer retrospectively. This is the foundation that all retention, VIP, and referral logic sits on. Without it, the Day 7 nudge is manual guesswork and the referral loop has no trigger.</p>
+      <div class="rm-tags">
+        <span class="rm-tag">Notion CRM</span>
+        <span class="rm-tag">Buyer tagging</span>
+        <span class="rm-tag">Retrospective import</span>
+      </div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Week 1–2 — high leverage</p>
+      <p class="rm-title" style="color:white;">Build Lookbook + Quick Menu</p>
+      <p class="rm-desc" style="color:rgba(255,255,255,.45);">The two lead magnets that eliminate the Solution-aware and Product-aware friction entirely. Lookbook = one-page PDF, all three tiers, prices, WA link. Quick Menu = single image of Express Bento options with prices. Both DM-able in one tap. These are the assets that make "send a cake in minutes" provably true from a cold message.</p>
+      <div class="rm-tags">
+        <span class="rm-tag">Lookbook PDF</span>
+        <span class="rm-tag">Quick Menu image</span>
+        <span class="rm-tag">Google Drive upload</span>
+      </div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Week 2 — referral unlock</p>
+      <p class="rm-title" style="color:white;">Write and activate referral prompt script</p>
+      <p class="rm-desc" style="color:rgba(255,255,255,.45);">The sixth WhatsApp script. Fires when a buyer reshares to their Story. "Your friends saw that — want to send them one?" + direct WA link. Zero-cost acquisition. No app, no landing page. Lives in Notion alongside Scripts 01–05 and is sent manually until automation activates.</p>
+      <div class="rm-tags">
+        <span class="rm-tag">Script 06 — referral</span>
+        <span class="rm-tag">Trigger: reshare detected</span>
+        <span class="rm-tag">COS v1 script bank update</span>
+      </div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Month 1 — campaign launch</p>
+      <p class="rm-title" style="color:white;">Run first 4-beat campaign — "No-stress gifting"</p>
+      <p class="rm-desc" style="color:rgba(255,255,255,.45);">Month 1 theme anchored to Express Bento. Pre-launch tease (2 days) → Monday Express launch post + WA broadcast → Friday proof post → Day 7 nudge to all buyers. This is the first time the full 4-beat structure runs end-to-end. Note results for Month 3 review.</p>
+      <div class="rm-tags">
+        <span class="rm-tag">4-beat campaign</span>
+        <span class="rm-tag">Express Bento hero</span>
+        <span class="rm-tag">Day 7 tracking</span>
+      </div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Month 2 — corporate activation</p>
+      <p class="rm-title" style="color:white;">Corporate pipeline — scripts + lookbook + tracker</p>
+      <p class="rm-desc" style="color:rgba(255,255,255,.45);">Script 05 is live. Build the corporate one-pager (event specs, box options, pricing tiers). Set up the Notion corporate pipeline tracker: Inquiry → Quoted → Confirmed → Delivered. Corporate orders are the highest revenue-per-transaction SKU. No threshold gating — this runs parallel to retail from Month 2.</p>
+      <div class="rm-tags">
+        <span class="rm-tag">Corporate one-pager</span>
+        <span class="rm-tag">Pipeline tracker</span>
+        <span class="rm-tag">Pricing tiers</span>
+      </div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Month 2–3 — threshold watch</p>
+      <p class="rm-title" style="color:white;">Paid ads threshold — track weekly</p>
+      <p class="rm-desc" style="color:rgba(255,255,255,.45);">Threshold: 15+ WA order initiations per week for 4 consecutive weeks AND 10+ proof items in the bank. Log this weekly in the metrics dashboard alongside the 5 COS v1 metrics. When both conditions are met for 4 straight weeks, paid ads planning begins. Not before.</p>
+      <div class="rm-tags">
+        <span class="rm-tag">Weekly threshold log</span>
+        <span class="rm-tag">IG Ads planning (contingent)</span>
+      </div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Month 3 — loyalty + data review</p>
+      <p class="rm-title" style="color:white;">Loyalty mechanic launch + MSOS v2 planning</p>
+      <p class="rm-desc" style="color:rgba(255,255,255,.45);">Threshold: 5+ VIP buyers (3+ orders each) in CRM. Launch "Beqa's Circle" — stamp-card logic (5 orders = free upgrade or add-on). WhatsApp-tracked. Simultaneously: 6-week data review. Which campaign types drove the most orders? Which awareness stage converts fastest? Which buyer tags have the highest repeat rate? Feed into MSOS v2 and COS v2 planning.</p>
+      <div class="rm-tags">
+        <span class="rm-tag">Loyalty naming</span>
+        <span class="rm-tag">Stamp card design</span>
+        <span class="rm-tag">6-week data review</span>
+        <span class="rm-tag">MSOS v2 flag</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CLOSING
+══════════════════════════════════ -->
+<section class="section section-mid" style="padding-bottom:80px;">
+  <div class="mantra-block">
+    <p class="mantra-label">Operating principle</p>
+    <p class="mantra-text">"We don't 'market cakes.'<br>We convert gifting situations into fast decisions and repeat orders."</p>
+    <p class="mantra-sub">Because Beqa dey Bake. &nbsp;·&nbsp; Send a cake in minutes. &nbsp;·&nbsp; Every box feels like a celebration.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<div class="doc-footer">
+  <div>
+    <div class="doc-footer-brand">Beqabakes</div>
+    <div class="doc-footer-tagline">Because Beqa dey Bake.</div>
+  </div>
+  <div class="doc-footer-meta">
+    Marketing &amp; Sales Operating System v1<br>
+    Aligned to Brand System v2 + COS v1 &nbsp;·&nbsp; April 2026<br>
+    Strategy layer &nbsp;·&nbsp; Operator × Giver
+  </div>
+</div>
+
+</div>
+</body>
+</html>

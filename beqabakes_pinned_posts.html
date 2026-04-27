@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beqabakes — Three Pinned Posts</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Mulish:wght@300;400;500;600;700&family=Merienda:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brown:    #5C2C1D;
+  --brown-dk: #3d1c10;
+  --cream:    #FFE3E9;
+  --cream-lt: #FFFBF9;
+  --cream-md: #F5EDE8;
+  --pink:     #F58BA6;
+  --rose:     #D16681;
+  --rose-dk:  #a84d63;
+  --blush:    #F7D8DF;
+  --green:    #AAC8A7;
+  --green-dk: #5a8a57;
+  --text:     #2E2420;
+  --text-mid: #5C4840;
+  --text-dim: #8C7068;
+  --text-lt:  #B8A098;
+  --border:   rgba(92,44,29,.09);
+  --border-md:rgba(92,44,29,.17);
+  --white:    #ffffff;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Mulish',sans-serif;
+  background:#EDE3DD;
+  color:var(--text);
+  font-size:14px;
+  line-height:1.75;
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+}
+.page{max-width:1040px;margin:0 auto;background:var(--cream-lt);}
+
+/* ── COVER ── */
+.cover{
+  background:var(--brown-dk);
+  padding:64px 72px 52px;
+  position:relative;overflow:hidden;
+}
+.cover::before{content:'';position:absolute;top:-100px;right:-100px;width:420px;height:420px;border-radius:50%;background:rgba(245,139,166,.06);pointer-events:none;}
+.cover-bar{height:4px;display:grid;grid-template-columns:1fr 1fr 1fr;}
+.cover-bar span:nth-child(1){background:var(--rose);}
+.cover-bar span:nth-child(2){background:var(--pink);}
+.cover-bar span:nth-child(3){background:var(--brown);}
+.cover-eyebrow{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--rose);margin-bottom:14px;}
+.cover h1{font-family:'Playfair Display',serif;font-size:clamp(34px,4.5vw,52px);font-weight:700;color:white;line-height:1.1;margin-bottom:10px;}
+.cover h1 em{color:var(--rose);font-style:italic;}
+.cover-sub{font-size:14px;color:rgba(255,255,255,.45);max-width:560px;line-height:1.7;margin:20px 0 36px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);}
+.cover-pins{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;max-width:620px;}
+.cover-pin{padding:16px 20px;background:rgba(255,255,255,.03);}
+.cover-pin-num{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);margin-bottom:6px;}
+.cover-pin-name{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:white;margin-bottom:4px;}
+.cover-pin-mode{font-size:11px;color:rgba(255,255,255,.35);}
+.cover-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:20px;margin-top:28px;display:flex;justify-content:space-between;align-items:center;}
+.cover-bottom-meta{font-size:11px;color:rgba(255,255,255,.25);line-height:1.9;}
+.cover-bottom-brand{font-family:'Merienda',cursive;font-size:18px;color:var(--rose);opacity:.6;}
+
+/* ── NAV ── */
+.sticky-nav{position:sticky;top:0;z-index:50;background:rgba(61,28,16,.97);backdrop-filter:blur(8px);padding:0 72px;display:flex;align-items:center;justify-content:space-between;height:48px;border-bottom:1px solid rgba(255,255,255,.06);}
+.nav-brand{font-family:'Playfair Display',serif;font-size:13px;color:rgba(255,255,255,.7);}
+.nav-links{display:flex;gap:0;list-style:none;}
+.nav-links a{font-size:11px;font-weight:500;text-decoration:none;color:rgba(255,255,255,.4);padding:5px 12px;border-radius:20px;transition:color .15s,background .15s;}
+.nav-links a:hover{color:white;background:rgba(255,255,255,.08);}
+.nav-links a.p1:hover{color:var(--rose);}
+.nav-links a.p2:hover{color:var(--pink);}
+.nav-links a.p3:hover{color:var(--green);}
+.nav-status{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--rose);color:white;padding:3px 10px;border-radius:20px;}
+
+/* ── POST SECTION SHELL ── */
+.post-section{padding:0;border-bottom:2px solid var(--border-md);}
+
+.post-header{
+  padding:40px 72px 32px;
+  display:grid;grid-template-columns:auto 1fr auto;
+  align-items:center;gap:20px;
+}
+.post-pin-badge{
+  width:44px;height:44px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:18px;font-weight:700;
+  flex-shrink:0;
+}
+.post-header-text{}
+.post-header-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--brown);margin-bottom:3px;}
+.post-header-sub{font-size:12px;color:var(--text-dim);}
+.post-status-badge{font-size:11px;font-weight:700;padding:5px 14px;border-radius:20px;}
+
+/* Post 1 — Express colours */
+.p1-accent{ color:var(--rose); }
+.p1-bg{ background:var(--rose); }
+.p1-lt{ background:#FDF0F3; }
+.p1-border{ border-color:var(--rose); }
+
+/* Post 2 — Celebration colours */
+.p2-accent{ color:var(--pink); }
+.p2-bg{ background:var(--pink); }
+.p2-lt{ background:#FDF4F7; }
+.p2-border{ border-color:var(--pink); }
+
+/* Post 3 — custom colours */
+.p3-accent{ color:var(--green-dk); }
+.p3-bg{ background:var(--green); }
+.p3-lt{ background:#F3FAF2; }
+.p3-border{ border-color:var(--green); }
+
+/* ── CONTENT GRID ── */
+.post-body{
+  padding:0 72px 48px;
+  display:grid;grid-template-columns:340px 1fr;
+  gap:40px;align-items:start;
+}
+
+/* ── PHONE MOCKUP ── */
+.phone-wrap{position:sticky;top:68px;}
+.phone{
+  width:100%;max-width:320px;
+  background:#1a1a2e;
+  border-radius:36px;
+  padding:12px;
+  box-shadow:0 32px 64px rgba(0,0,0,.28), 0 0 0 1px rgba(255,255,255,.06);
+  margin:0 auto;
+}
+.phone-notch{
+  width:80px;height:22px;background:#1a1a2e;
+  border-radius:0 0 14px 14px;
+  margin:0 auto 8px;
+  position:relative;z-index:2;
+}
+.phone-screen{
+  border-radius:26px;
+  overflow:hidden;
+  aspect-ratio:9/16;
+  position:relative;
+}
+.ig-post{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;
+  position:relative;
+}
+
+/* Post 1 visual */
+.p1-visual{
+  flex:1;
+  background:linear-gradient(160deg,#3d1c10 0%,#5C2C1D 50%,#7a3d2a 100%);
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+  padding:20px 18px 16px;
+  position:relative;overflow:hidden;
+}
+.p1-visual::before{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:160px;height:160px;border-radius:50%;
+  background:rgba(245,139,166,.1);
+}
+.p1-eyebrow{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rose);margin-bottom:8px;}
+.p1-headline{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:white;line-height:1.2;margin-bottom:14px;}
+.p1-items{display:flex;flex-direction:column;gap:6px;}
+.p1-item{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:7px 10px;
+  background:rgba(255,255,255,.07);
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,.08);
+}
+.p1-item-name{font-size:10px;font-weight:600;color:rgba(255,255,255,.85);}
+.p1-item-price{font-size:10px;font-weight:700;color:var(--rose);}
+.p1-cta{
+  margin-top:12px;
+  background:var(--rose);
+  border-radius:10px;
+  padding:10px 14px;
+  text-align:center;
+  font-size:11px;font-weight:700;color:white;
+  letter-spacing:.04em;
+}
+
+/* Post 2 visual */
+.p2-visual{
+  flex:1;
+  background:linear-gradient(135deg,#FFE3E9 0%,#F7D8DF 40%,#F0C8D8 100%);
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+  padding:20px 18px 16px;
+  position:relative;overflow:hidden;
+}
+.p2-visual::before{
+  content:'';position:absolute;bottom:-30px;left:-30px;
+  width:120px;height:120px;border-radius:50%;
+  background:rgba(245,139,166,.2);
+}
+.p2-eyebrow{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rose);margin-bottom:8px;}
+.p2-headline{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--brown);line-height:1.2;margin-bottom:12px;}
+.p2-products{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-bottom:12px;}
+.p2-product{
+  background:rgba(255,255,255,.6);
+  border-radius:8px;padding:8px 6px;
+  text-align:center;
+  border:1px solid rgba(92,44,29,.1);
+}
+.p2-product-name{font-size:8px;font-weight:700;color:var(--brown);margin-bottom:2px;}
+.p2-product-price{font-size:9px;font-weight:700;color:var(--rose);}
+.p2-cta{
+  background:var(--brown);
+  border-radius:10px;
+  padding:10px 14px;
+  text-align:center;
+  font-size:11px;font-weight:700;color:white;
+}
+
+/* Post 3 visual */
+.p3-visual{
+  flex:1;
+  background:linear-gradient(150deg,#f8f4f0 0%,#EDE3DD 50%,#E5D5CC 100%);
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+  padding:20px 18px 16px;
+  position:relative;overflow:hidden;
+}
+.p3-visual::before{
+  content:'';position:absolute;top:-20px;right:-20px;
+  width:100px;height:100px;border-radius:50%;
+  background:rgba(170,200,167,.25);
+}
+.p3-eyebrow{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--green-dk);margin-bottom:8px;}
+.p3-headline{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--brown);line-height:1.2;margin-bottom:12px;font-style:italic;}
+.p3-details{display:flex;flex-direction:column;gap:5px;margin-bottom:12px;}
+.p3-detail{
+  display:flex;align-items:center;gap:8px;
+  padding:6px 8px;
+  background:rgba(255,255,255,.5);border-radius:6px;
+  font-size:9px;color:var(--brown);font-weight:500;
+}
+.p3-detail-dot{width:6px;height:6px;border-radius:50%;background:var(--green-dk);flex-shrink:0;}
+.p3-cta{
+  background:var(--brown);
+  border-radius:10px;
+  padding:10px 14px;
+  text-align:center;
+  font-size:11px;font-weight:700;color:white;
+}
+
+/* IG UI chrome */
+.ig-bottom{
+  background:#1a1a2e;
+  padding:8px 16px 4px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.ig-action{font-size:18px;color:rgba(255,255,255,.5);}
+
+/* ── BRIEF PANEL ── */
+.brief-panel{}
+
+.section-eyebrow{
+  font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:8px;
+}
+.section-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--brown);line-height:1.2;margin-bottom:8px;}
+.section-intro{font-size:13px;color:var(--text-dim);line-height:1.7;margin-bottom:20px;}
+
+/* Brief rows */
+.brief-grid{display:flex;flex-direction:column;gap:0;background:var(--white);border:1px solid var(--border-md);border-radius:14px;overflow:hidden;margin-bottom:16px;}
+.brief-row{display:grid;grid-template-columns:120px 1fr;gap:0;border-bottom:1px solid var(--border);}
+.brief-row:last-child{border-bottom:none;}
+.brief-label{
+  font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--text-lt);padding:13px 16px;
+  background:var(--cream-md);
+  display:flex;align-items:flex-start;
+  padding-top:15px;
+  border-right:1px solid var(--border);
+}
+.brief-value{font-size:13px;color:var(--text);padding:13px 16px;line-height:1.65;}
+.brief-value.caption{font-style:italic;color:var(--brown);font-family:'Mulish',sans-serif;}
+
+/* Checklist */
+.checklist{background:var(--white);border:1px solid var(--border-md);border-radius:12px;overflow:hidden;margin-bottom:14px;}
+.checklist-head{padding:10px 16px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-lt);border-bottom:1px solid var(--border);}
+.check-row{display:flex;align-items:flex-start;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);font-size:12px;color:var(--text-mid);line-height:1.5;}
+.check-row:last-child{border-bottom:none;}
+.check-icon{width:16px;height:16px;border-radius:3px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:10px;}
+.check-pass{background:#E8FAF0;color:#0A4D2A;}
+.check-warn{background:#FFF8E1;color:#7B5800;}
+
+/* Canva spec */
+.canva-spec{background:var(--white);border:1px solid var(--border-md);border-radius:12px;padding:16px 20px;margin-bottom:14px;}
+.canva-title{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--text-dim);margin-bottom:12px;}
+.canva-rows{display:flex;flex-direction:column;gap:6px;}
+.canva-row{display:grid;grid-template-columns:110px 1fr;font-size:12px;gap:8px;}
+.canva-key{color:var(--text-lt);font-weight:600;}
+.canva-val{color:var(--text-mid);}
+.canva-swatch{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:middle;margin-right:5px;border:1px solid var(--border-md);}
+
+/* Caption box */
+.caption-box{background:var(--white);border:1px solid var(--border-md);border-radius:12px;overflow:hidden;margin-bottom:14px;}
+.caption-head{padding:10px 16px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-lt);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.caption-body{padding:16px;font-size:13px;color:var(--text);line-height:1.85;white-space:pre-line;}
+.caption-beat{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:10px;margin-right:4px;vertical-align:middle;}
+.beat-s{background:#FFF8E1;color:#7B5800;}
+.beat-t{background:#FFEBEE;color:#C62828;}
+.beat-o{background:#E8FAF0;color:#0A4D2A;}
+.beat-c{background:var(--rose);color:white;}
+
+/* Alt captions */
+.alt-caption{background:var(--cream-md);border-radius:8px;padding:12px 14px;font-size:12px;color:var(--text-mid);line-height:1.75;margin-top:8px;border-left:2px solid var(--border-md);}
+.alt-caption-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:5px;}
+
+/* Pills */
+.pill{display:inline-block;padding:3px 11px;border-radius:20px;font-size:11px;font-weight:600;}
+.pill-express{background:var(--rose);color:white;}
+.pill-celeb{background:var(--pink);color:var(--brown);}
+.pill-custom{background:var(--green);color:var(--green-dk);}
+.pill-live{background:#E8FAF0;color:#0A4D2A;border:1px solid rgba(90,138,87,.25);}
+
+/* Cards */
+.card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:10px;}
+
+/* Divider */
+.divider{border:none;border-top:1px solid var(--border);margin:20px 0;}
+
+.callout{background:var(--cream);border-left:3px solid var(--rose);border-radius:0 10px 10px 0;padding:12px 16px;font-size:13px;line-height:1.65;color:var(--text);margin:14px 0;}
+.callout strong{color:var(--brown);}
+.callout-green{background:#F3FAF2;border-left:3px solid var(--green-dk);border-radius:0 10px 10px 0;padding:12px 16px;font-size:13px;color:var(--text);margin:14px 0;}
+.callout-green strong{color:var(--green-dk);}
+
+/* Mantra */
+.mantra-block{background:var(--brown-dk);border-radius:14px;padding:28px 36px;text-align:center;margin:8px 72px 0;}
+.mantra-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:10px;}
+.mantra-text{font-family:'Playfair Display',serif;font-size:16px;font-style:italic;color:white;line-height:1.5;margin-bottom:6px;}
+.mantra-sub{font-size:12px;color:var(--rose);opacity:.75;}
+
+/* Footer */
+.doc-footer{background:var(--brown-dk);padding:28px 72px;display:flex;justify-content:space-between;align-items:center;margin-top:40px;}
+.doc-footer-brand{font-family:'Playfair Display',serif;font-size:14px;color:white;}
+.doc-footer-tagline{font-family:'Merienda',cursive;font-size:12px;color:var(--rose);opacity:.65;margin-top:4px;}
+.doc-footer-meta{font-size:11px;color:rgba(255,255,255,.25);line-height:1.9;text-align:right;}
+
+@media print{
+  body{background:white;}
+  .page{max-width:100%;}
+  .post-body{grid-template-columns:1fr;}.phone-wrap{position:static;}
+  .cover{break-after:page;}
+  .post-section{break-inside:avoid;}
+  .sticky-nav{display:none;}
+}
+@media(min-width:1200px){body{padding:0 40px;}.page{box-shadow:0 0 60px rgba(0,0,0,.12);}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ── COVER ── -->
+<div class="cover-bar"><span></span><span></span><span></span></div>
+<div class="cover">
+  <p class="cover-eyebrow">Three Pinned Posts &nbsp;·&nbsp; April 2026 &nbsp;·&nbsp; Fully briefed + ready to build</p>
+  <h1>Three pins.<br><em>Three jobs done.</em></h1>
+  <p class="cover-sub">Every profile visitor arrives at one of three states — ready to order now, browsing and curious, or planning something bigger. These three pins intercept each state perfectly, route them through the bio link decision tree, and close to WhatsApp. All three are live and unblocked.</p>
+  <div class="cover-pins">
+    <div class="cover-pin">
+      <p class="cover-pin-num">Pin 01</p>
+      <p class="cover-pin-name">Quick Order</p>
+      <p class="cover-pin-mode">Express mode &nbsp;·&nbsp; Convert now</p>
+    </div>
+    <div class="cover-pin">
+      <p class="cover-pin-num">Pin 02</p>
+      <p class="cover-pin-name">Lookbook</p>
+      <p class="cover-pin-mode">Celebration mode &nbsp;·&nbsp; Browse + decide</p>
+    </div>
+    <div class="cover-pin">
+      <p class="cover-pin-num">Pin 03</p>
+      <p class="cover-pin-name">Custom Order</p>
+      <p class="cover-pin-mode">Celebration (soft) &nbsp;·&nbsp; Plan + chat</p>
+    </div>
+  </div>
+  <div class="cover-bottom">
+    <div class="cover-bottom-meta">Bio link routes all three paths · WhatsApp prefills ready<br>All posts checklist-passed · Canva specs included</div>
+    <div class="cover-bottom-brand">Beqabakes</div>
+  </div>
+</div>
+
+<!-- ── NAV ── -->
+<nav class="sticky-nav">
+  <span class="nav-brand">Pinned Posts</span>
+  <ul class="nav-links">
+    <li><a href="#post1" class="p1">Pin 01 — Quick Order</a></li>
+    <li><a href="#post2" class="p2">Pin 02 — Lookbook</a></li>
+    <li><a href="#post3" class="p3">Pin 03 — Custom Order</a></li>
+  </ul>
+  <span class="nav-status">3 posts ready</span>
+</nav>
+
+
+<!-- ════════════════════════════════════════
+     PIN 01 — QUICK ORDER
+════════════════════════════════════════ -->
+<div class="post-section" id="post1">
+
+  <div class="post-header">
+    <div class="post-pin-badge" style="background:var(--rose);color:white;">01</div>
+    <div class="post-header-text">
+      <p class="post-header-name">Quick Order</p>
+      <p class="post-header-sub">Express mode &nbsp;·&nbsp; Pinned left &nbsp;·&nbsp; Convert the ready-to-order visitor instantly</p>
+    </div>
+    <span class="post-status-badge pill-live">✓ Unblocked — build now</span>
+  </div>
+
+  <div class="post-body">
+
+    <!-- PHONE MOCKUP -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="ig-post">
+            <div class="p1-visual">
+              <div>
+                <p class="p1-eyebrow">Quick Order &nbsp;·&nbsp; Beqabakes</p>
+                <p class="p1-headline">Need a cake<br>today? 🎂</p>
+                <div class="p1-items">
+                  <div class="p1-item"><span class="p1-item-name">Quick Birthday Cake</span><span class="p1-item-price">₦18,000</span></div>
+                  <div class="p1-item"><span class="p1-item-name">Send Love (Bento)</span><span class="p1-item-price">₦10,000</span></div>
+                  <div class="p1-item"><span class="p1-item-name">Mini Celebration Box</span><span class="p1-item-price">₦15,000</span></div>
+                  <div class="p1-item"><span class="p1-item-name">Just Because Cake</span><span class="p1-item-price">₦7,000</span></div>
+                  <div class="p1-item"><span class="p1-item-name">Cupcake Box</span><span class="p1-item-price">₦12,000</span></div>
+                </div>
+              </div>
+              <div class="p1-cta">Order now → link in bio</div>
+            </div>
+            <div class="ig-bottom">
+              <span class="ig-action">♡</span>
+              <span class="ig-action">✈</span>
+              <span class="ig-action">🔖</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="text-align:center;font-size:10px;color:var(--text-lt);margin-top:10px;font-style:italic;">Visual concept — adapt in Canva</p>
+    </div>
+
+    <!-- BRIEF -->
+    <div class="brief-panel">
+      <p class="section-eyebrow p1-accent">Express mode</p>
+      <h2 class="section-title">Quick Order</h2>
+      <p class="section-intro">This pin intercepts the visitor who already wants to order. Its only job is to show them the five fastest options, their prices, and route them to WhatsApp in one tap. No storytelling. No warmth preamble. Speed first.</p>
+
+      <div class="brief-grid">
+        <div class="brief-row">
+          <span class="brief-label">SIA+ Mode</span>
+          <span class="brief-value"><span class="pill pill-express">Express</span></span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Situation</span>
+          <span class="brief-value">Someone landed on the Beqabakes profile. They need a cake — today, fast, no fuss. They're scanning for what's available and how much it costs.</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Tension</span>
+          <span class="brief-value">They don't want to DM and wait for a reply. They want to see the options and price before they commit to a conversation.</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Solution</span>
+          <span class="brief-value">Five quick options. Five prices. All visible at a glance. Tap the bio link, prefill fires, conversation starts instantly.</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Headline</span>
+          <span class="brief-value caption">"Need a cake today?"</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Sub-headline</span>
+          <span class="brief-value caption">"Pick. Pay. Done." &nbsp;or&nbsp; "Order in minutes."</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Body</span>
+          <span class="brief-value">5 items, name + price each. Ready within 24–48 hours. Abuja delivery.</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">CTA</span>
+          <span class="brief-value">Order now → link in bio<br><span style="font-size:11px;color:var(--text-lt);">Bio link → Quick Order path → WA prefill "Hi, I'd like to place a Quick Order"</span></span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Visual</span>
+          <span class="brief-value">Dark background (Chocolate Brown or very deep warm tone). Each item on a distinct row — name left, price right. Clean, menu-style layout. Rosewood CTA button at bottom. Cake image or B-Loaf mark as accent, not dominant. Post must be readable in Instagram grid thumbnail at tiny size.</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Pin position</span>
+          <span class="brief-value">Leftmost pin — the first post a new visitor sees when they check the grid.</span>
+        </div>
+      </div>
+
+      <!-- CAPTION -->
+      <div class="caption-box">
+        <div class="caption-head">
+          <span>Primary caption</span>
+          <span class="pill pill-express" style="font-size:10px;">Express mode</span>
+        </div>
+        <div class="caption-body"><span class="caption-beat beat-s">Situation</span> Need a cake today?
+
+<span class="caption-beat beat-t">Tension</span> No time to think, no stress needed.
+
+<span class="caption-beat beat-o">Solution</span> Quick Birthday Cake — ₦18,000
+Send Love (Bento) — ₦10,000
+Mini Celebration Box — ₦15,000
+Just Because Cake — ₦7,000
+Cupcake Box — ₦12,000
+
+Ready within 24–48 hrs. Abuja delivery.
+
+<span class="caption-beat beat-c">CTA</span> Order now → link in bio 🎂</div>
+      </div>
+
+      <div class="alt-caption-label" style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:6px;">Shorter variant (for A/B test)</div>
+      <div class="alt-caption">Pick. Pay. Done.
+
+Quick Birthday Cake ₦18k · Send Love ₦10k · Mini Celebration Box ₦15k · Just Because ₦7k · Cupcake Box ₦12k
+
+Abuja delivery. Order → link in bio 🎂</div>
+
+      <!-- CANVA SPEC -->
+      <div class="canva-spec" style="margin-top:14px;">
+        <p class="canva-title">Canva build spec</p>
+        <div class="canva-rows">
+          <div class="canva-row"><span class="canva-key">Format</span><span class="canva-val">1080 × 1080px (square) + 1080 × 1350px (portrait) — build both</span></div>
+          <div class="canva-row"><span class="canva-key">Background</span><span class="canva-val"><span class="canva-swatch" style="background:#3d1c10;"></span> Chocolate Brown #3d1c10 or #5C2C1D</span></div>
+          <div class="canva-row"><span class="canva-key">Headline font</span><span class="canva-val">Playfair Display Bold — white — 36–44pt</span></div>
+          <div class="canva-row"><span class="canva-key">Item name font</span><span class="canva-val">Mulish SemiBold — white 85% opacity — 14–16pt</span></div>
+          <div class="canva-row"><span class="canva-key">Price font</span><span class="canva-val">Mulish Bold — <span class="canva-swatch" style="background:#D16681;"></span> Rosewood #D16681 — same size as item name</span></div>
+          <div class="canva-row"><span class="canva-key">CTA button</span><span class="canva-val">Rosewood #D16681 fill · White Mulish Bold text · Rounded corners 12px</span></div>
+          <div class="canva-row"><span class="canva-key">Accent</span><span class="canva-val">B-Loaf mark or small cake graphic — top right corner, low opacity (~20%)</span></div>
+          <div class="canva-row"><span class="canva-key">Item rows</span><span class="canva-val">Each item: white 8% opacity background · rounded 8px · name left / price right · equal height rows</span></div>
+          <div class="canva-row"><span class="canva-key">Spacing</span><span class="canva-val">Generous padding — 40px margins · 8px gap between items</span></div>
+          <div class="canva-row"><span class="canva-key">Logo</span><span class="canva-val">B-Loaf in Cream Base, very small, bottom centre or top left — last element placed</span></div>
+        </div>
+      </div>
+
+      <!-- CHECKLIST -->
+      <div class="checklist">
+        <div class="checklist-head">Pre-output checklist — 6/6 required</div>
+        <div class="check-row"><span class="check-icon check-pass">✓</span><span><strong>Can someone order immediately?</strong> Yes — bio link → Quick Order WA prefill</span></div>
+        <div class="check-row"><span class="check-icon check-pass">✓</span><span><strong>Is price visible?</strong> Yes — all five prices shown explicitly</span></div>
+        <div class="check-row"><span class="check-icon check-pass">✓</span><span><strong>Clear in 3 seconds?</strong> Yes — menu format, dark background, high contrast</span></div>
+        <div class="check-row"><span class="check-icon check-pass">✓</span><span><strong>Exactly one CTA?</strong> Yes — "Order now → link in bio" only</span></div>
+        <div class="check-row"><span class="check-icon check-pass">✓</span><span><strong>Reduces thinking?</strong> Yes — options pre-laid, no conversation needed to see prices</span></div>
+        <div class="check-row"><span class="check-icon check-warn">!</span><span><strong>Triggers emotion?</strong> Mild — this post prioritises clarity over emotion. The urgency hook ("Need a cake today?") does the emotional work. Accept this tradeoff for a menu post.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     PIN 02 — LOOKBOOK
+════════════════════════════════════════ -->
+<div class="post-section" id="post2">
+
+  <div class="post-header" style="background:var(--cream-md);">
+    <div class="post-pin-badge" style="background:var(--pink);color:var(--brown);">02</div>
+    <div class="post-header-text">
+      <p class="post-header-name">Lookbook</p>
+      <p class="post-header-sub">Celebration mode &nbsp;·&nbsp; Pinned centre &nbsp;·&nbsp; Move the browser to a decision</p>
+    </div>
+    <span class="post-status-badge pill-live">✓ Unblocked — Lookbook site live</span>
+  </div>
+
+  <div class="post-body" style="background:var(--cream-md);padding-top:0;padding-bottom:48px;">
+
+    <!-- PHONE MOCKUP -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="ig-post">
+            <div class="p2-visual">
+              <div>
+                <p class="p2-eyebrow">The full collection &nbsp;·&nbsp; Beqabakes</p>
+                <p class="p2-headline">Every cake.<br>Every occasion.</p>
+                <div class="p2-products">
+                  <div class="p2-product">
+                    <p class="p2-product-name">Quick Order</p>
+                    <p class="p2-product-price">From ₦7k</p>
+                  </div>
+                  <div class="p2-product">
+                    <p class="p2-product-name">Signature</p>
+                    <p class="p2-product-price">From ₦18k</p>
+                  </div>
+                  <div class="p2-product">
+                    <p class="p2-product-name">Gift Sets</p>
+                    <p class="p2-product-price">From ₦15k</p>
+                  </div>
+                </div>
+              </div>
+              <div class="p2-cta">See full lookbook → link in bio</div>
+            </div>
+            <div class="ig-bottom">
+              <span class="ig-action">♡</span>
+              <span class="ig-action">✈</span>
+              <span class="ig-action">🔖</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="text-align:center;font-size:10px;color:var(--text-lt);margin-top:10px;font-style:italic;">Visual concept — adapt in Canva</p>
+    </div>
+
+    <!-- BRIEF -->
+    <div class="brief-panel">
+      <p class="section-eyebrow p2-accent">Celebration mode</p>
+      <h2 class="section-title">Lookbook</h2>
+      <p class="section-intro">This pin intercepts the browser — someone who isn't ready to commit yet, wants to see everything, compare options, get inspired. Its job is to move them from curious to informed, then route them to the Lookbook site (and from there to WhatsApp).</p>
+
+      <div class="brief-grid">
+        <div class="brief-row">
+          <span class="brief-label">SIA+ Mode</span>
+          <span class="brief-value"><span class="pill pill-celeb">Celebration</span></span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Situation</span>
+          <span class="brief-value">Someone who has seen one of our posts and is now on the profile. They're not sure which product is right for them. They want to see the full range before deciding.</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Tension</span>
+          <span class="brief-value">They don't know what's available beyond what they've seen in the feed. They're not ready to DM and ask questions — they want to browse first.</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Solution</span>
+          <span class="brief-value">The Lookbook site has everything — all products, all prices, beautiful visuals — and every page closes back to WhatsApp. This post is the door to that experience.</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Headline</span>
+          <span class="brief-value caption">"Every cake. Every occasion."&nbsp; or &nbsp;"Everything we bake — in one place."</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Sub-copy</span>
+          <span class="brief-value caption">"From quick same-day orders to full celebration cakes — see the full collection."</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">CTA</span>
+          <span class="brief-value">See the full lookbook → link in bio<br><span style="font-size:11px;color:var(--text-lt);">Bio link → Lookbook path → Lookbook site (WhatsApp CTA on every page)</span></span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Visual</span>
+          <span class="brief-value">Warm, soft, light background — Cream Base (#FFE3E9) or Blush (#F7D8DF). Three product category tiles: Quick Order / Signature / Gift Sets, each with a representative cake photo. Cake-Card Wedge rule: every cake shown with gift context — box, ribbon, or note visible. Playfair Display headline. No price detail needed here — the Lookbook site has prices.</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Pin position</span>
+          <span class="brief-value">Centre pin — the discovery and consideration post.</span>
+        </div>
+      </div>
+
+      <!-- CAPTION -->
+      <div class="caption-box">
+        <div class="caption-head">
+          <span>Primary caption</span>
+          <span class="pill pill-celeb" style="font-size:10px;">Celebration mode</span>
+        </div>
+        <div class="caption-body"><span class="caption-beat beat-s">Situation</span> Not sure what to get?
+
+<span class="caption-beat beat-t">Tension</span> Whether it's a birthday, a surprise, or just because — there's something for every occasion and every budget.
+
+<span class="caption-beat beat-o">Solution</span> Our full lookbook is live — quick orders from ₦7,000, signature cakes, gift sets, and more. Every option with photos and prices.
+
+<span class="caption-beat beat-c">CTA</span> See everything → link in bio 🎂</div>
+      </div>
+
+      <div class="alt-caption-label" style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:6px;">Shorter variant</div>
+      <div class="alt-caption">Every cake. Every occasion. Every budget.
+
+See the full collection → link in bio 🎂</div>
+
+      <!-- CANVA SPEC -->
+      <div class="canva-spec" style="margin-top:14px;">
+        <p class="canva-title">Canva build spec</p>
+        <div class="canva-rows">
+          <div class="canva-row"><span class="canva-key">Format</span><span class="canva-val">1080 × 1080px + 1080 × 1350px — build both. Also consider a 3-slide carousel (one per product category).</span></div>
+          <div class="canva-row"><span class="canva-key">Background</span><span class="canva-val"><span class="canva-swatch" style="background:#FFE3E9;"></span> Cream Base #FFE3E9 or <span class="canva-swatch" style="background:#F7D8DF;"></span> Blush #F7D8DF</span></div>
+          <div class="canva-row"><span class="canva-key">Headline font</span><span class="canva-val">Playfair Display Bold — Chocolate Brown #5C2C1D — 38–46pt</span></div>
+          <div class="canva-row"><span class="canva-key">Body font</span><span class="canva-val">Mulish Regular — text mid #5C4840 — 14–16pt</span></div>
+          <div class="canva-row"><span class="canva-key">Product tiles</span><span class="canva-val">3-column grid · white background · cake photo top · category name + "from ₦X" bottom · soft shadow</span></div>
+          <div class="canva-row"><span class="canva-key">CTA button</span><span class="canva-val">Chocolate Brown #5C2C1D fill · White Mulish Bold text · Rounded 12px</span></div>
+          <div class="canva-row"><span class="canva-key">Visual rule</span><span class="canva-val">Every cake photo must show Cake-Card Wedge — box, ribbon, or note visible. No isolated product shots.</span></div>
+          <div class="canva-row"><span class="canva-key">Accent</span><span class="canva-val">Thin rose (#D16681) rule line under headline · Primary Pink (#F58BA6) for any highlight text</span></div>
+          <div class="canva-row"><span class="canva-key">Carousel option</span><span class="canva-val">Slide 1: headline + 3-tile overview. Slide 2: Quick Order close-up. Slide 3: Signature + Gift Set. Final slide: CTA only.</span></div>
+        </div>
+      </div>
+
+      <!-- CHECKLIST -->
+      <div class="checklist">
+        <div class="checklist-head">Pre-output checklist — 6/6 required</div>
+        <div class="check-row"><span class="check-icon check-pass">✓</span><span><strong>Can someone order immediately?</strong> Yes — bio link → Lookbook site → WhatsApp CTA on every page</span></div>
+        <div class="check-row"><span class="check-icon check-pass">✓</span><span><strong>Is price visible?</strong> Yes — "from ₦X" on each product category tile</span></div>
+        <div class="check-row"><span class="check-icon check-pass">✓</span><span><strong>Clear in 3 seconds?</strong> Yes — "Every cake. Every occasion." + 3 tiles + one CTA</span></div>
+        <div class="check-row"><span class="check-icon check-pass">✓</span><span><strong>Exactly one CTA?</strong> Yes — "See everything → link in bio"</span></div>
+        <div class="check-row"><span class="check-icon check-pass">✓</span><span><strong>Reduces thinking?</strong> Yes — doesn't ask them to decide, asks them to browse first</span></div>
+        <div class="check-row"><span class="check-icon check-pass">✓</span><span><strong>Triggers emotion?</strong> Yes — warm visuals, gift context, "for every occasion" copy creates desire</span></div>
+      </div>
+
+      <div class="callout"><strong>Lookbook site rule:</strong> Every page on the Lookbook site must have a visible WhatsApp CTA. If a visitor browses the site and can't find how to order, the post has failed regardless of how good it looks. Before pinning this post, verify that the Lookbook site closes back to WhatsApp on every product page.</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     PIN 03 — CUSTOM ORDER
+════════════════════════════════════════ -->
+<div class="post-section" id="post3" style="border-bottom:none;">
+
+  <div class="post-header">
+    <div class="post-pin-badge" style="background:var(--green);color:var(--green-dk);">03</div>
+    <div class="post-header-text">
+      <p class="post-header-name">Custom Order — "Planning a bigger celebration?"</p>
+      <p class="post-header-sub">Celebration mode (soft) &nbsp;·&nbsp; Pinned right &nbsp;·&nbsp; Capture the custom buyer before they go elsewhere</p>
+    </div>
+    <span class="post-status-badge pill-live">✓ Unblocked — WA prefill ready</span>
+  </div>
+
+  <div class="post-body">
+
+    <!-- PHONE MOCKUP -->
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="ig-post">
+            <div class="p3-visual">
+              <div>
+                <p class="p3-eyebrow">Custom orders &nbsp;·&nbsp; Beqabakes</p>
+                <p class="p3-headline">Planning a bigger<br>celebration?</p>
+                <div class="p3-details">
+                  <div class="p3-detail"><span class="p3-detail-dot"></span>Fully custom design</div>
+                  <div class="p3-detail"><span class="p3-detail-dot"></span>Personalised flavours</div>
+                  <div class="p3-detail"><span class="p3-detail-dot"></span>Special packaging</div>
+                  <div class="p3-detail"><span class="p3-detail-dot"></span>48+ hours lead time</div>
+                </div>
+              </div>
+              <div class="p3-cta">Let's plan it → link in bio</div>
+            </div>
+            <div class="ig-bottom">
+              <span class="ig-action">♡</span>
+              <span class="ig-action">✈</span>
+              <span class="ig-action">🔖</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p style="text-align:center;font-size:10px;color:var(--text-lt);margin-top:10px;font-style:italic;">Visual concept — adapt in Canva</p>
+    </div>
+
+    <!-- BRIEF -->
+    <div class="brief-panel">
+      <p class="section-eyebrow p3-accent">Celebration mode — soft</p>
+      <h2 class="section-title">Planning a bigger celebration?</h2>
+      <p class="section-intro">This pin serves the minority who need something more than a Quick Order — a bigger occasion, a fully custom design, a special cake that takes planning. The reframe from "Custom Order" to "Planning a bigger celebration?" does important work: it positions the slow lane as a planning process, not a product category, and sets lead-time expectations before the conversation starts.</p>
+
+      <div class="brief-grid">
+        <div class="brief-row">
+          <span class="brief-label">SIA+ Mode</span>
+          <span class="brief-value"><span class="pill pill-celeb">Celebration (soft)</span> — warm, aspirational, no urgency</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Situation</span>
+          <span class="brief-value">Someone planning a bigger event — a milestone birthday, a wedding, an anniversary. They've seen the quick options and know they need something more. They're looking for confirmation that Beqabakes can do it.</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Tension</span>
+          <span class="brief-value">They're worried a fast-gifting bakery won't be able to do what they need, or that they'll be rushed. They need to know this is available and that it's a different, unhurried process.</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Solution</span>
+          <span class="brief-value">Custom orders are available. They take more time and planning. Starting the conversation now is the right move. The WA prefill opens a custom order conversation, not the Quick Order flow.</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Headline</span>
+          <span class="brief-value caption">"Planning a bigger celebration?"</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Sub-copy</span>
+          <span class="brief-value caption">"Custom cakes, special designs, personalised flavours. Let's start the conversation."</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Lead time</span>
+          <span class="brief-value"><strong>Must appear in the post.</strong> "48+ hours lead time" or "Best with 2–3 days notice." Sets expectations before WhatsApp — prevents disappointment and saves conversation time.</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">CTA</span>
+          <span class="brief-value">Let's plan it → link in bio<br><span style="font-size:11px;color:var(--text-lt);">Bio link → Custom Order path → WA prefill "Hi, I'd like to discuss a custom order"</span></span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Visual</span>
+          <span class="brief-value">Lighter, more refined feel than the Quick Order post. Warm neutral tones — cream, blush, natural textures. Show a more elaborate cake if available — tiered, decorated, special occasion feel. Still Cake-Card Wedge: cake in a gift context, not a studio isolation. Four feature points listed (custom design, flavours, packaging, lead time). Brown CTA button.</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Tone note</span>
+          <span class="brief-value">Warm and unhurried — the opposite of Express. This buyer is planning, not panicking. No urgency language. No "today" or "fast." The pace signals that this is a considered, quality-focused path.</span>
+        </div>
+        <div class="brief-row">
+          <span class="brief-label">Pin position</span>
+          <span class="brief-value">Rightmost pin — the specialist path for the considered buyer.</span>
+        </div>
+      </div>
+
+      <!-- CAPTION -->
+      <div class="caption-box">
+        <div class="caption-head">
+          <span>Primary caption</span>
+          <span class="pill pill-custom" style="font-size:10px;">Celebration — soft</span>
+        </div>
+        <div class="caption-body"><span class="caption-beat beat-s">Situation</span> Planning a bigger celebration?
+
+<span class="caption-beat beat-t">Tension</span> Some occasions deserve something more — a cake that's fully yours, designed for the moment, made with time and care.
+
+<span class="caption-beat beat-o">Solution</span> We do custom orders too. Personalised flavours, special designs, packaging for the occasion.
+
+Just give us a little notice — best with 48+ hours.
+
+<span class="caption-beat beat-c">CTA</span> Let's plan it together → link in bio 🎂</div>
+      </div>
+
+      <div class="alt-caption-label" style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-lt);margin-bottom:6px;">Shorter variant</div>
+      <div class="alt-caption">Planning a bigger celebration?
+
+Custom cakes, personalised flavours, special packaging. Give us 48+ hours and we'll make something beautiful.
+
+Start the conversation → link in bio 🎂</div>
+
+      <!-- CANVA SPEC -->
+      <div class="canva-spec" style="margin-top:14px;">
+        <p class="canva-title">Canva build spec</p>
+        <div class="canva-rows">
+          <div class="canva-row"><span class="canva-key">Format</span><span class="canva-val">1080 × 1080px + 1080 × 1350px — build both</span></div>
+          <div class="canva-row"><span class="canva-key">Background</span><span class="canva-val"><span class="canva-swatch" style="background:#F5EDE8;"></span> Cream Warm #F5EDE8 or <span class="canva-swatch" style="background:#FFFBF9;"></span> Off-white #FFFBF9 with subtle texture overlay</span></div>
+          <div class="canva-row"><span class="canva-key">Headline font</span><span class="canva-val">Playfair Display Bold Italic — Chocolate Brown #5C2C1D — 36–44pt</span></div>
+          <div class="canva-row"><span class="canva-key">Body font</span><span class="canva-val">Mulish Regular — text mid — 13–15pt</span></div>
+          <div class="canva-row"><span class="canva-key">Feature points</span><span class="canva-val">4 bullet items: small green dot · Mulish Medium · dark text · light card background</span></div>
+          <div class="canva-row"><span class="canva-key">Lead time badge</span><span class="canva-val">Small pill badge: "48+ hours lead time" — Green #AAC8A7 fill, dark text. Must be visible.</span></div>
+          <div class="canva-row"><span class="canva-key">CTA button</span><span class="canva-val">Chocolate Brown #5C2C1D fill · White Mulish Bold text · Rounded 12px</span></div>
+          <div class="canva-row"><span class="canva-key">Cake image</span><span class="canva-val">More elaborate / decorated cake if available. Cake-Card Wedge still applies — gift context required.</span></div>
+          <div class="canva-row"><span class="canva-key">Tone</span><span class="canva-val">More refined, less urgent than Pin 01. Light backgrounds, generous whitespace, elegant typography. Feels considered, not rushed.</span></div>
+        </div>
+      </div>
+
+      <!-- CHECKLIST -->
+      <div class="checklist">
+        <div class="checklist-head">Pre-output checklist — 6/6 required</div>
+        <div class="check-row"><span class="check-icon check-pass">✓</span><span><strong>Can someone order immediately?</strong> Yes — bio link → Custom Order WA prefill opens conversation instantly</span></div>
+        <div class="check-row"><span class="check-icon check-warn">!</span><span><strong>Is price visible?</strong> No fixed price for custom orders — acceptable here. Post should say "let's discuss" not show a price. This is the one post where price is legitimately variable.</span></div>
+        <div class="check-row"><span class="check-icon check-pass">✓</span><span><strong>Clear in 3 seconds?</strong> Yes — headline question self-selects the right buyer immediately</span></div>
+        <div class="check-row"><span class="check-icon check-pass">✓</span><span><strong>Exactly one CTA?</strong> Yes — "Let's plan it → link in bio"</span></div>
+        <div class="check-row"><span class="check-icon check-pass">✓</span><span><strong>Reduces thinking?</strong> Yes — lead time stated upfront, removes the "will it be ready?" anxiety before the conversation starts</span></div>
+        <div class="check-row"><span class="check-icon check-pass">✓</span><span><strong>Triggers emotion?</strong> Yes — aspiration and occasion language creates desire for the elevated experience</span></div>
+      </div>
+
+      <div class="callout-green"><strong>Lead time is a feature, not a warning.</strong> The "48+ hours" note in this post is not a disclaimer — it's a quality signal. It tells buyers that custom orders get attention and care, not a rushed turnaround. Frame it as "best with 48+ hours" (forward-looking, positive) not "requires 48 hours notice" (rule-like, limiting).</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PINNED SET OVERVIEW ── -->
+<div style="padding:48px 72px;background:var(--cream-md);border-top:2px solid var(--border-md);">
+  <p style="font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--rose);margin-bottom:16px;">Pinned post architecture</p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;">
+    <div style="background:var(--white);border:1px solid var(--border-md);border-radius:12px;padding:18px 20px;border-top:4px solid var(--rose);">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:8px;">Pin 01 — Left</p>
+      <p style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);margin-bottom:5px;">Quick Order</p>
+      <p style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">Visitor state: ready to order. Job: convert in one tap.</p>
+      <p style="font-size:11px;color:var(--text-lt);">Bio route: WhatsApp prefill "Quick Order"</p>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--border-md);border-radius:12px;padding:18px 20px;border-top:4px solid var(--pink);">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:8px;">Pin 02 — Centre</p>
+      <p style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);margin-bottom:5px;">Lookbook</p>
+      <p style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">Visitor state: browsing, undecided. Job: move to informed.</p>
+      <p style="font-size:11px;color:var(--text-lt);">Bio route: Lookbook site (WhatsApp on every page)</p>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--border-md);border-radius:12px;padding:18px 20px;border-top:4px solid var(--green);">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--green-dk);margin-bottom:8px;">Pin 03 — Right</p>
+      <p style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);margin-bottom:5px;">Custom Order</p>
+      <p style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">Visitor state: planning a bigger occasion. Job: capture and qualify.</p>
+      <p style="font-size:11px;color:var(--text-lt);">Bio route: WhatsApp prefill "Custom Order"</p>
+    </div>
+  </div>
+
+  <div style="background:var(--brown-dk);border-radius:12px;padding:18px 22px;font-size:13px;color:rgba(255,255,255,.65);line-height:1.75;">
+    <strong style="color:var(--rose);">The pinned set covers all five awareness stages:</strong> Unaware visitors scroll through the feed and stumble on one of the three posts. Problem-aware visitors tap Pin 01 and order immediately. Solution-aware and Product-aware visitors explore Pin 02 via the Lookbook. Planned-occasion buyers tap Pin 03. Every visitor state is intercepted. Every path closes to WhatsApp.
+  </div>
+</div>
+
+<!-- MANTRA -->
+<div class="mantra-block" style="margin:40px 72px 0;">
+  <p class="mantra-label">Pinned post principle</p>
+  <p class="mantra-text">"Three pins. Three visitor states.<br>One destination: WhatsApp."</p>
+  <p class="mantra-sub">Because Beqa dey Bake. · Send a cake in minutes.</p>
+</div>
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  <div>
+    <div class="doc-footer-brand">Beqabakes</div>
+    <div class="doc-footer-tagline">Because Beqa dey Bake.</div>
+  </div>
+  <div class="doc-footer-meta">
+    Three Pinned Posts · April 2026<br>
+    Brand v2 · COS v1 · Platform OS<br>
+    All posts checklist-passed
+  </div>
+</div>
+
+</div>
+</body>
+</html>

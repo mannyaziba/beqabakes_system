@@ -1,0 +1,2077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beqabakes — Content Operating System v1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Mulish:wght@300;400;500;600;700&family=Merienda:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream:       #FFE3E9;
+  --cream-light: #FFF7F9;
+  --cream-mid:   #FDEEF2;
+  --pink:        #F58BA6;
+  --rosewood:    #D16681;
+  --rosewood-dk: #a84d63;
+  --brown:       #5C2C1D;
+  --brown-lt:    #7a3d2a;
+  --green:       #AAC8A7;
+  --green-dk:    #5a8a57;
+  --blush:       #F7D8DF;
+  --text:        #2E2E2E;
+  --text-mid:    #5a4a4e;
+  --text-muted:  #8a7074;
+  --text-light:  #b8a0a6;
+  --border:      rgba(92,44,29,.1);
+  --border-md:   rgba(92,44,29,.18);
+  --border-dark: rgba(92,44,29,.28);
+  --white:       #ffffff;
+  --page-width:  860px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Mulish', sans-serif;
+  background: #f4eaed;
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.75;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ── PAGE SHELL ── */
+.page {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  background: var(--cream-light);
+}
+
+/* ── COVER PAGE ── */
+.cover {
+  min-height: 100vh;
+  background: var(--brown);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 64px 72px;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -120px; right: -120px;
+  width: 480px; height: 480px;
+  border-radius: 50%;
+  background: rgba(245,139,166,.08);
+}
+.cover::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -80px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: rgba(245,139,166,.05);
+}
+.cover-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin-bottom: 32px;
+}
+.cover-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255,255,255,.5);
+  letter-spacing: .06em;
+  margin-bottom: 20px;
+}
+.cover h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(38px, 5.5vw, 58px);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.12;
+  margin-bottom: 12px;
+}
+.cover h1 span { color: var(--pink); }
+.cover-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,.55);
+  max-width: 480px;
+  line-height: 1.65;
+  margin-bottom: 48px;
+}
+.cover-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.cover-tag {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(245,139,166,.35);
+  color: rgba(255,255,255,.6);
+}
+.cover-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid rgba(255,255,255,.1);
+  padding-top: 28px;
+  margin-top: 0;
+}
+.cover-footer-left {
+  font-size: 12px;
+  color: rgba(255,255,255,.35);
+  line-height: 1.8;
+}
+.cover-footer-right {
+  font-family: 'Merienda', cursive;
+  font-size: 22px;
+  color: var(--pink);
+  opacity: .7;
+}
+.cover-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,.1);
+}
+.cover-stat { }
+.cover-stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.cover-stat-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.4);
+}
+
+/* ── NAV / TOC ── */
+.toc-page {
+  padding: 72px;
+  background: var(--cream-mid);
+  border-bottom: 1px solid var(--border);
+}
+.toc-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--rosewood);
+  margin-bottom: 28px;
+}
+.toc-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--brown);
+  margin-bottom: 36px;
+}
+.toc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+.toc-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  transition: color .15s;
+}
+.toc-item:hover { color: var(--rosewood); }
+.toc-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  color: var(--text-light);
+  min-width: 28px;
+}
+.toc-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-mid);
+  flex: 1;
+  line-height: 1.4;
+}
+.toc-item:hover .toc-name { color: var(--rosewood); }
+
+/* ── SECTION PAGES ── */
+.section {
+  padding: 64px 72px;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-child { border-bottom: none; }
+.section-alt { background: var(--cream-mid); }
+
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.section-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  color: var(--text-light);
+  min-width: 24px;
+}
+.section-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--rosewood);
+}
+.section-rule {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--brown);
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.section-intro {
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 600px;
+  line-height: 1.7;
+  margin-bottom: 36px;
+}
+
+/* ── TYPOGRAPHY UTILS ── */
+h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--brown);
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+h4 {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  margin-top: 24px;
+}
+p {
+  font-size: 14px;
+  color: var(--text-mid);
+  line-height: 1.75;
+  margin-bottom: 14px;
+}
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 600; color: var(--text); }
+em { font-style: italic; color: var(--brown); }
+
+/* ── CALLOUT ── */
+.callout {
+  background: var(--cream);
+  border-left: 3px solid var(--rosewood);
+  border-radius: 0 10px 10px 0;
+  padding: 16px 20px;
+  margin: 20px 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--text);
+}
+.callout strong { color: var(--brown); }
+.callout-law {
+  background: var(--brown);
+  border-left: none;
+  border-radius: 10px;
+  padding: 20px 24px;
+  color: rgba(255,255,255,.85);
+  margin: 24px 0;
+}
+.callout-law strong { color: var(--pink); }
+
+/* ── CARDS ── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-bottom: 14px;
+}
+.card-sm {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 10px;
+}
+
+/* ── GRID UTILS ── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+
+/* ── PILLS / BADGES ── */
+.pill {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .03em;
+}
+.pill-express  { background: var(--rosewood); color: white; }
+.pill-celeb    { background: var(--pink); color: var(--brown); }
+.pill-retain   { background: var(--blush); color: var(--brown); border: 1px solid var(--border-md); }
+.pill-mono     { background: var(--cream); color: var(--brown); border: 1px solid var(--border-md); font-family: 'Mulish', monospace; }
+
+/* ── MODE CARDS ── */
+.mode-card {
+  border-radius: 14px;
+  padding: 24px;
+  border: 1px solid var(--border);
+}
+.mode-card-express  { background: var(--white); border-top: 4px solid var(--rosewood); }
+.mode-card-celeb    { background: var(--white); border-top: 4px solid var(--pink); }
+.mode-card-retain   { background: var(--white); border-top: 4px solid var(--blush); }
+.mode-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--brown);
+  margin-bottom: 6px;
+}
+.mode-card-sub {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
+.mode-card-quote {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--brown);
+  border-left: 2px solid var(--border-md);
+  padding-left: 12px;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+.mode-rule-list { list-style: none; }
+.mode-rule-list li {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  padding: 4px 0;
+  padding-left: 14px;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+.mode-rule-list li:last-child { border-bottom: none; }
+.mode-rule-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--text-light);
+}
+
+/* ── TABLES ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 16px 0;
+}
+.data-table th {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-dark);
+  background: var(--cream-mid);
+}
+.data-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--text-mid);
+  line-height: 1.5;
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--cream-light); }
+.data-table td strong { color: var(--text); }
+
+/* ── SIA+ TEMPLATE ── */
+.sia-template {
+  background: var(--white);
+  border: 1px solid var(--border-md);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.sia-header {
+  background: var(--brown);
+  padding: 20px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sia-header-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+}
+.sia-header-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,.5);
+  margin-top: 3px;
+}
+.sia-mode-selector {
+  display: flex;
+  gap: 6px;
+}
+.sia-body { padding: 0; }
+.sia-field {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 16px;
+  padding: 14px 28px;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+}
+.sia-field:last-child { border-bottom: none; }
+.sia-field-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-light);
+  padding-top: 2px;
+}
+.sia-field-value {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.65;
+}
+.sia-field-hint {
+  font-size: 12px;
+  color: var(--text-light);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+/* ── CHECKLIST ── */
+.checklist { list-style: none; }
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text-mid);
+  line-height: 1.55;
+}
+.checklist li:last-child { border-bottom: none; }
+.check-box {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--border-dark);
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── EXECUTION TRACKS ── */
+.track-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.track {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.track-head {
+  padding: 10px 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+.th-express  { background: var(--rosewood); color: white; }
+.th-celeb    { background: var(--pink); color: var(--brown); }
+.th-retain   { background: var(--blush); color: var(--brown); border-bottom: 1px solid var(--border-md); }
+.track-body { padding: 14px 16px; background: var(--white); }
+.track-step {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 9px;
+  font-size: 12px;
+  color: var(--text-mid);
+  line-height: 1.5;
+}
+.track-step:last-child { margin-bottom: 0; }
+.step-n {
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--brown);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── WHATSAPP SCRIPTS ── */
+.wa-script-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.wa-script-head {
+  padding: 10px 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--cream-mid);
+  border-bottom: 1px solid var(--border);
+}
+.wa-script-title { font-size: 12px; font-weight: 700; color: var(--brown); }
+.wa-script-body {
+  padding: 16px 18px;
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--text);
+  white-space: pre-line;
+}
+.wa-vars {
+  padding: 10px 18px;
+  background: var(--cream-light);
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.var-tag {
+  background: var(--cream);
+  border: 1px solid var(--border-md);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-family: 'Mulish', monospace;
+  font-size: 11px;
+  color: var(--brown);
+}
+
+/* ── CALENDAR ── */
+.cal-grid {
+  display: grid;
+  grid-template-columns: 70px repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border-md);
+  border: 1px solid var(--border-md);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.cal-cell {
+  background: var(--white);
+  padding: 12px 14px;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.cal-cell.head { background: var(--brown); color: white; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; display: flex; align-items: center; }
+.cal-cell.day  { background: var(--cream-mid); font-weight: 700; font-size: 11px; color: var(--text-muted); display: flex; align-items: center; }
+.cal-cell strong { display: block; font-size: 11px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.cal-cell .cal-sub { font-size: 11px; color: var(--text-light); margin-top: 3px; }
+
+/* ── CONTENT STACK ── */
+.stack-row {
+  display: grid;
+  grid-template-columns: 120px 1fr 130px;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: start;
+  font-size: 13px;
+}
+.stack-row:last-child { border-bottom: none; }
+.stack-layer { font-weight: 700; color: var(--brown); font-size: 13px; }
+.stack-desc { color: var(--text-muted); line-height: 1.6; }
+.stack-target { font-size: 12px; font-weight: 600; color: var(--green-dk); text-align: right; line-height: 1.45; }
+
+/* ── METRICS ── */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+.metric-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 12px;
+  text-align: center;
+}
+.metric-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--brown);
+  margin-bottom: 4px;
+}
+.metric-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-light);
+  line-height: 1.4;
+}
+
+/* ── ROADMAP ── */
+.roadmap { position: relative; padding-left: 36px; }
+.roadmap::before {
+  content: '';
+  position: absolute;
+  left: 11px; top: 8px; bottom: 8px;
+  width: 1px;
+  background: var(--border-dark);
+}
+.rm-item { position: relative; margin-bottom: 28px; }
+.rm-item::before {
+  content: '';
+  position: absolute;
+  left: -30px; top: 5px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--rosewood);
+}
+.rm-item.done::before { background: var(--rosewood); }
+.rm-week { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--rosewood); margin-bottom: 4px; }
+.rm-title { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; color: var(--brown); margin-bottom: 5px; }
+.rm-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; margin-bottom: 10px; }
+.rm-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.rm-tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: var(--cream); border: 1px solid var(--border-md); color: var(--brown); font-weight: 500; }
+
+/* ── VISUAL SYSTEM ── */
+.visual-rule {
+  display: flex;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  align-items: flex-start;
+}
+.visual-rule:last-child { border-bottom: none; }
+.vr-label {
+  min-width: 130px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-light);
+  padding-top: 2px;
+}
+.vr-value { color: var(--text-mid); line-height: 1.6; flex: 1; }
+
+/* ── INSIGHT BLOCK ── */
+.insight {
+  background: var(--cream);
+  border: 1px solid var(--border-md);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin: 20px 0;
+}
+.insight-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--rosewood);
+  margin-bottom: 8px;
+}
+.insight-text {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--brown);
+  line-height: 1.55;
+}
+
+/* ── DIVIDERS ── */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 28px 0;
+}
+.divider-dark {
+  border: none;
+  border-top: 1px solid var(--border-md);
+  margin: 28px 0;
+}
+
+/* ── FOOTER ── */
+.doc-footer {
+  background: var(--brown);
+  padding: 36px 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.doc-footer-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  color: var(--white);
+}
+.doc-footer-meta { font-size: 11px; color: rgba(255,255,255,.35); line-height: 1.9; text-align: right; }
+.doc-footer-tagline { font-family: 'Merienda', cursive; font-size: 14px; color: var(--pink); opacity: .7; margin-top: 8px; }
+
+/* ── MANTRA BLOCK ── */
+.mantra-block {
+  background: var(--brown);
+  border-radius: 14px;
+  padding: 36px 40px;
+  margin-top: 8px;
+  text-align: center;
+}
+.mantra-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+  margin-bottom: 16px;
+}
+.mantra-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+.mantra-sub {
+  font-size: 12px;
+  color: var(--pink);
+  opacity: .8;
+}
+
+/* ── PROOF SYSTEM ── */
+.proof-flow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border-md);
+  border: 1px solid var(--border-md);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.proof-step {
+  background: var(--white);
+  padding: 16px;
+}
+.proof-step-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+.proof-step-title { font-size: 12px; font-weight: 700; color: var(--brown); margin-bottom: 6px; }
+.proof-step-desc { font-size: 11px; color: var(--text-muted); line-height: 1.6; }
+
+/* ── PAGE BREAK HELPERS ── */
+.page-break { display: block; height: 1px; background: transparent; }
+
+/* ── PRINT STYLES ── */
+@media print {
+  body { background: white; font-size: 12px; }
+  .page { max-width: 100%; }
+  .cover { min-height: auto; padding: 48px; break-after: page; }
+  .toc-page { break-after: page; }
+  .section { padding: 40px 48px; break-inside: avoid; }
+  nav { display: none; }
+  h3 { break-after: avoid; }
+  .track-grid { break-inside: avoid; }
+  .sia-template { break-inside: avoid; }
+}
+
+/* ── STICKY NAV ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(92,44,29,.97);
+  backdrop-filter: blur(8px);
+  padding: 0 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.nav-brand-sm { font-family: 'Playfair Display', serif; font-size: 14px; color: var(--pink); letter-spacing: .04em; }
+.nav-links-sm { display: flex; gap: 0; list-style: none; }
+.nav-links-sm a { font-size: 11px; font-weight: 500; text-decoration: none; color: rgba(255,255,255,.45); padding: 5px 12px; border-radius: 20px; transition: color .15s, background .15s; letter-spacing: .04em; }
+.nav-links-sm a:hover { color: white; background: rgba(255,255,255,.07); }
+.nav-version { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; background: var(--rosewood); color: white; padding: 3px 10px; border-radius: 20px; }
+
+/* wide screen margin */
+@media (min-width: 1100px) {
+  body { padding: 0 40px; }
+  .page { box-shadow: 0 0 80px rgba(0,0,0,.12); }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- ══════════════════════════════════
+     COVER
+══════════════════════════════════ -->
+<div class="cover">
+  <div>
+    <p class="cover-eyebrow">Content Operating System &nbsp;·&nbsp; v1 &nbsp;·&nbsp; April 2026</p>
+    <p class="cover-brand">Beqabakes — Abuja, Nigeria</p>
+    <h1>We don't create content.<br><span>We trigger gifting decisions.</span></h1>
+    <p class="cover-sub">A fully revenue-aligned content system binding brand modes, SIA+ units, visual rules, WhatsApp scripts, weekly execution tracks, and proof collection into one operational document.</p>
+    <div class="cover-tags">
+      <span class="cover-tag">Brand-aligned v2</span>
+      <span class="cover-tag">Revenue-first</span>
+      <span class="cover-tag">Plug-and-play</span>
+      <span class="cover-tag">WhatsApp-native</span>
+      <span class="cover-tag">Abuja market</span>
+    </div>
+  </div>
+
+  <div>
+    <div class="cover-meta">
+      <div class="cover-stat">
+        <div class="cover-stat-num">3</div>
+        <div class="cover-stat-label">Posts per week</div>
+      </div>
+      <div class="cover-stat">
+        <div class="cover-stat-num">5–8 hrs</div>
+        <div class="cover-stat-label">Weekly time budget</div>
+      </div>
+      <div class="cover-stat">
+        <div class="cover-stat-num">6+</div>
+        <div class="cover-stat-label">WA orders targeted / week</div>
+      </div>
+    </div>
+    <div class="cover-footer">
+      <div class="cover-footer-left">
+        Aligned to Brand System v2<br>
+        Operator × Giver archetype<br>
+        Send a cake in minutes.
+      </div>
+      <div class="cover-footer-right">Beqabakes</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     STICKY NAV
+══════════════════════════════════ -->
+<nav class="sticky-nav">
+  <span class="nav-brand-sm">Beqabakes COS</span>
+  <ul class="nav-links-sm">
+    <li><a href="#system">System</a></li>
+    <li><a href="#modes">Modes</a></li>
+    <li><a href="#sia">SIA+</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#visual">Visual</a></li>
+    <li><a href="#platform">Platform</a></li>
+    <li><a href="#wa">WhatsApp</a></li>
+    <li><a href="#calendar">Calendar</a></li>
+    <li><a href="#execution">Execution</a></li>
+    <li><a href="#tracking">Tracking</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+  </ul>
+  <span class="nav-version">v1 locked</span>
+</nav>
+
+<!-- ══════════════════════════════════
+     TABLE OF CONTENTS
+══════════════════════════════════ -->
+<div class="toc-page">
+  <p class="toc-eyebrow">Contents</p>
+  <p class="toc-title">What's in this document</p>
+  <div class="toc-grid">
+    <a class="toc-item" href="#system"><span class="toc-num">00</span><span class="toc-name">System overview &amp; core flow</span></a>
+    <a class="toc-item" href="#modes"><span class="toc-num">01</span><span class="toc-name">Brand modes — the three registers</span></a>
+    <a class="toc-item" href="#sia"><span class="toc-num">02</span><span class="toc-name">SIA+ content unit — full template</span></a>
+    <a class="toc-item" href="#checklist"><span class="toc-num">03</span><span class="toc-name">Pre-output checklist (6-point)</span></a>
+    <a class="toc-item" href="#stack"><span class="toc-num">04</span><span class="toc-name">Content stack — 4 layers with targets</span></a>
+    <a class="toc-item" href="#pillars"><span class="toc-num">05</span><span class="toc-name">Content pillars &amp; monthly themes</span></a>
+    <a class="toc-item" href="#derivation"><span class="toc-num">06</span><span class="toc-name">Content derivation — one SIA+ → many</span></a>
+    <a class="toc-item" href="#visual"><span class="toc-num">07</span><span class="toc-name">Visual system — rules &amp; Wedge law</span></a>
+    <a class="toc-item" href="#platform"><span class="toc-num">08</span><span class="toc-name">Platform adapters — IG &amp; WhatsApp</span></a>
+    <a class="toc-item" href="#wa"><span class="toc-num">09</span><span class="toc-name">WhatsApp script bank (5 scripts)</span></a>
+    <a class="toc-item" href="#calendar"><span class="toc-num">10</span><span class="toc-name">Weekly content calendar</span></a>
+    <a class="toc-item" href="#execution"><span class="toc-num">11</span><span class="toc-name">Execution system — 3 parallel tracks</span></a>
+    <a class="toc-item" href="#proof"><span class="toc-num">12</span><span class="toc-name">Proof collection system</span></a>
+    <a class="toc-item" href="#tracking"><span class="toc-num">13</span><span class="toc-name">Tracking — 5 revenue metrics</span></a>
+    <a class="toc-item" href="#knowledge"><span class="toc-num">14</span><span class="toc-name">Knowledge base structure</span></a>
+    <a class="toc-item" href="#roadmap"><span class="toc-num">15</span><span class="toc-name">Roadmap &amp; next builds</span></a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     00 — SYSTEM OVERVIEW
+══════════════════════════════════ -->
+<section class="section" id="system">
+  <div class="section-eyebrow">
+    <span class="section-num">00</span>
+    <span class="section-tag">System overview</span>
+    <span class="section-rule"></span>
+  </div>
+  <h2 class="section-title">What this system does</h2>
+  <p class="section-intro">The COS turns Beqabakes' brand architecture into a repeatable production engine. Every output — post, story, WhatsApp message, packaging insert — flows from the same logic and ends at the same place: an order.</p>
+
+  <div class="callout-law">
+    <strong>Operating principle:</strong> Replace "What should I post?" with "What gifting situation am I solving today?" Every piece of content starts with a situation, not a format.
+  </div>
+
+  <h3>Core flow (locked)</h3>
+  <div class="card" style="padding: 20px 28px;">
+    <div style="display: flex; flex-wrap: wrap; gap: 0; align-items: center; font-size: 13px; line-height: 2;">
+      <span style="background:var(--brown);color:white;padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;margin:4px 4px 4px 0;">Brand System v2</span>
+      <span style="color:var(--text-light);margin:0 6px;">→</span>
+      <span style="background:var(--cream);border:1px solid var(--border-md);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;margin:4px 4px 4px 0;color:var(--brown);">Mode (Express / Celebration / Retention)</span>
+      <span style="color:var(--text-light);margin:0 6px;">→</span>
+      <span style="background:var(--cream);border:1px solid var(--border-md);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;margin:4px 4px 4px 0;color:var(--brown);">SIA+ brief</span>
+      <span style="color:var(--text-light);margin:0 6px;">→</span>
+      <span style="background:var(--cream);border:1px solid var(--border-md);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;margin:4px 4px 4px 0;color:var(--brown);">Visual (Cake-Card Wedge)</span>
+      <span style="color:var(--text-light);margin:0 6px;">→</span>
+      <span style="background:var(--cream);border:1px solid var(--border-md);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;margin:4px 4px 4px 0;color:var(--brown);">Platform adapters</span>
+      <span style="color:var(--text-light);margin:0 6px;">→</span>
+      <span style="background:var(--rosewood);color:white;padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;margin:4px 4px 4px 0;">Order via WhatsApp</span>
+      <span style="color:var(--text-light);margin:0 6px;">→</span>
+      <span style="background:var(--green);color:var(--green-dk);padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;margin:4px;border:1px solid rgba(90,138,87,.3);">Repeat loop</span>
+    </div>
+  </div>
+
+  <h3>System purpose</h3>
+  <div class="grid-2" style="margin-top: 8px;">
+    <div class="card-sm"><strong>Orders (conversion)</strong><p style="margin:6px 0 0;font-size:12px;color:var(--text-muted);">Every post has a direct path to a WhatsApp order. No orphaned content.</p></div>
+    <div class="card-sm"><strong>WhatsApp conversations (entry)</strong><p style="margin:6px 0 0;font-size:12px;color:var(--text-muted);">Instagram drives intent. WhatsApp closes it. Both are primary.</p></div>
+    <div class="card-sm"><strong>Repeat purchases (retention)</strong><p style="margin:6px 0 0;font-size:12px;color:var(--text-muted);">Day 7 nudge + packaging insert create a passive re-order engine.</p></div>
+    <div class="card-sm"><strong>Social proof (trust)</strong><p style="margin:6px 0 0;font-size:12px;color:var(--text-muted);">Active proof collection means Friday posts always have real material.</p></div>
+  </div>
+
+  <div class="callout" style="margin-top: 24px;">
+    <strong>System law:</strong> If a piece of content cannot lead to an immediate order, it does not get published. This is not a guideline. It is the filter for every output.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     01 — BRAND MODES
+══════════════════════════════════ -->
+<section class="section section-alt" id="modes">
+  <div class="section-eyebrow">
+    <span class="section-num">01</span>
+    <span class="section-tag">Brand modes</span>
+    <span class="section-rule"></span>
+  </div>
+  <h2 class="section-title">The three registers</h2>
+  <p class="section-intro">Every piece of content — post, message, insert, script — is assigned a mode before it is written. No exceptions. Mode determines tone, structure, CTA type, and visual approach.</p>
+
+  <div class="callout">
+    <strong>Rule:</strong> Content modes are Express, Celebration, and Retention. The old Offer / Emotion / Proof naming is retired. All documents and Notion databases use the new terms.
+  </div>
+
+  <div class="track-grid">
+    <div class="mode-card mode-card-express">
+      <div style="margin-bottom:10px;"><span class="pill pill-express">Express</span></div>
+      <p class="mode-card-title">Urgency &amp; action</p>
+      <p class="mode-card-sub">Sales · Offer · Conversion</p>
+      <p class="mode-card-quote">"Pick. Pay. Done."</p>
+      <ul class="mode-rule-list">
+        <li>Lead with action, not product</li>
+        <li>Price always visible</li>
+        <li>Max 2 lines before CTA</li>
+        <li>Single CTA — WhatsApp order link</li>
+        <li>Rosewood (#D16681) CTA button</li>
+        <li>No decorative language</li>
+      </ul>
+    </div>
+    <div class="mode-card mode-card-celeb">
+      <div style="margin-bottom:10px;"><span class="pill pill-celeb">Celebration</span></div>
+      <p class="mode-card-title">Warmth &amp; gift moment</p>
+      <p class="mode-card-sub">Emotion · Gift context · Desire</p>
+      <p class="mode-card-quote">"Every box feels like a celebration."</p>
+      <ul class="mode-rule-list">
+        <li>Reference recipient, not product</li>
+        <li>Situational (birthday, just because)</li>
+        <li>Warm but never sentimental</li>
+        <li>Slightly longer — still ends in action</li>
+        <li>Cake-Card Wedge mandatory</li>
+        <li>Pink (#F58BA6) accent, not CTA</li>
+      </ul>
+    </div>
+    <div class="mode-card mode-card-retain">
+      <div style="margin-bottom:10px;"><span class="pill pill-retain">Retention</span></div>
+      <p class="mode-card-title">Soft &amp; relational</p>
+      <p class="mode-card-sub">Re-order · Follow-up · Loyalty</p>
+      <p class="mode-card-quote">"Hope they loved it. Send another?"</p>
+      <ul class="mode-rule-list">
+        <li>Acknowledge the completed gift</li>
+        <li>Low pressure, high warmth</li>
+        <li>Mention discount naturally</li>
+        <li>One action — re-order link only</li>
+        <li>Timing: Day 0 + Day 7 post-delivery</li>
+        <li>Blush palette, Mulish 400</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Mode decision guide</h3>
+  <p>Ask these three questions in order before writing anything:</p>
+  <table class="data-table" style="margin-top: 12px;">
+    <thead>
+      <tr><th>Question</th><th>If yes →</th><th>If no →</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Has this customer already ordered from us?</td><td><span class="pill pill-retain">Retention</span></td><td>Next question</td></tr>
+      <tr><td>Is this primarily driving an order right now?</td><td><span class="pill pill-express">Express</span></td><td>Next question</td></tr>
+      <tr><td>Does it show a gift moment, reaction, or emotion?</td><td><span class="pill pill-celeb">Celebration</span></td><td>Rethink — don't publish</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════════════════════════════
+     02 — SIA+ TEMPLATE
+══════════════════════════════════ -->
+<section class="section" id="sia">
+  <div class="section-eyebrow">
+    <span class="section-num">02</span>
+    <span class="section-tag">SIA+ content unit</span>
+    <span class="section-rule"></span>
+  </div>
+  <h2 class="section-title">The brief that starts every post</h2>
+  <p class="section-intro">One SIA+ per post, written before any copy or visual work begins. The mode field is mandatory and must be selected first. Everything else flows from it.</p>
+
+  <div class="sia-template">
+    <div class="sia-header">
+      <div>
+        <p class="sia-header-title">SIA+ — Content unit brief</p>
+        <p class="sia-header-sub">Complete all fields in order. Mode selection unlocks the rest.</p>
+      </div>
+      <div class="sia-mode-selector">
+        <span class="pill pill-express">Express</span>
+        <span class="pill pill-celeb">Celebration</span>
+        <span class="pill pill-retain">Retention</span>
+      </div>
+    </div>
+    <div class="sia-body">
+      <div class="sia-field" style="background:var(--cream-mid);">
+        <span class="sia-field-label">Mode <span style="color:var(--rosewood);">*</span></span>
+        <div>
+          <div class="sia-field-value">Select before writing: Express / Celebration / Retention</div>
+          <div class="sia-field-hint">This determines tone, CTA type, visual approach, and publish timing. Cannot be left blank.</div>
+        </div>
+      </div>
+      <div class="sia-field">
+        <span class="sia-field-label">Gifting situation</span>
+        <div>
+          <div class="sia-field-value">Who is the buyer? What just happened? What are they feeling?</div>
+          <div class="sia-field-hint">e.g. "Busy professional forgot wife's birthday. It's 11am. Panic mode."</div>
+        </div>
+      </div>
+      <div class="sia-field">
+        <span class="sia-field-label">Core problem</span>
+        <div>
+          <div class="sia-field-value">What is the friction, urgency, or emotional need?</div>
+          <div class="sia-field-hint">e.g. "Needs something meaningful that arrives today, no time to plan."</div>
+        </div>
+      </div>
+      <div class="sia-field">
+        <span class="sia-field-label">Product</span>
+        <div>
+          <div class="sia-field-value">Express Bento / Signature Cake / Gift Set — one product per brief</div>
+          <div class="sia-field-hint">Include price. No card without price visible in final output.</div>
+        </div>
+      </div>
+      <div class="sia-field">
+        <span class="sia-field-label">Decision logic</span>
+        <div>
+          <div class="sia-field-value">Why is this product the obvious solution for this situation?</div>
+          <div class="sia-field-hint">e.g. "Pre-built, same-day, no decisions needed. One tap."</div>
+        </div>
+      </div>
+      <div class="sia-field">
+        <span class="sia-field-label">Visual direction</span>
+        <div>
+          <div class="sia-field-value">Apply Cake-Card Wedge rule: cake + note card + packaging context</div>
+          <div class="sia-field-hint">Real &gt; styled. Human &gt; object. Context &gt; isolation. Specify hands / box / note.</div>
+        </div>
+      </div>
+      <div class="sia-field">
+        <span class="sia-field-label">Proof available</span>
+        <div>
+          <div class="sia-field-value">Is there a delivery photo, reaction, or testimonial in the Proof bank?</div>
+          <div class="sia-field-hint">Pull from Proof bank first. If none, flag to collect after this delivery.</div>
+        </div>
+      </div>
+      <div class="sia-field">
+        <span class="sia-field-label">Caption structure</span>
+        <div>
+          <div class="sia-field-value">Situation → Tension → Solution → CTA (four beats, in order)</div>
+          <div class="sia-field-hint">Express: max 2 lines before CTA. Celebration: warm, ends in action. Retention: soft, one link.</div>
+        </div>
+      </div>
+      <div class="sia-field">
+        <span class="sia-field-label">CTA</span>
+        <div>
+          <div class="sia-field-value">One action only — WhatsApp order link. No "DM or call or visit."</div>
+          <div class="sia-field-hint">Express → "Order now" (Rosewood). Celebration → "Send this today." Retention → re-order link + BACK500.</div>
+        </div>
+      </div>
+      <div class="sia-field">
+        <span class="sia-field-label">Failure modes</span>
+        <div>
+          <div class="sia-field-value">Too many choices? No price? No CTA? Vague caption? Poor visual?</div>
+          <div class="sia-field-hint">Review against these before moving to design. Fix here — not at checklist stage.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight" style="margin-top: 20px;">
+    <p class="insight-label">Example — Express mode brief</p>
+    <p class="insight-text">"Forgot a birthday? Send this in 30 minutes." — Situation: last-minute buyer. Problem: needs something fast and meaningful. Product: Express Bento ₦X, same-day. CTA: "Order now → [WA link]"</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     03 — PRE-OUTPUT CHECKLIST
+══════════════════════════════════ -->
+<section class="section section-alt" id="checklist">
+  <div class="section-eyebrow">
+    <span class="section-num">03</span>
+    <span class="section-tag">Pre-output checklist</span>
+    <span class="section-rule"></span>
+  </div>
+  <h2 class="section-title">6 of 6 required before publishing</h2>
+  <p class="section-intro">Every asset — post, script, insert, UI card — must pass all six. If any fails, fix the content, not the checklist. This is the brand's quality gate.</p>
+
+  <div class="card">
+    <ul class="checklist">
+      <li><span class="check-box"></span><div><strong>Can someone order immediately from this?</strong><br><span style="font-size:12px;color:var(--text-muted);">A clear path to purchase exists within this asset. One tap to WhatsApp.</span></div></li>
+      <li><span class="check-box"></span><div><strong>Is the price visible?</strong><br><span style="font-size:12px;color:var(--text-muted);">No price = no card, no post, no message. Non-negotiable regardless of mode.</span></div></li>
+      <li><span class="check-box"></span><div><strong>Is it clear in under 3 seconds?</strong><br><span style="font-size:12px;color:var(--text-muted);">A stranger who has never heard of Beqabakes understands what is being sold.</span></div></li>
+      <li><span class="check-box"></span><div><strong>Is there exactly one CTA?</strong><br><span style="font-size:12px;color:var(--text-muted);">One action. Not two. Not "DM or call or visit." One link, one direction.</span></div></li>
+      <li><span class="check-box"></span><div><strong>Does it reduce thinking — not add it?</strong><br><span style="font-size:12px;color:var(--text-muted);">No unnecessary choices, no ambiguity, no "which one do I pick?" moment.</span></div></li>
+      <li><span class="check-box"></span><div><strong>Does it trigger emotion or urgency?</strong><br><span style="font-size:12px;color:var(--text-muted);">Shows a gift moment, a face, or a feeling — not just a product on a table.</span></div></li>
+    </ul>
+  </div>
+
+  <div class="callout" style="margin-top: 16px;">
+    <strong>If the answer is No to any item:</strong> fix the content before the checklist. The checklist does not flex. The content does.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     04 — CONTENT STACK
+══════════════════════════════════ -->
+<section class="section" id="stack">
+  <div class="section-eyebrow">
+    <span class="section-num">04</span>
+    <span class="section-tag">Content stack</span>
+    <span class="section-rule"></span>
+  </div>
+  <h2 class="section-title">Four layers. Each with a revenue target.</h2>
+  <p class="section-intro">The stack defines what gets produced at each level of abstraction — from thinking to distribution to conversion. Every layer has a measurable threshold so you know if it's working.</p>
+
+  <div class="card" style="padding: 8px 28px;">
+    <div class="stack-row">
+      <span class="stack-layer">Thinking</span>
+      <span class="stack-desc">One SIA+ brief per post slot (3/week). Mode assigned before any copy or visual work begins. This is the non-negotiable first step. No brief = no post.</span>
+      <span class="stack-target">3 briefs / week</span>
+    </div>
+    <div class="stack-row">
+      <span class="stack-layer">Authority</span>
+      <span class="stack-desc">One longer piece per month derived from the month's theme. "How to send a birthday cake in Abuja in under an hour." Repurposed into Reels, captions, and Stories. One brief feeds five distribution units.</span>
+      <span class="stack-target">1 piece / month</span>
+    </div>
+    <div class="stack-row">
+      <span class="stack-layer">Distribution</span>
+      <span class="stack-desc">3 posts + daily Stories per week. Instagram = discovery and desire. WhatsApp = conversion and retention. Both channels are primary — neither is secondary.</span>
+      <span class="stack-target">3 posts + daily stories</span>
+    </div>
+    <div class="stack-row" style="border-bottom:none;">
+      <span class="stack-layer">Conversion</span>
+      <span class="stack-desc">Minimum 2 WhatsApp order initiations per post. If a post consistently falls below this, the brief or timing is reviewed — not just the design. Content that doesn't convert is content that doesn't get repeated.</span>
+      <span class="stack-target">2+ WA orders / post</span>
+    </div>
+  </div>
+
+  <h3>Content derivation — one SIA+ unit → many outputs</h3>
+  <p>The goal is maximum output from minimum brief-writing effort. Each SIA+ should yield at least four usable pieces:</p>
+
+  <div class="grid-2" style="margin-top: 12px;">
+    <div class="card-sm">
+      <h4 style="margin-top:0;">Long-form (monthly authority piece)</h4>
+      <p style="font-size:13px;margin:0;color:var(--text-muted);">"How to send a birthday cake in Abuja in under 1 hour" — turns into Reel script + caption + Story sequence + WhatsApp broadcast.</p>
+    </div>
+    <div class="card-sm">
+      <h4 style="margin-top:0;">Distillations (3 posts from 1 brief)</h4>
+      <p style="font-size:13px;margin:0;color:var(--text-muted);">"Forgot a birthday?" → "Send this today" → "No stress gifting." Same situation, three different angles, three post slots filled.</p>
+    </div>
+    <div class="card-sm">
+      <h4 style="margin-top:0;">Micro insights (captions)</h4>
+      <p style="font-size:13px;margin:0;color:var(--text-muted);">"People don't want cake — they want the moment." Pull one principle from the decision logic field and lead with it.</p>
+    </div>
+    <div class="card-sm">
+      <h4 style="margin-top:0;">Proof opportunities</h4>
+      <p style="font-size:13px;margin:0;color:var(--text-muted);">Every delivery creates a proof collection moment. The SIA+ brief flags whether proof exists in the bank or needs to be requested.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     05 — PILLARS & THEMES
+══════════════════════════════════ -->
+<section class="section section-alt" id="pillars">
+  <div class="section-eyebrow">
+    <span class="section-num">05</span>
+    <span class="section-tag">Content pillars &amp; monthly themes</span>
+    <span class="section-rule"></span>
+  </div>
+  <h2 class="section-title">What we talk about. When. And why.</h2>
+  <p class="section-intro">Five pillars define the subject territory. Monthly themes give each pillar a focused angle for the current period. Themes are now bound to specific products — not left floating as creative directions.</p>
+
+  <h3>The five pillars</h3>
+  <table class="data-table">
+    <thead>
+      <tr><th>#</th><th>Pillar</th><th>What it covers</th><th>Primary mode</th><th>Frequency</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td><strong>Fast gifting</strong></td>
+        <td>Speed, same-day, Express Bento, urgency moments</td>
+        <td><span class="pill pill-express">Express</span></td>
+        <td>Monday posts</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><strong>Emotional moments</strong></td>
+        <td>Gift reactions, birthdays, surprises, celebration context</td>
+        <td><span class="pill pill-celeb">Celebration</span></td>
+        <td>Wednesday posts</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><strong>Social proof</strong></td>
+        <td>Delivery photos, testimonials, reshares, reactions</td>
+        <td><span class="pill pill-retain">Retention</span></td>
+        <td>Friday posts</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><strong>Behind the scenes (light)</strong></td>
+        <td>Baking process, packaging, Beqa at work — humanises the brand</td>
+        <td><span class="pill pill-celeb">Celebration</span></td>
+        <td>Stories / occasional Reels</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><strong>Product clarity</strong></td>
+        <td>What's included, pricing, ordering steps — removes hesitation</td>
+        <td><span class="pill pill-express">Express</span></td>
+        <td>Pinned posts / Highlights</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>Note:</strong> Old Pillars 1 and 3 (fast gifting + product clarity) were duplicates — both described Express content. They are now separated by function: Pillar 1 drives emotional urgency; Pillar 5 handles rational clarity. Different briefs, different post types.
+  </div>
+
+  <h3>Monthly themes — bound to products</h3>
+  <table class="data-table">
+    <thead>
+      <tr><th>Month</th><th>Theme</th><th>Anchor product</th><th>Campaign angle</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Month 1</strong></td>
+        <td>"No-stress gifting"</td>
+        <td>Express Bento</td>
+        <td>Same-day delivery feature + urgency copy sprint. Lead with Express Bento as the hero SKU. Run 3-post Express sequence.</td>
+      </tr>
+      <tr>
+        <td><strong>Month 2</strong></td>
+        <td>"Make someone smile"</td>
+        <td>Gift Sets (upsell)</td>
+        <td>Gift Sets as the emotionally complete option. Valentine's / Mother's Day adjacency if calendar aligns. Celebration mode dominant.</td>
+      </tr>
+      <tr>
+        <td><strong>Month 3</strong></td>
+        <td>"Last-minute saves"</td>
+        <td>Same-day / WhatsApp</td>
+        <td>Urgency reactivation campaign. Retarget lapsed buyers via WhatsApp broadcast. 3-post Express sprint + WA push sequence.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════════════════════════════
+     07 — VISUAL SYSTEM
+══════════════════════════════════ -->
+<section class="section" id="visual">
+  <div class="section-eyebrow">
+    <span class="section-num">07</span>
+    <span class="section-tag">Visual system</span>
+    <span class="section-rule"></span>
+  </div>
+  <h2 class="section-title">What every image must do</h2>
+  <p class="section-intro">The visual system exists to sell emotion before copy does. Every image is assessed against the Cake-Card Wedge rule before being used. No staging for staging's sake.</p>
+
+  <div class="callout-law">
+    <strong>Cake-Card Wedge rule (mandatory):</strong> Every product visual includes cake + note card + packaging context. Not cake alone. Not packaging alone. The wedge is what makes a photo feel like a gift — not a product shot.
+  </div>
+
+  <h3>Visual hierarchy (locked)</h3>
+  <div class="card" style="padding:16px 28px;">
+    <div class="visual-rule">
+      <span class="vr-label">Priority 1</span>
+      <span class="vr-value"><strong>The cake</strong> — centred, clearly identifiable, good light. This is the product.</span>
+    </div>
+    <div class="visual-rule">
+      <span class="vr-label">Priority 2</span>
+      <span class="vr-value"><strong>Gift context</strong> — hands, the open box, the note card, a reaction. This is the emotion.</span>
+    </div>
+    <div class="visual-rule" style="border-bottom:none;">
+      <span class="vr-label">Priority 3</span>
+      <span class="vr-value"><strong>Brand</strong> — logo, sticker, ribbon. Last. Never the first thing in frame.</span>
+    </div>
+  </div>
+
+  <h3>Visual direction rules</h3>
+  <div class="grid-2" style="margin-top: 8px;">
+    <div class="card-sm">
+      <h4 style="margin-top:0;">Always shoot</h4>
+      <ul style="list-style:none;font-size:13px;color:var(--text-muted);">
+        <li style="padding:4px 0;border-bottom:1px solid var(--border);">Real over styled (candid &gt; arranged)</li>
+        <li style="padding:4px 0;border-bottom:1px solid var(--border);">Human over object (hands, faces, reactions)</li>
+        <li style="padding:4px 0;border-bottom:1px solid var(--border);">Context over isolation (box open, gift given)</li>
+        <li style="padding:4px 0;">Delivery moment over studio flatlay</li>
+      </ul>
+    </div>
+    <div class="card-sm">
+      <h4 style="margin-top:0;">Never use</h4>
+      <ul style="list-style:none;font-size:13px;color:var(--text-muted);">
+        <li style="padding:4px 0;border-bottom:1px solid var(--border);">Empty aesthetic posts (no product, no context)</li>
+        <li style="padding:4px 0;border-bottom:1px solid var(--border);">Over-styled shoots that feel commercial</li>
+        <li style="padding:4px 0;border-bottom:1px solid var(--border);">Abstract or concept-led compositions</li>
+        <li style="padding:4px 0;">Stock photos or generic bakery imagery</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Post layout template</h3>
+  <div class="card" style="max-width:340px;padding:0;overflow:hidden;border:2px solid var(--border-md);">
+    <div style="background:var(--blush);height:180px;display:flex;align-items:center;justify-content:center;">
+      <div style="text-align:center;">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text-light);margin-bottom:8px;">IMAGE ZONE</div>
+        <div style="font-size:13px;color:var(--brown);">Cake · Note card · Context</div>
+        <div style="font-size:11px;color:var(--text-light);margin-top:4px;">Cake-Card Wedge rule applied</div>
+      </div>
+    </div>
+    <div style="padding:16px 20px;border-top:1px solid var(--border);">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-light);margin-bottom:6px;">SITUATION LINE</div>
+      <div style="font-size:13px;color:var(--text-mid);margin-bottom:10px;line-height:1.6;">Short hook that names the gifting moment. Max one line.</div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-light);margin-bottom:6px;">PRODUCT + PRICE</div>
+      <div style="font-size:13px;color:var(--text-mid);margin-bottom:12px;">Express Bento · ₦X · Same day</div>
+      <div style="background:var(--rosewood);color:white;padding:9px 16px;border-radius:8px;text-align:center;font-size:13px;font-weight:700;">Order now →</div>
+    </div>
+  </div>
+
+  <h3>Typography in visuals</h3>
+  <div class="card" style="padding:16px 28px;">
+    <div class="visual-rule">
+      <span class="vr-label">Headlines</span>
+      <span class="vr-value">Playfair Display Bold. Situation line or product name. Dark on light or white on dark only.</span>
+    </div>
+    <div class="visual-rule">
+      <span class="vr-label">Body / price</span>
+      <span class="vr-value">Mulish Medium (500). Price must be the same size as or larger than body copy. Never smaller.</span>
+    </div>
+    <div class="visual-rule" style="border-bottom:none;">
+      <span class="vr-label">CTA button</span>
+      <span class="vr-value">Mulish Bold on Rosewood (#D16681). No other color for CTA. No exceptions.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     08 — PLATFORM ADAPTERS
+══════════════════════════════════ -->
+<section class="section section-alt" id="platform">
+  <div class="section-eyebrow">
+    <span class="section-num">08</span>
+    <span class="section-tag">Platform adapters</span>
+    <span class="section-rule"></span>
+  </div>
+  <h2 class="section-title">Instagram + WhatsApp. Both primary.</h2>
+  <p class="section-intro">The old "primary / secondary" framing is retired. Instagram and WhatsApp serve different functions but carry equal operational weight. Neither gets deprioritised.</p>
+
+  <div class="grid-2">
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+        <div style="width:36px;height:36px;background:var(--pink);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--brown);">IG</div>
+        <div>
+          <p style="font-weight:700;font-size:14px;margin:0;color:var(--brown);">Instagram</p>
+          <p style="font-size:11px;color:var(--text-light);margin:0;text-transform:uppercase;letter-spacing:.06em;">Discovery + desire</p>
+        </div>
+      </div>
+      <div class="visual-rule" style="padding:8px 0;">
+        <span class="vr-label" style="min-width:100px;">Role</span>
+        <span class="vr-value">Build brand memory, create desire, feed WhatsApp with warm leads</span>
+      </div>
+      <div class="visual-rule" style="padding:8px 0;">
+        <span class="vr-label" style="min-width:100px;">Content</span>
+        <span class="vr-value">Feed posts (3/week), Reels, Stories (daily), Highlights (always-on)</span>
+      </div>
+      <div class="visual-rule" style="padding:8px 0;border-bottom:none;">
+        <span class="vr-label" style="min-width:100px;">Adaptation</span>
+        <span class="vr-value">Keep message + structure + CTA. Change format, length, aspect ratio</span>
+      </div>
+    </div>
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+        <div style="width:36px;height:36px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--green-dk);">WA</div>
+        <div>
+          <p style="font-weight:700;font-size:14px;margin:0;color:var(--brown);">WhatsApp</p>
+          <p style="font-size:11px;color:var(--text-light);margin:0;text-transform:uppercase;letter-spacing:.06em;">Conversion + retention</p>
+        </div>
+      </div>
+      <div class="visual-rule" style="padding:8px 0;">
+        <span class="vr-label" style="min-width:100px;">Role</span>
+        <span class="vr-value">Close orders, confirm deliveries, drive repeat purchases — primary revenue channel</span>
+      </div>
+      <div class="visual-rule" style="padding:8px 0;">
+        <span class="vr-label" style="min-width:100px;">Content</span>
+        <span class="vr-value">Order confirmation, delivery update, photo prompt, Day 7 nudge, broadcast blasts</span>
+      </div>
+      <div class="visual-rule" style="padding:8px 0;border-bottom:none;">
+        <span class="vr-label" style="min-width:100px;">Frequency</span>
+        <span class="vr-value">Scripts fire per trigger (order, delivery, Day 7). Broadcasts: Monday + Wednesday</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top: 16px;">
+    <strong>Adaptation rule (keep / change):</strong> Change format and length when moving between platforms. Never change the core message, the structure (Situation → Tension → Solution → CTA), or the CTA itself.
+  </div>
+
+  <h3>Additional channels</h3>
+  <table class="data-table">
+    <thead><tr><th>Channel</th><th>Role</th><th>Content type</th><th>Frequency</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Instagram Stories</strong></td><td>Trust + proof layer</td><td>Delivery moments, testimonials, behind-the-scenes</td><td>Daily — even if just a reshare</td></tr>
+      <tr><td><strong>Instagram Reels</strong></td><td>Discovery amplifier</td><td>Authority content, process, "how to gift fast"</td><td>1–2/month from authority layer</td></tr>
+      <tr><td><strong>Google Drive / Notion</strong></td><td>Asset + knowledge base</td><td>Proof bank, brief archive, approved visuals</td><td>Updated after every delivery</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════════════════════════════
+     09 — WHATSAPP SCRIPTS
+══════════════════════════════════ -->
+<section class="section" id="wa">
+  <div class="section-eyebrow">
+    <span class="section-num">09</span>
+    <span class="section-tag">WhatsApp script bank</span>
+    <span class="section-rule"></span>
+  </div>
+  <h2 class="section-title">Five scripts. All modes covered.</h2>
+  <p class="section-intro">Every script is pre-assigned a mode, reviewed against the pre-output checklist, and ready to send or automate. Variables are shown in brackets.</p>
+
+  <div class="wa-script-card">
+    <div class="wa-script-head">
+      <span class="pill pill-express">Express</span>
+      <span class="wa-script-title">Script 01 — Order confirmation</span>
+      <span style="margin-left:auto;font-size:11px;color:var(--text-light);">Trigger: order placed</span>
+    </div>
+    <div class="wa-script-body">Hi [Name]! Your order is confirmed.
+
+We're baking your [product] now and it'll be ready by [time].
+
+Anything to add to the box? Just reply here.</div>
+    <div class="wa-vars">Variables: <span class="var-tag">[Name]</span><span class="var-tag">[product]</span><span class="var-tag">[time]</span></div>
+  </div>
+
+  <div class="wa-script-card">
+    <div class="wa-script-head">
+      <span class="pill pill-express">Express</span>
+      <span class="wa-script-title">Script 02 — Delivery update</span>
+      <span style="margin-left:auto;font-size:11px;color:var(--text-light);">Trigger: rider dispatched</span>
+    </div>
+    <div class="wa-script-body">[Name], your cake is on its way!
+
+Our rider is headed to [address]. Estimated arrival: [ETA].
+
+Please ensure someone is available to receive it.</div>
+    <div class="wa-vars">Variables: <span class="var-tag">[Name]</span><span class="var-tag">[address]</span><span class="var-tag">[ETA]</span></div>
+  </div>
+
+  <div class="wa-script-card">
+    <div class="wa-script-head">
+      <span class="pill pill-celeb">Celebration</span>
+      <span class="wa-script-title">Script 03 — Photo prompt</span>
+      <span style="margin-left:auto;font-size:11px;color:var(--text-light);">Trigger: delivery confirmed</span>
+    </div>
+    <div class="wa-script-body">Hope it made them smile!
+
+If you got a reaction photo, tag us @beqabakes — we love to see it. You'll get ₦500 off your next order when we reshare.</div>
+    <div class="wa-vars">No variables required — send as-is post-delivery</div>
+  </div>
+
+  <div class="wa-script-card">
+    <div class="wa-script-head">
+      <span class="pill pill-retain">Retention</span>
+      <span class="wa-script-title">Script 04 — Day 7 re-order nudge</span>
+      <span style="margin-left:auto;font-size:11px;color:var(--text-light);">Trigger: exactly 7 days post-delivery</span>
+    </div>
+    <div class="wa-script-body">Hi [Name]! It's been a week since your last order.
+
+Got another occasion coming up? Use code BACK500 for ₦500 off your next box.
+
+Order here → [link]</div>
+    <div class="wa-vars">Variables: <span class="var-tag">[Name]</span><span class="var-tag">[link]</span> · Send exactly Day 7 — not Day 6, not Day 8</div>
+  </div>
+
+  <div class="wa-script-card">
+    <div class="wa-script-head">
+      <span class="pill pill-express">Express</span>
+      <span class="wa-script-title">Script 05 — Corporate / bulk inquiry response</span>
+      <span style="margin-left:auto;font-size:11px;color:var(--text-light);">Trigger: inquiry received</span>
+    </div>
+    <div class="wa-script-body">Hi [Name], thanks for reaching out!
+
+For corporate and bulk orders (10+ boxes), we offer custom packaging, branded note cards, and flexible delivery scheduling.
+
+Minimum order: 10 boxes. Lead time: 48 hours.
+Pricing: from ₦[price] per box depending on specifications.
+
+To get started, please share: event date, quantity, and any branding requirements. We'll come back within 2 hours.</div>
+    <div class="wa-vars">Variables: <span class="var-tag">[Name]</span><span class="var-tag">[price]</span></div>
+  </div>
+
+  <h3>Packaging insert (physical)</h3>
+  <div class="grid-2">
+    <div class="card" style="text-align:center;padding:28px;">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:14px;">Front of insert</p>
+      <p style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--brown);margin-bottom:6px;">Hope they loved it.</p>
+      <p style="font-family:'Mulish',sans-serif;font-size:13px;color:var(--text-muted);">Because Beqa dey Bake.</p>
+    </div>
+    <div class="card" style="padding:28px;">
+      <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:14px;">Back of insert</p>
+      <p style="font-size:14px;color:var(--text);line-height:1.75;">Order again in seconds →<br><span style="color:var(--rosewood);font-weight:700;">wa.me/beqabakes</span></p>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:12px;">Show this card for <strong>₦500 off</strong> your next box.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     10 — WEEKLY CALENDAR
+══════════════════════════════════ -->
+<section class="section section-alt" id="calendar">
+  <div class="section-eyebrow">
+    <span class="section-num">10</span>
+    <span class="section-tag">Weekly calendar</span>
+    <span class="section-rule"></span>
+  </div>
+  <h2 class="section-title">Three posts. Every week. No rotation.</h2>
+  <p class="section-intro">All three modes run every week. Monday is always Express. Wednesday is always Celebration. Friday is always Proof/Retention. This is not a rotation — it is the permanent weekly structure.</p>
+
+  <div class="cal-grid">
+    <div class="cal-cell head"></div>
+    <div class="cal-cell head">Instagram post</div>
+    <div class="cal-cell head">WhatsApp push</div>
+    <div class="cal-cell head">Content goal</div>
+
+    <div class="cal-cell day">Mon</div>
+    <div class="cal-cell">
+      <span class="pill pill-express" style="margin-bottom:6px;display:inline-block;">Offer — Express</span>
+      <strong>Product + price + CTA</strong>
+      <span class="cal-sub">Rosewood CTA · price visible · 2 lines max</span>
+    </div>
+    <div class="cal-cell">
+      <strong>Availability broadcast</strong>
+      <span class="cal-sub">New week · open slots · Express Bento feature</span>
+    </div>
+    <div class="cal-cell" style="color:var(--text-muted);font-size:12px;">Drive immediate orders. Establish the week's offer.</div>
+
+    <div class="cal-cell day">Wed</div>
+    <div class="cal-cell">
+      <span class="pill pill-celeb" style="margin-bottom:6px;display:inline-block;">Gift moment — Celebration</span>
+      <strong>Real delivery or reaction</strong>
+      <span class="cal-sub">Pink accent · recipient-first · Cake-Card Wedge</span>
+    </div>
+    <div class="cal-cell">
+      <strong>Day 7 nudge</strong>
+      <span class="cal-sub">Script 04 to buyers from 7 days ago</span>
+    </div>
+    <div class="cal-cell" style="color:var(--text-muted);font-size:12px;">Build emotional proof. Create desire for gifting.</div>
+
+    <div class="cal-cell day">Fri</div>
+    <div class="cal-cell">
+      <span class="pill pill-retain" style="margin-bottom:6px;display:inline-block;">Proof — Retention</span>
+      <strong>Testimonial or reshare</strong>
+      <span class="cal-sub">Pull from Proof bank first · real delivery moment</span>
+    </div>
+    <div class="cal-cell">
+      <strong>Photo prompt</strong>
+      <span class="cal-sub">Script 03 to week's delivery recipients</span>
+    </div>
+    <div class="cal-cell" style="color:var(--text-muted);font-size:12px;">Close the trust loop. Feed the Proof bank.</div>
+  </div>
+
+  <div class="callout" style="margin-top: 16px;">
+    <strong>Cadence law:</strong> 3 posts per week minimum. If a week drops below 3, the shortfall is reviewed — not the target. Stories run daily regardless of post day, even if it's only a reshare.
+  </div>
+
+  <h3>Post caption structure — every post, no exceptions</h3>
+  <div class="card" style="padding:0;overflow:hidden;">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border-md);">
+      <div style="background:var(--cream-mid);padding:16px 18px;text-align:center;">
+        <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;">Beat 1</p>
+        <p style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);margin-bottom:6px;">Situation</p>
+        <p style="font-size:12px;color:var(--text-muted);">"Forgot a birthday?"</p>
+      </div>
+      <div style="background:var(--cream-mid);padding:16px 18px;text-align:center;">
+        <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;">Beat 2</p>
+        <p style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);margin-bottom:6px;">Tension</p>
+        <p style="font-size:12px;color:var(--text-muted);">"The stress of no gift"</p>
+      </div>
+      <div style="background:var(--cream-mid);padding:16px 18px;text-align:center;">
+        <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;">Beat 3</p>
+        <p style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--brown);margin-bottom:6px;">Solution</p>
+        <p style="font-size:12px;color:var(--text-muted);">"Beqabakes delivers"</p>
+      </div>
+      <div style="background:var(--rosewood);padding:16px 18px;text-align:center;">
+        <p style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:8px;">Beat 4</p>
+        <p style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:white;margin-bottom:6px;">CTA</p>
+        <p style="font-size:12px;color:rgba(255,255,255,.75);">"Order now →"</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     11 — EXECUTION SYSTEM
+══════════════════════════════════ -->
+<section class="section" id="execution">
+  <div class="section-eyebrow">
+    <span class="section-num">11</span>
+    <span class="section-tag">Execution system</span>
+    <span class="section-rule"></span>
+  </div>
+  <h2 class="section-title">Three parallel tracks. Run simultaneously.</h2>
+  <p class="section-intro">The old Day 1–5 single-post workflow is replaced with three tracks running in parallel. Each track covers one post slot. All three move through the same six steps.</p>
+
+  <div class="track-grid">
+    <div class="track">
+      <div class="track-head th-express">Monday track — Express</div>
+      <div class="track-body">
+        <div class="track-step"><div class="step-n">1</div><span>Select urgent gifting situation (forgot, last-minute, same-day need)</span></div>
+        <div class="track-step"><div class="step-n">2</div><span>Write SIA+ brief — mode: Express. Price field cannot be blank.</span></div>
+        <div class="track-step"><div class="step-n">3</div><span>Visual direction: product + price + CTA layout. Cake-Card Wedge.</span></div>
+        <div class="track-step"><div class="step-n">4</div><span>Write caption — situation line + product + price + 1 CTA. Max 2 lines before CTA.</span></div>
+        <div class="track-step"><div class="step-n">5</div><span>Run 6-point checklist. All green. Fix and repeat if any fail.</span></div>
+        <div class="track-step"><div class="step-n">6</div><span>Post Monday. WhatsApp broadcast (availability) same day.</span></div>
+      </div>
+    </div>
+    <div class="track">
+      <div class="track-head th-celeb">Wednesday track — Celebration</div>
+      <div class="track-body">
+        <div class="track-step"><div class="step-n">1</div><span>Select emotional gifting moment (birthday, surprise, romantic, "just because")</span></div>
+        <div class="track-step"><div class="step-n">2</div><span>Write SIA+ brief — mode: Celebration. Proof bank check: any delivery photo available?</span></div>
+        <div class="track-step"><div class="step-n">3</div><span>Visual direction: recipient-first. Cake-Card Wedge. Real delivery preferred over product shot.</span></div>
+        <div class="track-step"><div class="step-n">4</div><span>Write caption — warm, situational, ends in CTA. Slightly longer than Express permitted.</span></div>
+        <div class="track-step"><div class="step-n">5</div><span>Run 6-point checklist. All green.</span></div>
+        <div class="track-step"><div class="step-n">6</div><span>Post Wednesday. Day 7 nudge (Script 04) to buyers from 7 days prior.</span></div>
+      </div>
+    </div>
+    <div class="track">
+      <div class="track-head th-retain">Friday track — Proof/Retention</div>
+      <div class="track-body">
+        <div class="track-step"><div class="step-n">1</div><span>Pull from Proof bank first. Use customer photo / testimonial if available.</span></div>
+        <div class="track-step"><div class="step-n">2</div><span>Write SIA+ brief — mode: Retention. If no proof available, flag urgently and create content.</span></div>
+        <div class="track-step"><div class="step-n">3</div><span>Visual direction: real delivery moment only. No staging. Real face or reaction preferred.</span></div>
+        <div class="track-step"><div class="step-n">4</div><span>Caption: soft, relational, acknowledge the gift, gentle re-order nudge. BACK500 code if Retention.</span></div>
+        <div class="track-step"><div class="step-n">5</div><span>Run 6-point checklist. All green.</span></div>
+        <div class="track-step"><div class="step-n">6</div><span>Post Friday. Photo prompt (Script 03) to that week's delivery recipients.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top: 16px; padding: 16px 24px;">
+    <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:10px;">Time budget — realistic</p>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;font-size:13px;color:var(--text-mid);">
+      <span>3 SIA+ briefs: <strong style="color:var(--brown);">~45 min</strong></span>
+      <span>Visual direction + shooting: <strong style="color:var(--brown);">~2 hrs</strong></span>
+      <span>3 captions: <strong style="color:var(--brown);">~45 min</strong></span>
+      <span>Checklists + scheduling: <strong style="color:var(--brown);">~30 min</strong></span>
+      <span>WA scripts + Stories: <strong style="color:var(--brown);">~30 min</strong></span>
+      <span style="font-weight:700;color:var(--brown);">Total: 5–6 hrs/week</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     12 — PROOF SYSTEM
+══════════════════════════════════ -->
+<section class="section section-alt" id="proof">
+  <div class="section-eyebrow">
+    <span class="section-num">12</span>
+    <span class="section-tag">Proof collection system</span>
+    <span class="section-rule"></span>
+  </div>
+  <h2 class="section-title">Active collection. Not passive hope.</h2>
+  <p class="section-intro">Proof is not a content type you wait for — it's a system you run. The photo prompt script fires after every delivery. The Proof bank is the most valuable asset in this COS.</p>
+
+  <div class="proof-flow">
+    <div class="proof-step">
+      <div class="proof-step-num" style="color:var(--cream);">01</div>
+      <p class="proof-step-title">Delivery confirmed</p>
+      <p class="proof-step-desc">Rider marks delivery complete. Triggers automated photo prompt (Script 03) via WhatsApp.</p>
+    </div>
+    <div class="proof-step">
+      <div class="proof-step-num" style="color:var(--cream);">02</div>
+      <p class="proof-step-title">Photo prompt sent</p>
+      <p class="proof-step-desc">"Hope it made them smile! Tag us @beqabakes for ₦500 off your next order."</p>
+    </div>
+    <div class="proof-step">
+      <div class="proof-step-num" style="color:var(--cream);">03</div>
+      <p class="proof-step-title">Proof received</p>
+      <p class="proof-step-desc">Photo or message received. Tagged in Notion "Proof bank" with date, product, buyer name.</p>
+    </div>
+    <div class="proof-step">
+      <div class="proof-step-num" style="color:var(--cream);">04</div>
+      <p class="proof-step-title">Published Friday</p>
+      <p class="proof-step-desc">Friday posts pull from Proof bank first. Reshare = ₦500 credit applied to buyer's account.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top: 16px;">
+    <strong>Bank target:</strong> Maintain a minimum of 4 unused proof items in the bank at all times. If the bank falls below 4, Friday posts create original Celebration content while urgently requesting new proof from recent buyers.
+  </div>
+
+  <h3>Proof bank structure (Notion)</h3>
+  <table class="data-table">
+    <thead><tr><th>Field</th><th>What to capture</th><th>Required?</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Date received</strong></td><td>Date of photo/message receipt</td><td>Yes</td></tr>
+      <tr><td><strong>Buyer name</strong></td><td>First name only (privacy)</td><td>Yes</td></tr>
+      <tr><td><strong>Product</strong></td><td>What was ordered</td><td>Yes</td></tr>
+      <tr><td><strong>Content type</strong></td><td>Photo / video / text testimonial / reaction</td><td>Yes</td></tr>
+      <tr><td><strong>Permission</strong></td><td>Verbal yes via WhatsApp (screenshot) or implied via public tag</td><td>Yes</td></tr>
+      <tr><td><strong>Used</strong></td><td>Date published and which post it appeared in</td><td>After use</td></tr>
+      <tr><td><strong>Incentive issued</strong></td><td>₦500 credit applied? Y/N</td><td>After use</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════════════════════════════
+     13 — TRACKING
+══════════════════════════════════ -->
+<section class="section" id="tracking">
+  <div class="section-eyebrow">
+    <span class="section-num">13</span>
+    <span class="section-tag">Output tracking</span>
+    <span class="section-rule"></span>
+  </div>
+  <h2 class="section-title">Five metrics. Reviewed every Friday.</h2>
+  <p class="section-intro">The old system tracked volume only (posts, stories count). These five metrics connect content activity directly to revenue, so you know what's working — not just what was published.</p>
+
+  <div class="metrics-row">
+    <div class="metric-card">
+      <p class="metric-num">3</p>
+      <p class="metric-label">Posts published / week</p>
+    </div>
+    <div class="metric-card">
+      <p class="metric-num">—</p>
+      <p class="metric-label">Avg reach per post</p>
+    </div>
+    <div class="metric-card">
+      <p class="metric-num">3%+</p>
+      <p class="metric-label">WA reply rate target</p>
+    </div>
+    <div class="metric-card">
+      <p class="metric-num">6+</p>
+      <p class="metric-label">Orders via WA / week</p>
+    </div>
+    <div class="metric-card">
+      <p class="metric-num">1+</p>
+      <p class="metric-label">Proof collected / week</p>
+    </div>
+  </div>
+
+  <h3>Threshold guide</h3>
+  <table class="data-table" style="margin-top: 12px;">
+    <thead><tr><th>Metric</th><th>Target</th><th>Below threshold: action</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Posts published</strong></td><td>3/week</td><td>Review track that slipped. Never reduce target.</td></tr>
+      <tr><td><strong>Avg reach per post</strong></td><td>Growing week-on-week</td><td>Review posting time, hashtags, first-frame visual.</td></tr>
+      <tr><td><strong>WA reply rate</strong></td><td>3%+ of reach per post</td><td>Review CTA clarity and caption structure in SIA+ brief.</td></tr>
+      <tr><td><strong>Orders via WA / week</strong></td><td>6+ (2 per post)</td><td>Review offer clarity, price visibility, ordering friction.</td></tr>
+      <tr><td><strong>Proof collected</strong></td><td>1+ / week</td><td>Send photo prompt script manually to last 5 buyers immediately.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Weekly review ritual (Fridays, 15 min)</h3>
+  <div class="card-sm" style="margin-top:8px;">
+    <ol style="font-size:13px;color:var(--text-mid);line-height:2;padding-left:20px;">
+      <li>Log all 5 metrics in the tracking Notion database</li>
+      <li>Flag any metric below threshold with the reason</li>
+      <li>Identify which of this week's 3 posts performed best — why?</li>
+      <li>Pre-assign next week's 3 post situations before closing</li>
+      <li>Check Proof bank count — flag if below 4 items</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     14 — KNOWLEDGE BASE
+══════════════════════════════════ -->
+<section class="section section-alt" id="knowledge">
+  <div class="section-eyebrow">
+    <span class="section-num">14</span>
+    <span class="section-tag">Knowledge base</span>
+    <span class="section-rule"></span>
+  </div>
+  <h2 class="section-title">Four databases. Clear ingestion rules.</h2>
+  <p class="section-intro">The knowledge base is only useful if content goes in and gets used. Each database has a defined owner, ingestion trigger, and retirement rule.</p>
+
+  <table class="data-table">
+    <thead><tr><th>Database</th><th>What goes in</th><th>Ingestion trigger</th><th>Retirement rule</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>SIA+ brief archive</strong></td>
+        <td>All completed SIA+ briefs, tagged with mode, date, post type, and performance score</td>
+        <td>After each post publishes</td>
+        <td>Never retired — used for seasonal repeats and campaign planning</td>
+      </tr>
+      <tr>
+        <td><strong>Proof bank</strong></td>
+        <td>Customer photos, testimonials, reactions, tagged with product and permission status</td>
+        <td>Within 24 hrs of receiving from buyer</td>
+        <td>Marked "used" after publishing. Stays in database as archive.</td>
+      </tr>
+      <tr>
+        <td><strong>Approved visual library</strong></td>
+        <td>Final approved post images, pre-shoot raw files, brand-compliant assets</td>
+        <td>After 6-point checklist passes</td>
+        <td>Retired if product changes or visual feels dated (&gt;3 months old)</td>
+      </tr>
+      <tr>
+        <td><strong>Content performance log</strong></td>
+        <td>5 weekly metrics, post-specific reach + WA reply rate, notes on what worked</td>
+        <td>Every Friday review ritual</td>
+        <td>Never retired — used for quarterly brand system review</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════════════════════════════
+     15 — ROADMAP
+══════════════════════════════════ -->
+<section class="section" id="roadmap">
+  <div class="section-eyebrow">
+    <span class="section-num">15</span>
+    <span class="section-tag">Roadmap &amp; next builds</span>
+    <span class="section-rule"></span>
+  </div>
+  <h2 class="section-title">What to build, in order.</h2>
+  <p class="section-intro">The COS is live from this document. What follows builds compounding leverage on top of it. Each phase is ordered by revenue impact, not complexity.</p>
+
+  <div class="roadmap">
+    <div class="rm-item done">
+      <p class="rm-week">Completed — this document</p>
+      <p class="rm-title">Content Operating System v1</p>
+      <p class="rm-desc">All 12 inconsistencies resolved. Terminology unified. SIA+ template upgraded with mode assignment. Execution workflow corrected to 3 parallel tracks. WhatsApp scripts written. Calendar locked. Proof system defined. 5-metric tracking framework live.</p>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Week 1 — Immediate</p>
+      <p class="rm-title">Write the first 3 weeks of SIA+ briefs in advance</p>
+      <p class="rm-desc">9 briefs (3 weeks × 3 posts). Pre-writing removes the blank-page problem from weekly execution and turns content creation into a production task rather than a creative one. Assign mode, situation, product, and CTA for all 9 before shooting anything.</p>
+      <div class="rm-tags">
+        <span class="rm-tag">9 SIA+ briefs</span>
+        <span class="rm-tag">Mode assigned</span>
+        <span class="rm-tag">Notion template</span>
+      </div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Week 1–2 — High leverage</p>
+      <p class="rm-title">WhatsApp automation setup</p>
+      <p class="rm-desc">Scripts 01–04 are written. Wire them into WhatsApp Business or a tool like Wati / Interakt. Set triggers: Day 0 (delivery confirmed → Scripts 02 + 03 fire), Day 7 (Script 04 fires). This converts the retention loop from manual to passive — highest revenue-per-hour return on this list.</p>
+      <div class="rm-tags">
+        <span class="rm-tag">WA Business API</span>
+        <span class="rm-tag">Day 0 + Day 7 triggers</span>
+        <span class="rm-tag">Script A/B variants</span>
+      </div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Week 2 — Proof system launch</p>
+      <p class="rm-title">Build the Proof bank to 10+ items</p>
+      <p class="rm-desc">Send Script 03 manually to the last 20 delivery recipients today. The target is 10+ approved proof items in the bank before the first Friday post runs under this system. Without a stocked bank, Friday posts default to creating new content — which is the slower, harder path every week.</p>
+      <div class="rm-tags">
+        <span class="rm-tag">Notion Proof bank setup</span>
+        <span class="rm-tag">Permission capture</span>
+        <span class="rm-tag">Reshare incentive live</span>
+      </div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Week 2–3 — Content production</p>
+      <p class="rm-title">3-week content batch shoot</p>
+      <p class="rm-desc">Produce 9 posts in a single shoot session using the 9 pre-written briefs. Each shot is pre-assigned: type, mode, product, Cake-Card Wedge composition. No improvising on the day. All images pass the checklist before the shoot ends. This is how 5–6 hrs/week becomes achievable.</p>
+      <div class="rm-tags">
+        <span class="rm-tag">Shoot brief template</span>
+        <span class="rm-tag">9-post batch</span>
+        <span class="rm-tag">Story variants</span>
+      </div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Month 1 — Authority layer</p>
+      <p class="rm-title">First long-form piece</p>
+      <p class="rm-desc">"How to send a birthday cake in Abuja in under 1 hour." One brief produces: Reel script, 3 caption rewrites, WhatsApp broadcast, Story sequence. This is the compounding mechanic — one SIA+ feeding five distribution units. Month 1 theme: No-stress gifting + Express Bento hero.</p>
+      <div class="rm-tags">
+        <span class="rm-tag">Reel script</span>
+        <span class="rm-tag">Caption bank (3 posts)</span>
+        <span class="rm-tag">WA broadcast</span>
+        <span class="rm-tag">Story sequence</span>
+      </div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Month 1–2 — Distribution</p>
+      <p class="rm-title">Ordering friction audit + link-in-bio page</p>
+      <p class="rm-desc">Map the current ordering journey end-to-end: Instagram discovery → WhatsApp DM → response → payment → confirmation. Every friction point identified and removed. Priority output: a single ordering link (Linktree or custom page) showing products, prices, and a direct WhatsApp CTA — making "send a cake in minutes" true from cold discovery.</p>
+      <div class="rm-tags">
+        <span class="rm-tag">Journey map</span>
+        <span class="rm-tag">Link-in-bio page</span>
+        <span class="rm-tag">Order form (Tally / Notion)</span>
+        <span class="rm-tag">Payment link</span>
+      </div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Month 2 — Corporate pipeline</p>
+      <p class="rm-title">Corporate lookbook + pipeline tracker</p>
+      <p class="rm-desc">Script 05 is live. Next: a 1-page PDF lookbook for corporate clients (event specs, box options, pricing tiers) that can be sent via WhatsApp in under 30 seconds. Notion pipeline tracker: Inquiry → Quoted → Confirmed → Delivered. Corporate orders are highest revenue-per-transaction in the SKU mix.</p>
+      <div class="rm-tags">
+        <span class="rm-tag">Corporate PDF lookbook</span>
+        <span class="rm-tag">Notion pipeline tracker</span>
+        <span class="rm-tag">Pricing tier sheet</span>
+      </div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Month 3 — Retention formalisation</p>
+      <p class="rm-title">Loyalty mechanic launch</p>
+      <p class="rm-desc">The Day 7 script + BACK500 code create a soft repeat incentive. Formalise this as a named loyalty mechanic — e.g. "Beqa's Circle" — with simple stamp-card logic (5 orders = free add-on or upgrade). No app required. Tracked in WhatsApp manually to start. This is the stage where a customer becomes a regular.</p>
+      <div class="rm-tags">
+        <span class="rm-tag">Loyalty naming</span>
+        <span class="rm-tag">Stamp card design</span>
+        <span class="rm-tag">BACK500 upgrade</span>
+      </div>
+    </div>
+
+    <div class="rm-item">
+      <p class="rm-week">Month 3+ — System review</p>
+      <p class="rm-title">COS v2 — data-driven update</p>
+      <p class="rm-desc">After 6 weeks running the calendar and tracking all 5 metrics, audit: which post types drive orders, which WA scripts get replies, which products convert fastest. Feed findings back into the mode table, monthly themes, and brief archive. The COS is a living system — each review makes it more precise.</p>
+      <div class="rm-tags">
+        <span class="rm-tag">6-week data review</span>
+        <span class="rm-tag">COS v2 draft</span>
+        <span class="rm-tag">SKU rationalisation</span>
+        <span class="rm-tag">Brand System v3 flag</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CLOSING MANTRA
+══════════════════════════════════ -->
+<section class="section" style="background:var(--cream-mid);padding-bottom:80px;">
+  <div class="mantra-block">
+    <p class="mantra-label">Operating principle</p>
+    <p class="mantra-text">"We don't create content.<br>We trigger gifting decisions."</p>
+    <p class="mantra-sub">Because Beqa dey Bake. &nbsp;·&nbsp; Send a cake in minutes. &nbsp;·&nbsp; Every box feels like a celebration.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<div class="doc-footer">
+  <div>
+    <div class="doc-footer-brand">Beqabakes</div>
+    <div class="doc-footer-tagline">Because Beqa dey Bake.</div>
+  </div>
+  <div class="doc-footer-meta">
+    Content Operating System v1<br>
+    Aligned to Brand System v2 &nbsp;·&nbsp; April 2026<br>
+    Operator × Giver archetype
+  </div>
+</div>
+
+</div><!-- /.page -->
+
+</body>
+</html>
